@@ -115,6 +115,7 @@
 		3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CBB931B1A14B227007FED9E /* libsqlite3.dylib */; };
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
+		715B84571E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */; };
 		833E2D9E1DC723D600C5AB48 /* GettingMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */; };
 		90011F921AE4BF090088D549 /* EMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90011F911AE4BF090088D549 /* EMAlertView.m */; };
 		9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7861939D8D000DC38A4 /* ChatViewController.m */; };
@@ -647,6 +648,8 @@
 		3CBF90BE19302F5000AD68AE /* BaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BaseViewController.h; sourceTree = "<group>"; };
 		3CBF90BF19302F5000AD68AE /* BaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BaseViewController.m; sourceTree = "<group>"; };
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		715B84551E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+GroupMemberChange.h"; sourceTree = "<group>"; };
+		715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+GroupMemberChange.m"; sourceTree = "<group>"; };
 		833E2D9C1DC723D600C5AB48 /* GettingMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GettingMoreFooterView.h; sourceTree = "<group>"; };
 		833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GettingMoreFooterView.m; sourceTree = "<group>"; };
 		90011F901AE4BF090088D549 /* EMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertView.h; sourceTree = "<group>"; };
@@ -1685,6 +1688,8 @@
 			children = (
 				908B48D21E77DDCC00B2B4CA /* ChatDemoHelper+GroupMemberChange.h */,
 				908B48D31E77DDCC00B2B4CA /* ChatDemoHelper+GroupMemberChange.m */,
+				715B84551E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.h */,
+				715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */,
 			);
 			path = GroupMember;
 			sourceTree = "<group>";
@@ -3223,6 +3228,7 @@
 				D2FD8D8E1E5C39FD0097B20D /* PSTCollectionViewUpdateItem.m in Sources */,
 				90A5F9EC1E71300600B3B2E3 /* EaseConversationModel+Top.m in Sources */,
 				D2FD8DBF1E5C39FD0097B20D /* EaseRecordView.m in Sources */,
+				715B84571E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m in Sources */,
 				D2FD8D601E5C39FD0097B20D /* MJRefreshAutoNormalFooter.m in Sources */,
 				D2FD8D6F1E5C39FD0097B20D /* MWGridViewController.m in Sources */,
 				3C914D8519514BBD0002DAD3 /* ContactSelectionViewController.m in Sources */,
