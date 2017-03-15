@@ -133,6 +133,8 @@
 		906083DA1B71F894008574B4 /* EMRotbotChatViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 906083D81B71F894008574B4 /* EMRotbotChatViewCell.m */; };
 		90882EE21E78FE6900FB9A9E /* AppDelegate+ShareFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 90882EE11E78FE6900FB9A9E /* AppDelegate+ShareFiles.m */; };
 		90882EE51E79279F00FB9A9E /* ShareFilesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90882EE41E79279F00FB9A9E /* ShareFilesViewController.m */; };
+		90882EE81E7961F200FB9A9E /* ChatViewController+ShareFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 90882EE71E7961F200FB9A9E /* ChatViewController+ShareFile.m */; };
+		90882EEB1E79679400FB9A9E /* ShareFileActivity.m in Sources */ = {isa = PBXBuildFile; fileRef = 90882EEA1E79679400FB9A9E /* ShareFileActivity.m */; };
 		908B48CA1E778E0800B2B4CA /* RevocationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 908B48C91E778E0800B2B4CA /* RevocationManager.m */; };
 		908B48CD1E77930400B2B4CA /* MainViewController+Revocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 908B48CC1E77930400B2B4CA /* MainViewController+Revocation.m */; };
 		908B48D01E779B0600B2B4CA /* ConversationListController+Revocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 908B48CF1E779B0600B2B4CA /* ConversationListController+Revocation.m */; };
@@ -695,6 +697,10 @@
 		90882EE11E78FE6900FB9A9E /* AppDelegate+ShareFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+ShareFiles.m"; sourceTree = "<group>"; };
 		90882EE31E79279F00FB9A9E /* ShareFilesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFilesViewController.h; sourceTree = "<group>"; };
 		90882EE41E79279F00FB9A9E /* ShareFilesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFilesViewController.m; sourceTree = "<group>"; };
+		90882EE61E7961F200FB9A9E /* ChatViewController+ShareFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatViewController+ShareFile.h"; sourceTree = "<group>"; };
+		90882EE71E7961F200FB9A9E /* ChatViewController+ShareFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+ShareFile.m"; sourceTree = "<group>"; };
+		90882EE91E79679400FB9A9E /* ShareFileActivity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShareFileActivity.h; sourceTree = "<group>"; };
+		90882EEA1E79679400FB9A9E /* ShareFileActivity.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShareFileActivity.m; sourceTree = "<group>"; };
 		908B48C81E778E0800B2B4CA /* RevocationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RevocationManager.h; sourceTree = "<group>"; };
 		908B48C91E778E0800B2B4CA /* RevocationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RevocationManager.m; sourceTree = "<group>"; };
 		908B48CB1E77930400B2B4CA /* MainViewController+Revocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+Revocation.h"; sourceTree = "<group>"; };
@@ -1708,6 +1714,10 @@
 				90882EE11E78FE6900FB9A9E /* AppDelegate+ShareFiles.m */,
 				90882EE31E79279F00FB9A9E /* ShareFilesViewController.h */,
 				90882EE41E79279F00FB9A9E /* ShareFilesViewController.m */,
+				90882EE61E7961F200FB9A9E /* ChatViewController+ShareFile.h */,
+				90882EE71E7961F200FB9A9E /* ChatViewController+ShareFile.m */,
+				90882EE91E79679400FB9A9E /* ShareFileActivity.h */,
+				90882EEA1E79679400FB9A9E /* ShareFileActivity.m */,
 			);
 			path = ShareFiles;
 			sourceTree = "<group>";
@@ -3281,6 +3291,7 @@
 				D2FD8D901E5C39FD0097B20D /* PSTGridLayoutItem.m in Sources */,
 				D2F7691C1CBF3F26009778FB /* SearchMessageViewController.m in Sources */,
 				D2FD8D981E5C39FD0097B20D /* NSDate+Category.m in Sources */,
+				90882EE81E7961F200FB9A9E /* ChatViewController+ShareFile.m in Sources */,
 				D2FD8DBD1E5C39FD0097B20D /* EaseFacialView.m in Sources */,
 				D21FD15B1E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m in Sources */,
 				D2FD8D751E5C39FD0097B20D /* DACircularProgressView.m in Sources */,
@@ -3303,6 +3314,7 @@
 				908B48D01E779B0600B2B4CA /* ConversationListController+Revocation.m in Sources */,
 				D2FD8DA31E5C39FD0097B20D /* EaseEmotionManager.m in Sources */,
 				D2FD8DC01E5C39FD0097B20D /* EaseConversationCell.m in Sources */,
+				90882EEB1E79679400FB9A9E /* ShareFileActivity.m in Sources */,
 				D2FD8D501E5C39FD0097B20D /* EMCDDeviceManager+ProximitySensor.m in Sources */,
 				D2FD8D7D1E5C39FD0097B20D /* MKAnnotationView+EMWebCache.m in Sources */,
 				9003D9151939D8D000DC38A4 /* ApplyFriendCell.m in Sources */,

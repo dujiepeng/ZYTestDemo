@@ -56,7 +56,7 @@
 @property (nonatomic) BOOL isKicked;
 @property (nonatomic) BOOL isPlayingAudio;
 @property (nonatomic, strong) NSMutableArray *atTargets;
-
+@property (nonatomic, strong) UIDocumentInteractionController *documentController;
 @end
 
 @implementation EaseMessageViewController

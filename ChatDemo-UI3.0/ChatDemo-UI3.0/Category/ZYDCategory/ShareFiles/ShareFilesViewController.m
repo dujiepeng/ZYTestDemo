@@ -60,13 +60,16 @@
     }
     
     EMMessageBody *body = nil;
+    NSString *name = [[_url absoluteString] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding].lastPathComponent;
     if ([suffix isEqualToString:@"jpg"] || [suffix isEqualToString:@"png"]) {
-        body = [[EMImageMessageBody alloc] initWithData:data displayName:@"image"];
+        body = [[EMImageMessageBody alloc] initWithData:data displayName:name];
     } else if ([suffix isEqualToString:@"mp4"]) {
-        body = [[EMVideoMessageBody alloc] initWithData:data displayName:@"video"];
+        body = [[EMVideoMessageBody alloc] initWithData:data displayName:name];
     } else {
-        body = [[EMFileMessageBody alloc] initWithData:data displayName:@"file"];
+        body = [[EMFileMessageBody alloc] initWithData:data displayName:name];
     }
+    
+    [self clearInBox];
     NSString *from = [EMClient sharedClient].currentUsername;
     EMMessage *newMsg = [[EMMessage alloc] initWithConversationID:userModel.buddy from:from to:userModel.buddy body:body ext:nil];
     __weak typeof(self) weakSelf = self;
@@ -124,5 +127,13 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (void)clearInBox {
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSError *error = nil;
+    [fm removeItemAtURL:_url error:&error];
+    if (error) {
+        NSLog(@"删除失败");
+    }
+}
 
 @end
