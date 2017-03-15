@@ -150,7 +150,7 @@
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     }
     if (model.bodyType == EMMessageBodyTypeLocation && [ChatDemoHelper isGoneAfterReadMessage:model.message]) {
-#warning 阅后即焚 - 位置需要补充
+
         EaseLocationViewController *locationController = [[EaseLocationViewController alloc] initWithLocation:CLLocationCoordinate2DMake(model.latitude, model.longitude)];
         locationController.locationModel = model;
         locationController.locDelegate = self;

@@ -25,13 +25,9 @@
 - (void)FViewDidLoad
 {
     [self FViewDidLoad];
-//    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGoneAfterReadUI:) name:@"handleGoneAfterReadUI" object:nil];
+
 }
 
-//- (void)handleGoneAfterReadUI:(NSNotification *)notification
-//{
-//    [self tableViewDidTriggerHeaderRefresh];
-//}
 
 /**
  *  最新一条消息为阅后即焚消息时显示

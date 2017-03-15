@@ -198,7 +198,6 @@
 		D21FD15E1E793DC2006A0CAE /* EaseLocationViewController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD14D1E793DC2006A0CAE /* EaseLocationViewController+GoneAfterRead.m */; };
 		D21FD15F1E793DC2006A0CAE /* EaseMessageCell+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD14F1E793DC2006A0CAE /* EaseMessageCell+GoneAfterRead.m */; };
 		D21FD1601E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1511E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.m */; };
-		D21FD1611E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1531E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.m */; };
 		D21FD1621E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1551E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.m */; };
 		D21FD1631E793DC2006A0CAE /* RedPacketChatViewController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1571E793DC2006A0CAE /* RedPacketChatViewController+GoneAfterRead.m */; };
 		D21FD1641E793DC2006A0CAE /* RemoveAfterReadCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1591E793DC2006A0CAE /* RemoveAfterReadCell.m */; };
@@ -814,8 +813,6 @@
 		D21FD14F1E793DC2006A0CAE /* EaseMessageCell+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageCell+GoneAfterRead.m"; sourceTree = "<group>"; };
 		D21FD1501E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageReadManager+GoneAfterRead.h"; sourceTree = "<group>"; };
 		D21FD1511E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageReadManager+GoneAfterRead.m"; sourceTree = "<group>"; };
-		D21FD1521E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+GoneAfterRead.h"; sourceTree = "<group>"; };
-		D21FD1531E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+GoneAfterRead.m"; sourceTree = "<group>"; };
 		D21FD1541E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseSDKHelper+GoneAfterRead.h"; sourceTree = "<group>"; };
 		D21FD1551E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseSDKHelper+GoneAfterRead.m"; sourceTree = "<group>"; };
 		D21FD1561E793DC2006A0CAE /* RedPacketChatViewController+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "RedPacketChatViewController+GoneAfterRead.h"; sourceTree = "<group>"; };
@@ -2061,8 +2058,6 @@
 				D21FD14F1E793DC2006A0CAE /* EaseMessageCell+GoneAfterRead.m */,
 				D21FD1501E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.h */,
 				D21FD1511E793DC2006A0CAE /* EaseMessageReadManager+GoneAfterRead.m */,
-				D21FD1521E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.h */,
-				D21FD1531E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.m */,
 				D21FD1541E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.h */,
 				D21FD1551E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.m */,
 				D21FD1561E793DC2006A0CAE /* RedPacketChatViewController+GoneAfterRead.h */,
@@ -3178,7 +3173,6 @@
 				3049C18E1E5305DD00D3B159 /* RedpacketTakenMessageTipCell.m in Sources */,
 				D2FD8D671E5C39FD0097B20D /* MJRefreshStateHeader.m in Sources */,
 				3049C18F1E5305DD00D3B159 /* RedpacketView.m in Sources */,
-				D21FD1611E793DC2006A0CAE /* EaseMessageViewController+GoneAfterRead.m in Sources */,
 				D2FD8D611E5C39FD0097B20D /* MJRefreshAutoStateFooter.m in Sources */,
 				3049C1901E5305DD00D3B159 /* RedPacketUserConfig.m in Sources */,
 				90911126192EEBB8008A48AA /* AppDelegate.m in Sources */,
