@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11757"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="EMGroupReadControl">
+            <rect key="frame" x="0.0" y="0.0" width="75" height="44"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+            <subviews>
+                <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2000人已读" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXJ-Iz-Wd9">
+                    <rect key="frame" x="18.5" y="24" width="56.5" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="6qf-Vl-Cuu"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <imageView contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="hasRead.png" highlightedImage="hasRead.png" translatesAutoresizingMaskIntoConstraints="NO" id="lht-d2-6LZ">
+                    <rect key="frame" x="-1.5" y="24" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="20" id="GcD-C4-T9j"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="20" id="Owj-aL-RD6"/>
+                        <constraint firstAttribute="width" constant="20" id="nyW-0D-3nE"/>
+                    </constraints>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="IXJ-Iz-Wd9" firstAttribute="leading" secondItem="lht-d2-6LZ" secondAttribute="trailing" id="GF7-5r-QJb"/>
+                <constraint firstAttribute="bottom" secondItem="IXJ-Iz-Wd9" secondAttribute="bottom" id="WNI-lh-uSm"/>
+                <constraint firstAttribute="bottom" secondItem="lht-d2-6LZ" secondAttribute="bottom" id="d9L-Pu-akS"/>
+                <constraint firstAttribute="trailing" secondItem="IXJ-Iz-Wd9" secondAttribute="trailing" id="wAF-JN-djJ"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="countLabel" destination="IXJ-Iz-Wd9" id="5kK-Kj-INN"/>
+            </connections>
+        </view>
+    </objects>
+    <resources>
+        <image name="hasRead.png" width="16" height="16"/>
+    </resources>
+</document>
