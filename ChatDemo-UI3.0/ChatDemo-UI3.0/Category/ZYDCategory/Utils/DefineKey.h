@@ -28,3 +28,5 @@
 #define REVOCATION_DELETE @"Revocation_delete"
 #define REVOCATION_REFRESHCONVERSATIONS @"Revocation_refreshConversations"
 #define REVOCATION_UPDATE_UNREAD_COUNT @"Revocation_updateUnreadCount"
+
+#define GROUP_MEMBER_CHANGE_INSERT     @"group_member_change_insert"
