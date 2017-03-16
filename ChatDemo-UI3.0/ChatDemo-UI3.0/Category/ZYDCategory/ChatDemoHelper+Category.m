@@ -91,4 +91,92 @@
     [self ZYDDidUpdateConversationList:conversationAry];
 }
 
+// 接收撤回透传消息
+- (void)didReceiveCmdMessages:(NSArray *)aCmdMessages {
+    
+    for (EMMessage *cmdMessage in aCmdMessages) {
+        EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;
+        NSString *from = cmdMessage.from;
+        NSString *to = cmdMessage.to;
+        
+        if ([body.action isEqualToString:@"REVOKE_FLAG"]) {
+            //删除撤回的消息
+            NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
+            BOOL isSuccess = [self removeRevokeMessageWithChatter:cmdMessage.conversationId conversationType:(EMConversationType)cmdMessage.chatType messageId:revokeMessageId];
+            
+            if (isSuccess)  {
+                
+                
+                BOOL isChatting = NO;
+                
+                if (self.chatVC)  {
+                    
+                    isChatting = [cmdMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
+                    EMMessage *oldMessage = [self.chatVC.conversation loadMessageWithId:revokeMessageId error:nil];
+                    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"撤回了一条消息"] ];
+                    EMMessage *smessage = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
+                    smessage.timestamp = oldMessage.timestamp;
+                    smessage.localTime = oldMessage.localTime;
+                    if (self.chatVC.conversation.type == EMConversationTypeGroupChat){
+                        smessage.chatType = EMChatTypeGroupChat;
+                    } else {
+                        smessage.chatType = EMChatTypeChat;
+                    }
+                    [self.chatVC.conversation insertMessage:smessage error:nil];
+                    [self.chatVC.conversation deleteMessageWithId:revokeMessageId error:nil];
+                    EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:smessage];
+                    [self.chatVC.dataArray replaceObjectAtIndex:self.chatVC.menuIndexPath.row withObject:model];
+                    __block NSInteger index = -1;
+                    [self.chatVC.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                        if ([obj isKindOfClass:[EMMessage class]]) {
+                            EMMessage *_message = (EMMessage *)obj;
+                            if ([_message.messageId isEqualToString:revokeMessageId]) {
+                                index = idx;
+                                *stop = YES;
+                            }
+                        }
+                    }];
+                    if (index > -1) {
+                        [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:smessage];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.chatVC.tableView beginUpdates];
+                        //                        [self.chatVC.tableView reloadRowsAtIndexPaths:@[self.chatVC.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+                        [self.chatVC.tableView endUpdates];
+                        
+                    });
+                    [self.chatVC.tableView reloadData];
+                    
+                }
+                else if (self.chatVC == nil || !isChatting) {
+                    if (self.conversationListVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
+                        [self.conversationListVC refresh];
+                    }
+                    if (self.mainVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
+                        [self.mainVC setupUnreadMessageCount];
+                    }
+                    return;
+                }
+                
+            }  else {
+                NSLog(@"接收失败");
+            }
+            
+        }
+    }
+}
+//删除消息
+- (BOOL)removeRevokeMessageWithChatter:(NSString *)aChatter
+                      conversationType:(EMConversationType)type
+                             messageId:(NSString *)messageId{
+    
+    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aChatter type:type createIfNotExist:YES];
+    EMError *error = nil;
+    [conversation deleteMessageWithId:messageId error:&error];
+    return !error;
+}
+
+
 @end
