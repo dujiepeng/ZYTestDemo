@@ -329,7 +329,7 @@
 
 - (BOOL)messageViewController:(EaseMessageViewController *)viewController didSelectMessageModel:(id<IMessageModel>)messageModel
 {
-    BOOL flag = NO;
+    BOOL flag = [super messageViewController:viewController didSelectMessageModel:messageModel];
     if (!messageModel.isSender && [ChatDemoHelper isGoneAfterReadMessage:messageModel.message]) {
         [self markReadingMessage:messageModel];
         switch (messageModel.bodyType) {
