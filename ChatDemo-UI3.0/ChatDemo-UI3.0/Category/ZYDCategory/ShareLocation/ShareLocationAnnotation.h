@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#define LATITUDE @"Latitude"
-#define LONGITUDE @"Longitude"
 #define ISSTOP @"isStop"
 
 @interface ShareLocationAnnotation : NSObject <MKAnnotation>

@@ -53,13 +53,13 @@
     for (EMMessage *msg in aCmdMessages) {
         if (msg.body.type == EMMessageBodyTypeCmd) {
             EMCmdMessageBody *body = (EMCmdMessageBody *)msg.body;
-            if ([body.action isEqualToString:@"shareLocation"]) {
+            if ([body.action isEqualToString:SHARE_LOCATION_MESSAGE_FLAG]) {
                 NSMutableDictionary *dic = [NSMutableDictionary dictionary];
-                if (![msg.ext[ISSTOP] boolValue]) {
-                    dic[@"lan"] = msg.ext[LATITUDE];
-                    dic[@"lon"] = msg.ext[LONGITUDE];
+                if (![msg.ext[STOP_SHARE_LOCATION_FLAG] boolValue]) {
+                    dic[LATITUDE] = msg.ext[LATITUDE];
+                    dic[LONGITUDE] = msg.ext[LONGITUDE];
                 }else {
-                    dic[@"isStop"] = msg.ext[ISSTOP];
+                    dic[STOP_SHARE_LOCATION_FLAG] = msg.ext[STOP_SHARE_LOCATION_FLAG];
                 }
                 dic[@"username"] = msg.from;
                 [set addObject:dic];
@@ -76,7 +76,7 @@
     }
     
     if (set.count > 0) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"ShareLocations" object:set];
+        [[NSNotificationCenter defaultCenter] postNotificationName:SHARE_LOCATION_NOTI_KEY object:set];
     }
 }
 

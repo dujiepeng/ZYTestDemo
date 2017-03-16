@@ -8,6 +8,7 @@
 
 #import "EaseMessageCell+ShareLocation.h"
 #import "EaseMessageViewController+ShareLocation.h"
+#import "DefineKey.h"
 #import <objc/runtime.h>
 
 @implementation EaseMessageCell (ShareLocation)
@@ -30,7 +31,7 @@
     if (tapRecognizer.state == UIGestureRecognizerStateEnded) {
         if (self.model.message.body.type == EMMessageBodyTypeText) {
             if ([self.delegate respondsToSelector:@selector(shareLocationMessageHasPassed)]) {
-                if ([self.model.message.ext[@"shareLocation"] boolValue]) {
+                if ([self.model.message.ext[SHARE_LOCATION_MESSAGE_FLAG] boolValue]) {
                     [self.delegate performSelector:@selector(shareLocationMessageHasPassed) withObject:nil];
                     return;
                 }

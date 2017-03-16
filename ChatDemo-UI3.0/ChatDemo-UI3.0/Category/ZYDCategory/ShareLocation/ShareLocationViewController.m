@@ -10,6 +10,7 @@
 #import "ShareLocationHeadView.h"
 #import "ShareLocationAnnotation.h"
 #import "ChatViewController+ShareLocation.h"
+#import "DefineKey.h"
 #import <MapKit/MapKit.h>
 
 @interface ShareLocationViewController () <MKMapViewDelegate>
@@ -52,7 +53,7 @@
     for (id vc in navVC.viewControllers) {
         if ([vc isKindOfClass:[ChatViewController class]]) {
             ChatViewController *chatVC = vc;
-            [chatVC sendTextMessage:@"发起位置共享" withExt:@{@"shareLocation":@YES}];
+            [chatVC sendTextMessage:@"发起位置共享" withExt:@{SHARE_LOCATION_MESSAGE_FLAG:@YES}];
             break;
         }
     }
@@ -63,15 +64,15 @@
     for (id vc in navVC.viewControllers) {
         if ([vc isKindOfClass:[ChatViewController class]]) {
             ChatViewController *chatVC = vc;
-            [chatVC sendTextMessage:@"停止了位置共享" withExt:@{@"shareLocation":@NO}];
+            [chatVC sendTextMessage:@"停止了位置共享" withExt:@{SHARE_LOCATION_MESSAGE_FLAG:@NO}];
             break;
         }
     }
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:@"shareLocation"];
+        EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:SHARE_LOCATION_MESSAGE_FLAG];
         NSString *from = [[EMClient sharedClient] currentUsername];
-        NSDictionary *ext = @{@"isStop":@YES};
+        NSDictionary *ext = @{STOP_SHARE_LOCATION_FLAG:@YES};
         EMMessage *message = [[EMMessage alloc] initWithConversationID:self->_currentUsername
                                                                   from:from
                                                                     to:self->_currentUsername
@@ -99,7 +100,7 @@
 - (void)registerNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(didReceiveLocations:)
-                                                 name:@"ShareLocations"
+                                                 name:SHARE_LOCATION_NOTI_KEY
                                                object:nil];
 }
 
@@ -111,9 +112,9 @@
             NSArray *infoDicts = [noti.object allObjects];
             for (NSDictionary *dic in infoDicts) {
                 NSString *username = dic[@"username"];
-                double lan = [dic[@"lan"] doubleValue];
-                double lon = [dic[@"lon"] doubleValue];
-                BOOL isStop = [dic[@"isStop"] boolValue];
+                double lan = [dic[LATITUDE] doubleValue];
+                double lon = [dic[LONGITUDE] doubleValue];
+                BOOL isStop = [dic[STOP_SHARE_LOCATION_FLAG] boolValue];
                 if (username && [username isKindOfClass:[NSString class]]) {
                     for (NSObject *obj in self.mapView.annotations) {
                         if ([obj isKindOfClass:[ShareLocationAnnotation class]]) {
@@ -213,7 +214,8 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 {
     if([CLLocationManager locationServicesEnabled]){
         _locationManager = [[CLLocationManager alloc] init];
-        
+        _locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+         _locationManager.distanceFilter = 10;
         if ([[UIDevice currentDevice].systemVersion floatValue] >= 8.0) {
             [_locationManager requestWhenInUseAuthorization];
         }
@@ -221,7 +223,7 @@ didChangeDragState:(MKAnnotationViewDragState)newState
 }
 
 - (void)sendShareLocation {
-    EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:@"shareLocation"];
+    EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:SHARE_LOCATION_MESSAGE_FLAG];
     NSString *from = [[EMClient sharedClient] currentUsername];
     NSDictionary *ext = @{LATITUDE:[NSNumber numberWithDouble:_latitude],LONGITUDE:[NSNumber numberWithDouble:_longitude]};
     EMMessage *message = [[EMMessage alloc] initWithConversationID:_currentUsername
