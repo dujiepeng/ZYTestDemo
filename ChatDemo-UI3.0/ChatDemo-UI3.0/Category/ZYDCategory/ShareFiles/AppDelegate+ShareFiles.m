@@ -9,29 +9,27 @@
 #import "AppDelegate+ShareFiles.h"
 #import "ShareFilesViewController.h"
 #import "EMNavigationController.h"
-#import "EaseMessageModel.h"
+#import "LoginViewController.h"
+#import "RedPacketChatViewController.h"
+
 
 @implementation AppDelegate (ShareFiles)
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url options:(nonnull NSDictionary<NSString *,id> *)options
 {
- 
-    NSLog(@"url -- %@",url);
-
     if(self.window.rootViewController) {
         id vc = self.window.rootViewController;
         if ([vc isKindOfClass:[EMNavigationController class]]) {
             EMNavigationController *emNav = (EMNavigationController *)vc;
-            if ([emNav.topViewController isKindOfClass:[MainViewController class]]) {
-                MainViewController *mainVC = (MainViewController *)emNav.topViewController;
+            if (![emNav.topViewController isKindOfClass:[LoginViewController class]]) {
+                if (emNav.viewControllers.count > 0) {
+                    [emNav popToRootViewControllerAnimated:NO];
+                }
                 ShareFilesViewController *shareFilesVC = [[ShareFilesViewController alloc] initWithUrl:url];
-                [mainVC.navigationController pushViewController:shareFilesVC animated:NO];
+                [emNav pushViewController:shareFilesVC animated:YES];
                 return YES;
             }
         }
-        
     }
-
-    
     return YES;
 }
 @end
