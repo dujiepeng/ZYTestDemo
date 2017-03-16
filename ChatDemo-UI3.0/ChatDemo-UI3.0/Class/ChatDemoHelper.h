@@ -39,4 +39,6 @@
 
 - (void)asyncConversationFromDB;
 
+- (ChatViewController*)_getCurrentChatView;
+
 @end
