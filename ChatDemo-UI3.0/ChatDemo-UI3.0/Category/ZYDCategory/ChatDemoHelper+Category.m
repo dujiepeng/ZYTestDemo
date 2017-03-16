@@ -93,63 +93,77 @@
 
 // 接收撤回透传消息
 - (void)didReceiveCmdMessages:(NSArray *)aCmdMessages {
+    BOOL isRefreshCons = YES;
     
     for (EMMessage *cmdMessage in aCmdMessages) {
         EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;
         NSString *from = cmdMessage.from;
-        NSString *to = cmdMessage.to;
         
         if ([body.action isEqualToString:@"REVOKE_FLAG"]) {
             //删除撤回的消息
             NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
-            BOOL isSuccess = [self removeRevokeMessageWithChatter:cmdMessage.conversationId conversationType:(EMConversationType)cmdMessage.chatType messageId:revokeMessageId];
             
-            if (isSuccess)  {
+            //构建插入的消息
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cmdMessage.conversationId
+                                                                                           type:(EMConversationType)cmdMessage.chatType
+                                                                               createIfNotExist:YES];
+            
+            EMMessage *oldMessage = [conversation loadMessageWithId:revokeMessageId error:nil];
+            EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",cmdMessage.from] ];
+            EMMessage *smessage = [[EMMessage alloc] initWithConversationID:oldMessage.conversationId
+                                                                       from:from
+                                                                         to:oldMessage.conversationId
+                                                                       body:body ext:nil];
+            smessage.timestamp = oldMessage.timestamp;
+            smessage.localTime = oldMessage.localTime;
+            if (self.chatVC.conversation.type == EMConversationTypeGroupChat){
+                smessage.chatType = EMChatTypeGroupChat;
+            } else {
+                smessage.chatType = EMChatTypeChat;
+            }
+            //判断是否删除成功
+            BOOL isSuccess = [self removeRevokeMessageWithChatter:cmdMessage.conversationId
+                                                 conversationType:(EMConversationType)cmdMessage.chatType
+                                                        messageId:revokeMessageId];
+            
+            if (isSuccess)  { //更新UI,插入一条撤回消息
                 
-                
+                if (self.chatVC == nil) {
+                    self.chatVC = [self _getCurrentChatView];//todo
+                }
                 BOOL isChatting = NO;
                 
                 if (self.chatVC)  {
                     
                     isChatting = [cmdMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
-                    EMMessage *oldMessage = [self.chatVC.conversation loadMessageWithId:revokeMessageId error:nil];
-                    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"撤回了一条消息"] ];
-                    EMMessage *smessage = [[EMMessage alloc] initWithConversationID:to from:from to:to body:body ext:nil];
-                    smessage.timestamp = oldMessage.timestamp;
-                    smessage.localTime = oldMessage.localTime;
-                    if (self.chatVC.conversation.type == EMConversationTypeGroupChat){
-                        smessage.chatType = EMChatTypeGroupChat;
-                    } else {
-                        smessage.chatType = EMChatTypeChat;
-                    }
+                    
+                    
                     [self.chatVC.conversation insertMessage:smessage error:nil];
                     [self.chatVC.conversation deleteMessageWithId:revokeMessageId error:nil];
-                    EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:smessage];
-                    [self.chatVC.dataArray replaceObjectAtIndex:self.chatVC.menuIndexPath.row withObject:model];
-                    __block NSInteger index = -1;
-                    [self.chatVC.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                        if ([obj isKindOfClass:[EMMessage class]]) {
-                            EMMessage *_message = (EMMessage *)obj;
-                            if ([_message.messageId isEqualToString:revokeMessageId]) {
-                                index = idx;
-                                *stop = YES;
-                            }
-                        }
-                    }];
-                    if (index > -1) {
-                        [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:smessage];
-                    }
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self.chatVC.tableView beginUpdates];
-                        //                        [self.chatVC.tableView reloadRowsAtIndexPaths:@[self.chatVC.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-                        [self.chatVC.tableView endUpdates];
-                        
-                    });
-                    [self.chatVC.tableView reloadData];
                     
+                    NSInteger index = 0;
+                    for (int i = 0; i <= self.chatVC.messsagesSource.count; i++) {
+                        index = i;
+                        EMMessage *msg = self.chatVC.messsagesSource[i];
+                        if ([msg.messageId isEqualToString:revokeMessageId]) {
+                            break;
+                        }
+                    }
+                    
+                    [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:smessage];
+                    
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        self.chatVC.messageTimeIntervalTag = 0;
+                        NSArray *formattedMessages = (NSArray *)[self.chatVC performSelector:@selector(formatMessages:)
+                                                                                  withObject:self.chatVC.messsagesSource];
+                        [self.chatVC.dataArray removeAllObjects];
+                        [self.chatVC.dataArray addObjectsFromArray:formattedMessages];
+                        [self.chatVC.tableView reloadData];
+                    });
                 }
                 else if (self.chatVC == nil || !isChatting) {
                     if (self.conversationListVC) {
+                        
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
                         [self.conversationListVC refresh];
                     }
@@ -159,7 +173,17 @@
                     }
                     return;
                 }
-                
+                if (isChatting) {
+                    isRefreshCons = NO;
+                }
+                if (isRefreshCons) {
+                    if (self.conversationListVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
+                    }
+                    if (self.contactViewVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
+                    }
+                }
             }  else {
                 NSLog(@"接收失败");
             }
