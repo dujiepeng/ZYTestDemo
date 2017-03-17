@@ -101,30 +101,20 @@
         
         if ([body.action isEqualToString:@"REVOKE_FLAG"]) {
             //删除撤回的消息
-            NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
-            
-            //构建插入的消息
             EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cmdMessage.conversationId
                                                                                            type:(EMConversationType)cmdMessage.chatType
                                                                                createIfNotExist:YES];
+            NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
+            //构建插入的消息
+            EMMessage *newMessage = [self buildInsertMessageWithConversation:conversation
+                                                                  CmdMessage:cmdMessage
+                                                                   messageId:revokeMessageId];
             
-            EMMessage *oldMessage = [conversation loadMessageWithId:revokeMessageId error:nil];
-            EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",cmdMessage.from] ];
-            EMMessage *smessage = [[EMMessage alloc] initWithConversationID:oldMessage.conversationId
-                                                                       from:from
-                                                                         to:oldMessage.conversationId
-                                                                       body:body ext:nil];
-            smessage.timestamp = oldMessage.timestamp;
-            smessage.localTime = oldMessage.localTime;
-            if (self.chatVC.conversation.type == EMConversationTypeGroupChat){
-                smessage.chatType = EMChatTypeGroupChat;
-            } else {
-                smessage.chatType = EMChatTypeChat;
-            }
+            
+            
             //判断是否删除成功
-            BOOL isSuccess = [self removeRevokeMessageWithChatter:cmdMessage.conversationId
-                                                 conversationType:(EMConversationType)cmdMessage.chatType
-                                                        messageId:revokeMessageId];
+            BOOL isSuccess = [self removeRevokeMessageWithConversation:conversation
+                                                             messageId:revokeMessageId];
             
             if (isSuccess)  { //更新UI,插入一条撤回消息
                 
@@ -137,8 +127,7 @@
                     
                     isChatting = [cmdMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
                     
-                    
-                    [self.chatVC.conversation insertMessage:smessage error:nil];
+                    [self.chatVC.conversation insertMessage:newMessage error:nil];
                     [self.chatVC.conversation deleteMessageWithId:revokeMessageId error:nil];
                     
                     NSInteger index = 0;
@@ -150,7 +139,7 @@
                         }
                     }
                     
-                    [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:smessage];
+                    [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:newMessage];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.chatVC.messageTimeIntervalTag = 0;
@@ -159,6 +148,9 @@
                         [self.chatVC.dataArray removeAllObjects];
                         [self.chatVC.dataArray addObjectsFromArray:formattedMessages];
                         [self.chatVC.tableView reloadData];
+                        [[EMClient sharedClient].chatManager updateMessage:newMessage completion:nil];
+                        
+                        
                     });
                 }
                 else if (self.chatVC == nil || !isChatting) {
@@ -192,15 +184,33 @@
     }
 }
 //删除消息
-- (BOOL)removeRevokeMessageWithChatter:(NSString *)aChatter
-                      conversationType:(EMConversationType)type
-                             messageId:(NSString *)messageId{
-    
-    EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:aChatter type:type createIfNotExist:YES];
+- (BOOL)removeRevokeMessageWithConversation:(EMConversation *)conversation
+                                  messageId:(NSString *)messageId{
     EMError *error = nil;
     [conversation deleteMessageWithId:messageId error:&error];
     return !error;
 }
 
+//插入有一条撤回消息
+- (EMMessage *)buildInsertMessageWithConversation:(EMConversation *)conversation
+                                       CmdMessage:(EMMessage *)cmdMessage
+                                        messageId:(NSString *)revokeMessageId{
+    
+    EMMessage *oldMessage = [conversation loadMessageWithId:revokeMessageId error:nil];
+    EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",cmdMessage.from] ];
+    EMMessage *smessage = [[EMMessage alloc] initWithConversationID:oldMessage.conversationId
+                                                               from:cmdMessage.from
+                                                                 to:oldMessage.conversationId
+                                                               body:body ext:nil];
+    smessage.timestamp = oldMessage.timestamp;
+    smessage.localTime = oldMessage.localTime;
+    if (conversation.type == EMConversationTypeGroupChat){
+        smessage.chatType = EMChatTypeGroupChat;
+    } else {
+        smessage.chatType = EMChatTypeChat;
+    }
+    [conversation insertMessage:smessage error:nil];
+    return smessage;
+}
 
 @end
