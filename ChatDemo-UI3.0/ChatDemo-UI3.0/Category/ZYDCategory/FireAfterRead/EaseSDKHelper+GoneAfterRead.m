@@ -8,7 +8,7 @@
 
 #import "EaseSDKHelper+GoneAfterRead.h"
 #import <objc/runtime.h>
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "EaseFireHelper.h"
 
 @implementation EaseSDKHelper (GoneAfterRead)
 
@@ -39,9 +39,9 @@
 + (EMMessage *)FSendTextMessage:(NSString *)text to:(NSString *)to messageType:(EMChatType)messageType messageExt:(NSDictionary *)messageExt
 {
     EMMessage *msg = [self FSendTextMessage:text to:to messageType:messageType messageExt:messageExt];
-    if ([[ChatDemoHelper shareHelper] isGoneAfterReadMode]) {
+    if ([[EaseFireHelper sharedHelper] isGoneAfterReadMode]) {
         
-      msg.ext = [ChatDemoHelper structureGoneAfterReadMsgExt:msg.ext];
+      msg.ext = [EaseFireHelper structureGoneAfterReadMsgExt:msg.ext];
     }
     return msg;
 }
@@ -49,9 +49,9 @@
 + (EMMessage *)FSendImageMessageWithImageData:(NSData *)imageData to:(NSString *)to messageType:(EMChatType)messageType messageExt:(NSDictionary *)messageExt
 {
     EMMessage *msg = [self FSendImageMessageWithImageData:imageData to:to messageType:messageType messageExt:messageExt];
-    if ([[ChatDemoHelper shareHelper] isGoneAfterReadMode]) {
+    if ([[EaseFireHelper sharedHelper] isGoneAfterReadMode]) {
         
-        msg.ext = [ChatDemoHelper structureGoneAfterReadMsgExt:msg.ext];
+        msg.ext = [EaseFireHelper structureGoneAfterReadMsgExt:msg.ext];
     }
     return msg;
 }
@@ -59,9 +59,9 @@
 + (EMMessage *)FSendLocationMessageWithLatitude:(double)latitude longitude:(double)longitude address:(NSString *)address to:(NSString *)to messageType:(EMChatType)messageType messageExt:(NSDictionary *)messageExt
 {
     EMMessage *msg = [self FSendLocationMessageWithLatitude:latitude longitude:longitude address:address to:to messageType:messageType messageExt:messageExt];
-    if ([[ChatDemoHelper shareHelper] isGoneAfterReadMode]) {
+    if ([[EaseFireHelper sharedHelper] isGoneAfterReadMode]) {
         
-        msg.ext = [ChatDemoHelper structureGoneAfterReadMsgExt:msg.ext];
+        msg.ext = [EaseFireHelper structureGoneAfterReadMsgExt:msg.ext];
     }
     return msg;
 }
@@ -69,9 +69,9 @@
 + (EMMessage *)FSendVoiceMessageWithLocalPath:(NSString *)localPath duration:(NSInteger)duration to:(NSString *)to messageType:(EMChatType)messageType messageExt:(NSDictionary *)messageExt
 {
     EMMessage *msg = [self FSendVoiceMessageWithLocalPath:localPath duration:duration to:to messageType:messageType messageExt:messageExt];
-    if ([[ChatDemoHelper shareHelper] isGoneAfterReadMode]) {
+    if ([[EaseFireHelper sharedHelper] isGoneAfterReadMode]) {
         
-        msg.ext = [ChatDemoHelper structureGoneAfterReadMsgExt:msg.ext];
+        msg.ext = [EaseFireHelper structureGoneAfterReadMsgExt:msg.ext];
     }
     return msg;
 }
@@ -79,9 +79,9 @@
 + (EMMessage *)FSendVideoMessageWithURL:(NSURL *)url to:(NSString *)to messageType:(EMChatType)messageType messageExt:(NSDictionary *)messageExt
 {
     EMMessage *msg = [self FSendVideoMessageWithURL:url to:to messageType:messageType messageExt:messageExt];
-    if ([[ChatDemoHelper shareHelper] isGoneAfterReadMode]) {
+    if ([[EaseFireHelper sharedHelper] isGoneAfterReadMode]) {
         
-        msg.ext = [ChatDemoHelper structureGoneAfterReadMsgExt:msg.ext];
+        msg.ext = [EaseFireHelper structureGoneAfterReadMsgExt:msg.ext];
     }
     return msg;
 }

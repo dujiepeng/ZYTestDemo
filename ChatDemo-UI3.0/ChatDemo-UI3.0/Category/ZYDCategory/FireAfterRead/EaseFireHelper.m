@@ -1,13 +1,14 @@
 //
-//  ChatDemoHelper+GoneAfterRead.m
+//  EaseFireHelper.m
 //  ChatDemo-UI3.0
 //
-//  Created by EaseMob on 2017/3/14.
+//  Created by EaseMob on 2017/3/17.
 //  Copyright © 2017年 EaseMob. All rights reserved.
 //
 
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "EaseFireHelper.h"
 #import <objc/runtime.h>
+
 #define kGoneAfterReadKey @"goneAfterReadKey"
 /** @brief NSUserDefaults中保存当前已阅读但未发送ack回执的阅后即焚消息信息 */
 #define NEED_REMOVE_MESSAGE_DIC            @"em_needRemoveMessages"
@@ -17,28 +18,33 @@
 #define UserDefaultKey(username) [[KEM_REMOVEAFTERREAD_PREFIX stringByAppendingString:@"_"] stringByAppendingString:username]
 /** @brief NSUserDefaults中保存当前阅读的阅后即焚消息信息 */
 #define NEED_REMOVE_CURRENT_MESSAGE        @"em_needRemoveCurrnetMessage"
-
-@interface ChatDemoHelper()
-
+#define kReconnectAction @"RemoveUnFiredMsg"
+#define kReconnectMsgIdKey @"REMOVE_UNFIRED_MSG"
+@interface EaseFireHelper()<EMClientDelegate, EMChatManagerDelegate>
 @property (nonatomic, strong) NSDictionary *infoDic;
 @property (nonatomic, strong) dispatch_queue_t queue;
-
-
 @end
 
-static const char *goneModeKey = "goneModeKey";
-static char infoDicKey;
-static char queueKey;
-@implementation ChatDemoHelper (GoneAfterRead)
-
-- (BOOL)isGoneAfterReadMode
+static EaseFireHelper *helper = nil;
+@implementation EaseFireHelper
++ (instancetype)sharedHelper
 {
-    return [objc_getAssociatedObject(self, goneModeKey) boolValue];
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        helper = [[EaseFireHelper alloc] init];
+    });
+    return helper;
 }
 
-- (void)setIsGoneAfterReadMode:(BOOL)isGoneAfterReadMode
+- (instancetype)init
 {
-    objc_setAssociatedObject(self, goneModeKey,  @(isGoneAfterReadMode), OBJC_ASSOCIATION_ASSIGN);
+    self = [super init];
+    if (self) {
+        [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+        [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    }
+    return self;
 }
 
 - (NSDictionary *)needRemoveDic
@@ -46,39 +52,9 @@ static char queueKey;
     return [self.infoDic objectForKey:NEED_REMOVE_MESSAGE_DIC];
 }
 
-- (NSDictionary *)infoDic
-{
-    return objc_getAssociatedObject(self, &infoDicKey);
-}
+#pragma mark - 阅后即焚ext
 
-- (void)setInfoDic:(NSDictionary *)infoDic
-{
-    objc_setAssociatedObject(self, &infoDicKey, infoDic, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (dispatch_queue_t)queue
-{
-    return objc_getAssociatedObject(self, &queueKey);
-}
-
-- (void)setQueue:(dispatch_queue_t)queue
-{
-    objc_setAssociatedObject(self, &queueKey, queue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (BOOL)hasGone
-{
-    return [objc_getAssociatedObject(self, @selector(hasGone)) boolValue];
-}
-
-- (void)setHasGone:(BOOL)hasGone
-{
-    objc_setAssociatedObject(self, @selector(hasGone), @(hasGone), OBJC_ASSOCIATION_ASSIGN);
-}
-
-/**
- 构造阅后即焚ext
- */
+// 构造消息的ext
 + (NSDictionary *)structureGoneAfterReadMsgExt:(NSDictionary *)ext
 {
     NSMutableDictionary *tempExt = [ext mutableCopy];
@@ -89,40 +65,13 @@ static char queueKey;
     [tempExt setObject:@YES forKey:kGoneAfterReadKey];
     return tempExt;
 }
-
+// 判断是否为阅后即焚消息
 + (BOOL)isGoneAfterReadMessage:(EMMessage *)message
 {
     return [[message.ext objectForKey:kGoneAfterReadKey] boolValue];
 }
 
-- (void)updateCurrentMsg:(EMMessage *)aMessage{
-    if (!aMessage)
-    {
-        return;
-    }
-    NSMutableDictionary *dic = [self.infoDic mutableCopy];
-    if (!dic) {
-        dic = [[NSMutableDictionary alloc] init];
-    }
-    dic[NEED_REMOVE_CURRENT_MESSAGE] = @[aMessage.conversationId,aMessage.messageId];
-    [self updateInfoDic:dic];
-}
-
-- (void)updateInfoDic:(NSDictionary *)dic{
-    @synchronized(self) {
-        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        if ([[EMClient sharedClient] currentUsername].length > 0) {
-            
-            if (dic) {
-                [userDefaults setObject:dic forKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
-            }else {
-                [userDefaults removeObjectForKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
-            }
-            [userDefaults synchronize];
-        }
-        self.infoDic = dic;
-    }
-}
+#pragma mark - 处理阅后即焚消息
 
 - (void)handleGoneAfterReadMessage:(EMMessage *)message
 {
@@ -163,6 +112,86 @@ static char queueKey;
             }
         }
     });
+}
+
+- (void)messagesDidRead:(NSArray *)aMessages
+{
+    for (EMMessage *msg in aMessages) {
+        
+        if ([EaseFireHelper isGoneAfterReadMessage:msg]) {
+            
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:msg.conversationId type:EMConversationTypeChat createIfNotExist:YES];
+            [conversation deleteMessageWithId:msg.messageId error:nil];
+            if (!conversation.latestMessage) {
+                
+                [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:nil];
+            }
+            dispatch_async(dispatch_get_main_queue(), ^{
+                
+                [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterReadUI" object:msg];
+            });
+            
+        }
+    }
+}
+
+- (void)connectionStateDidChange:(EMConnectionState)aConnectionState
+{
+    if (aConnectionState == EMConnectionConnected && [[EMClient sharedClient] isLoggedIn]) {
+        NSLog(@"------%s-----",__func__);
+        [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
+        [self sendAllNeedRemoveMessage];
+    }
+}
+
+- (void)autoLoginDidCompleteWithError:(EMError *)aError
+{
+    if (!aError) {
+        
+        if ([[EMClient sharedClient] isLoggedIn]) {
+            
+            NSLog(@"------%s-----",__func__);
+            [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
+            [self sendAllNeedRemoveMessage];
+        }
+    }
+}
+
+
+
+
+
+#pragma mark - Other
+
+- (void)updateCurrentMsg:(EMMessage *)aMessage
+{
+    if (!aMessage)
+    {
+        return;
+    }
+    NSMutableDictionary *dic = [self.infoDic mutableCopy];
+    if (!dic) {
+        dic = [[NSMutableDictionary alloc] init];
+    }
+    dic[NEED_REMOVE_CURRENT_MESSAGE] = @[aMessage.conversationId,aMessage.messageId];
+    [self updateInfoDic:dic];
+}
+
+- (void)updateInfoDic:(NSDictionary *)dic
+{
+    @synchronized(self) {
+        NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+        if ([[EMClient sharedClient] currentUsername].length > 0) {
+            
+            if (dic) {
+                [userDefaults setObject:dic forKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
+            }else {
+                [userDefaults removeObjectForKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
+            }
+            [userDefaults synchronize];
+        }
+        self.infoDic = dic;
+    }
 }
 
 - (void)addMessageToNeedRemoveDic:(NSArray *)messageInfo
@@ -234,12 +263,26 @@ static char queueKey;
                 for (NSString *messageId in weakSelf.needRemoveDic[chatter]) {
                     
                     EMMessage *msg = [conversation loadMessageWithId:messageId error:nil];
-                    [[EMClient sharedClient].chatManager sendMessageReadAck:msg completion:nil];
-                    [conversation deleteMessageWithId:msg.messageId error:nil];
+                    if (!msg) {
+                        
+                        EMCmdMessageBody *cmd = [[EMCmdMessageBody alloc] initWithAction:@"RemoveUnFiredMsg"];
+                        EMMessage *msg = [[EMMessage alloc] initWithConversationID:chatter from:[[EMClient sharedClient] currentUsername] to:chatter body:cmd ext:@{@"REMOVE_UNFIRED_MSG":messageId}];
+                        [[EMClient sharedClient].chatManager sendMessage:msg progress:nil completion:nil];
+                    } else {
+                        
+                        [[EMClient sharedClient].chatManager sendMessageReadAck:msg completion:nil];
+                        [conversation deleteMessageWithId:msg.messageId error:nil];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterRead" object:msg];
+                    });
                 }
                 if (!conversation.latestMessage)
                 {
                     [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:nil];
+                    [weakSelf.conversationListVC tableViewDidTriggerHeaderRefresh];
+
                 }
             }
             [weakSelf clearNeedRemoveDic];
@@ -257,50 +300,29 @@ static char queueKey;
     [self updateInfoDic:dic];
 }
 
-#pragma mark - EMClientDelegate
-
-- (void)messagesDidRead:(NSArray *)aMessages
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages
 {
-    for (EMMessage *msg in aMessages) {
+    for (EMMessage *msg in aCmdMessages) {
         
-        if ([ChatDemoHelper isGoneAfterReadMessage:msg]) {
+        EMCmdMessageBody *body = (EMCmdMessageBody *)msg.body;
+        if (![body.action isEqualToString:kReconnectAction]) {
+            continue;
+        }
+        NSString *msgId = msg.ext[kReconnectMsgIdKey];
+        if (msgId.length > 0) {
             
             EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:msg.conversationId type:EMConversationTypeChat createIfNotExist:YES];
-            [conversation deleteMessageWithId:msg.messageId error:nil];
+            EMMessage *message = [conversation loadMessageWithId:msgId error:nil];
+            [conversation deleteMessageWithId:msgId error:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterReadUI" object:message];
             if (!conversation.latestMessage) {
                 
-                [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:nil];
+                [self.conversationListVC tableViewDidTriggerHeaderRefresh];
             }
-            dispatch_async(dispatch_get_main_queue(), ^{
-                
-                [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterReadUI" object:msg];
-            });
             
         }
-    }
-}
-
-- (void)connectionStateDidChange:(EMConnectionState)aConnectionState
-{
-    if (aConnectionState == EMConnectionConnected && [[EMClient sharedClient] isLoggedIn]) {
-        NSLog(@"------%s-----",__func__);
-        [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
-        [self sendAllNeedRemoveMessage];
-    }
-}
-
-- (void)autoLoginDidCompleteWithError:(EMError *)aError
-{
-    if (!aError) {
         
-        if ([[EMClient sharedClient] isLoggedIn]) {
-            
-            NSLog(@"------%s-----",__func__);
-            [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
-            [self sendAllNeedRemoveMessage];
-        }
     }
 }
-
 
 @end

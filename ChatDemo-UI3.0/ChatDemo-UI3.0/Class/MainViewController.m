@@ -21,6 +21,7 @@
 #import "ChatDemoHelper.h"
 #import "RedPacketChatViewController.h"
 #import <UserNotifications/UserNotifications.h>
+#import "EaseFireHelper.h"
 
 //两次提示的默认间隔
 static const CGFloat kDefaultPlaySoundInterval = 3.0;
@@ -86,6 +87,7 @@ static NSString *kGroupName = @"GroupName";
     
     [ChatDemoHelper shareHelper].contactViewVC = _contactsVC;
     [ChatDemoHelper shareHelper].conversationListVC = _chatListVC;
+    [EaseFireHelper sharedHelper].conversationListVC = _chatListVC;
 }
 
 - (void)didReceiveMemoryWarning

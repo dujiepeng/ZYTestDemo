@@ -8,16 +8,13 @@
 
 #import "RemoveAfterReadCell.h"
 #import "EaseBubbleView+Gif.h"
-//#import "EMGifImage.h"
 #import "UIImageView+HeadImage.h"
-#import "ChatDemoHelper+GoneAfterRead.h"
-
-//#import "EaseMob.h"
+#import "EaseFireHelper.h"
 #import <Hyphenate/Hyphenate.h>
 
 @interface RemoveAfterReadCell()
 
-@property (nonatomic, strong) UIImageView *frontImageView;//上面遮罩
+
 @property (nonatomic, strong) UILabel *countLabel;
 @property (nonatomic, assign) int currentCount;
 
@@ -139,12 +136,14 @@
             
             weakSelf.countLabel.text = [NSString stringWithFormat:@"%d",currentIndex];
         });
-        if (currentIndex == 0 && ![[ChatDemoHelper shareHelper] hasGone]) {
+        if ([[EaseFireHelper sharedHelper] hasGone]) {
+            dispatch_source_cancel(fireTimer);
+        }
+        if (currentIndex == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.countLabel.text = @"";
-                [[ChatDemoHelper shareHelper] handleGoneAfterReadMessage:model.message];
+                [[EaseFireHelper sharedHelper] handleGoneAfterReadMessage:model.message];
             });
-            
             dispatch_source_cancel(fireTimer);
         }
     });

@@ -8,7 +8,7 @@
 
 #import "ConversationListController+GoneAfterRead.h"
 #import <objc/runtime.h>
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "EaseFireHelper.h"
 @implementation ConversationListController (GoneAfterRead)
 
 + (void)load
@@ -41,7 +41,7 @@
                  latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     EMMessage *latestMessage = conversationModel.conversation.latestMessage;
-    if (latestMessage.ext && [ChatDemoHelper isGoneAfterReadMessage:latestMessage] && (latestMessage.direction == EMMessageDirectionReceive)) {
+    if (latestMessage.ext && [EaseFireHelper isGoneAfterReadMessage:latestMessage] && (latestMessage.direction == EMMessageDirectionReceive)) {
         
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:@"[阅后即焚消息]"];
         return attr;
