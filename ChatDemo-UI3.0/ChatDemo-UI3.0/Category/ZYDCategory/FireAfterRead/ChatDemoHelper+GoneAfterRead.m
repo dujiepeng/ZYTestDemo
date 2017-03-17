@@ -65,6 +65,17 @@ static char queueKey;
 {
     objc_setAssociatedObject(self, &queueKey, queue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
+
+- (BOOL)hasGone
+{
+    return [objc_getAssociatedObject(self, @selector(hasGone)) boolValue];
+}
+
+- (void)setHasGone:(BOOL)hasGone
+{
+    objc_setAssociatedObject(self, @selector(hasGone), @(hasGone), OBJC_ASSOCIATION_ASSIGN);
+}
+
 /**
  构造阅后即焚ext
  */
@@ -100,12 +111,15 @@ static char queueKey;
 - (void)updateInfoDic:(NSDictionary *)dic{
     @synchronized(self) {
         NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-        if (dic) {
-            [userDefaults setObject:dic forKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
-        }else {
-            [userDefaults removeObjectForKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
+        if ([[EMClient sharedClient] currentUsername].length > 0) {
+            
+            if (dic) {
+                [userDefaults setObject:dic forKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
+            }else {
+                [userDefaults removeObjectForKey:UserDefaultKey([[EMClient sharedClient] currentUsername])];
+            }
+            [userDefaults synchronize];
         }
-        [userDefaults synchronize];
         self.infoDic = dic;
     }
 }
@@ -134,6 +148,13 @@ static char queueKey;
                 } else {
                     
                     [self addMessageToNeedRemoveDic:@[message.conversationId, message.messageId]];
+                }
+                if (!conversation.latestMessage) {
+                    
+                    [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:^(NSString *aConversationId, EMError *aError) {
+                        
+                        [self.conversationListVC tableViewDidTriggerHeaderRefresh];
+                    }];
                 }
                 dispatch_async(dispatch_get_main_queue(), ^{
                     
@@ -195,7 +216,7 @@ static char queueKey;
             [weakSelf addMessageToNeedRemoveDic:@[aMessage.conversationId,aMessage.messageId]];
         }
     });
-
+    
 }
 
 /**
@@ -261,8 +282,8 @@ static char queueKey;
 
 - (void)connectionStateDidChange:(EMConnectionState)aConnectionState
 {
-    if (aConnectionState == EMConnectionConnected) {
-        
+    if (aConnectionState == EMConnectionConnected && [[EMClient sharedClient] isLoggedIn]) {
+        NSLog(@"------%s-----",__func__);
         [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
         [self sendAllNeedRemoveMessage];
     }
@@ -272,9 +293,14 @@ static char queueKey;
 {
     if (!aError) {
         
-        [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
-        [self sendAllNeedRemoveMessage];
+        if ([[EMClient sharedClient] isLoggedIn]) {
+            
+            NSLog(@"------%s-----",__func__);
+            [self addMessageToNeedRemoveDic:self.infoDic[NEED_REMOVE_CURRENT_MESSAGE]];
+            [self sendAllNeedRemoveMessage];
+        }
     }
 }
+
 
 @end

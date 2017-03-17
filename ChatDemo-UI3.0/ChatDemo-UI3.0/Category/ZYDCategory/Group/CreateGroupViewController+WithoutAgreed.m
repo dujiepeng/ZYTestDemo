@@ -61,8 +61,6 @@ static const char *withoutAgreedKey = "withoutAgreedKey";
 
 - (BOOL)myViewController:(EMChooseViewController *)viewController didFinishSelectedSources:(NSArray *)selectedSources
 {
-    
-    
     NSInteger maxUsersCount = 200;
     if ([selectedSources count] > (maxUsersCount - 1)) {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"group.maxUserCount", nil) message:nil delegate:nil cancelButtonTitle:NSLocalizedString(@"ok", @"OK") otherButtonTitles:nil, nil];
@@ -82,7 +80,7 @@ static const char *withoutAgreedKey = "withoutAgreedKey";
     setting.maxUsersCount = maxUsersCount;
     id objc = [self valueForKey:@"isMemberOn"];
     NSLog(@"objc -- %@",objc);
-    if ([self valueForKey:@"isPublic"]) {
+    if ([[self valueForKey:@"isPublic"] boolValue]) {
         if([self valueForKey:@"isMemberOn"])
         {
             setting.style = EMGroupStylePublicOpenJoin;
@@ -92,7 +90,7 @@ static const char *withoutAgreedKey = "withoutAgreedKey";
         }
     }
     else{
-        if([self valueForKey:@"isMemberOn"])
+        if([[self valueForKey:@"isMemberOn"] boolValue])
         {
             setting.style = EMGroupStylePrivateMemberCanInvite;
         }

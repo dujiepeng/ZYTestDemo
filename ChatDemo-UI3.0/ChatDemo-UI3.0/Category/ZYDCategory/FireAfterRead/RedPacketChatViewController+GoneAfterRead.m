@@ -14,12 +14,18 @@
 #import "UIImage+EMGIF.h"
 #import "EaseLocationViewController+GoneAfterRead.h"
 
+
+#define kHasReadMsgs @"hasReadMsgs"
 @interface RedPacketChatViewController()<EaseMessageReadManagerDelegate, EaseLocationViewControllerDelegate>
 
 @property (nonatomic, strong) id<IMessageModel> currentModel;
 @property (nonatomic) BOOL isPlayingAudio;
-@property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, strong) NSRunLoop *runloop;
+@property (nonatomic, strong) dispatch_source_t fireTimer;
+
+@property (nonatomic, strong) id<IMessageModel> tappedModel;
+
+@property (nonatomic, strong) NSMutableArray *needRemoveMessages;
+
 @end
 
 @implementation RedPacketChatViewController (GoneAfterRead)
@@ -35,6 +41,16 @@
     objc_setAssociatedObject(self, @selector(currentModel), currentModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
+- (id<IMessageModel>)tappedModel
+{
+    return objc_getAssociatedObject(self, @selector(tappedModel));
+}
+
+- (void)setTappedModel:(id<IMessageModel>)tappedModel
+{
+    objc_setAssociatedObject(self, @selector(tappedModel), tappedModel, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
 - (BOOL)isPlayingAudio
 {
     return [objc_getAssociatedObject(self, @selector(isPlayingAudio)) boolValue];
@@ -45,14 +61,14 @@
     objc_setAssociatedObject(self, @selector(isPlayingAudio), @(isPlayingAudio), OBJC_ASSOCIATION_ASSIGN);
 }
 
-- (NSTimer *)timer
+- (dispatch_source_t)fireTimer
 {
-    return objc_getAssociatedObject(self, @selector(timer));
+    return objc_getAssociatedObject(self, @selector(fireTimer));
 }
 
-- (void)setTimer:(NSTimer *)timer
+- (void)setFireTimer:(dispatch_source_t)fireTimer
 {
-    objc_setAssociatedObject(self, @selector(timer), timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(self, @selector(fireTimer), fireTimer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 
@@ -64,6 +80,16 @@
 - (void)setRunloop:(NSRunLoop *)runloop
 {
     objc_setAssociatedObject(self, @selector(runloop), runloop, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+}
+
+- (NSMutableArray *)needRemoveMessages
+{
+    return objc_getAssociatedObject(self, @selector(needRemoveMessages));
+}
+
+- (void)setNeedRemoveMessages:(NSMutableArray *)needRemoveMessages
+{
+    objc_setAssociatedObject(self, @selector(needRemoveMessages), needRemoveMessages, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
 
 
@@ -91,6 +117,18 @@
     
 }
 
+// 离开聊天页面 删除所有已读的消息
+- (void)FBackAction
+{
+    
+    for (EMMessage *msg in self.needRemoveMessages) {
+        
+        [[ChatDemoHelper shareHelper] handleGoneAfterReadMessage:msg];
+    }
+    [[ChatDemoHelper shareHelper] setHasGone:YES];
+    [self.navigationController.navigationBar setBarTintColor:RGBACOLOR(30, 167, 252, 1)];
+    [self FBackAction];
+}
 
 - (void)dealloc
 {
@@ -101,8 +139,10 @@
 #pragma mark - 消息点击
 - (void)FMessageCellSelected:(id<IMessageModel>)model
 {
+    [self storeHasbeenReadMessage:model.message];
     if (model.bodyType == EMMessageBodyTypeVoice && [ChatDemoHelper isGoneAfterReadMessage:model.message]) {
-    
+        
+        [self markReadingMessage:model];
         self.scrollToBottomWhenAppear = NO;
         EMVoiceMessageBody *body = (EMVoiceMessageBody *)model.message.body;
         EMDownloadStatus downloadStatus = [body downloadStatus];
@@ -143,14 +183,14 @@
         }
         return;
     }
-
+    
     if (model.bodyType == EMMessageBodyTypeVideo && [ChatDemoHelper isGoneAfterReadMessage:model.message]) {
-        self.currentModel = model;
+        
+        [self markReadingMessage:model];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     }
     if (model.bodyType == EMMessageBodyTypeLocation && [ChatDemoHelper isGoneAfterReadMessage:model.message]) {
-
         EaseLocationViewController *locationController = [[EaseLocationViewController alloc] initWithLocation:CLLocationCoordinate2DMake(model.latitude, model.longitude)];
         locationController.locationModel = model;
         locationController.locDelegate = self;
@@ -167,7 +207,7 @@
     self.currentModel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
 }
-
+// 位置消息读完
 - (void)locationMessageReadAck:(id<IMessageModel>)model
 {
     [self readMessageFinished:model];
@@ -179,20 +219,30 @@
     
     [self FViewDidLoad];
     [[ChatDemoHelper shareHelper] setIsGoneAfterReadMode:NO];
+    [[ChatDemoHelper shareHelper] setHasGone:NO];
     if (self.conversation.type == EMConversationTypeChat) {
-       
+        
         [self.chatBarMoreView insertItemWithImage:[UIImage imageNamed:@"timg.jpeg"] highlightedImage:[UIImage imageNamed:@"timg.jpeg"]  title:@"阅后即焚"];
     }
+    if (!self.needRemoveMessages) {
+        self.needRemoveMessages = [NSMutableArray array];
+    }
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleGoneAfterReadUI:) name:@"handleGoneAfterReadUI" object:nil];
-
+    
 }
 #pragma mark - 阅后即焚UI更新
 - (void)handleGoneAfterReadUI:(NSNotification *)notification
 {
     EMMessage *message = (EMMessage *)notification.object;
+    if ([self hasBeenRead:message]) {
+        
+        [self.needRemoveMessages removeObject:message];
+    }
+    
     NSInteger index = [self removeMessageModel:message];
+    
     id <IMessageModel>model = [[EaseMessageModel alloc] initWithMessage:message];
-    if ([self.dataArray[index] conformsToProtocol:@protocol(IMessageModel)]) {
+    if (index >= 0 && [self.dataArray[index] conformsToProtocol:@protocol(IMessageModel)]) {
         model = self.dataArray[index];
     }
     if (index >= 0) {
@@ -229,7 +279,7 @@
     NSIndexSet *indexSet = [[self removeTimePrompt:index] mutableCopy];
     [self.dataArray removeObjectsAtIndexes:indexSet];
     [self.messsagesSource removeObject:message];
-
+    
 }
 
 //数据源移除时间提示
@@ -288,6 +338,7 @@
     [self.chatToolbar endEditing:YES];
 }
 
+
 - (UITableViewCell *)FMessageViewController:(UITableView *)tableView cellForMessageModel:(id<IMessageModel>)messageModel
 {
     if ([ChatDemoHelper isGoneAfterReadMessage:messageModel.message]) {
@@ -309,7 +360,8 @@
             }
         }
         cell.model = messageModel;
-        BOOL isReading = self.currentModel && [self.currentModel.messageId isEqualToString:messageModel.messageId];
+        BOOL isReading = [self hasBeenRead:messageModel.message];
+        
         [cell isReadMessage:isReading];
         return cell;
     }
@@ -327,17 +379,39 @@
     return [self messageViewController:viewController FShouldSendHasReadAckForMessage:message read:read];
 }
 
+// 判断是否读过
+- (BOOL)hasBeenRead:(EMMessage *)message
+{
+    if (!message || message.messageId.length <= 0) {
+        return NO;
+    }
+    return [self.needRemoveMessages containsObject:message];
+}
+
+// 存储已经阅读的消息
+- (void)storeHasbeenReadMessage:(EMMessage *)message
+{
+    if (!message || message.messageId.length <= 0) {
+        return;
+    }
+    [self.needRemoveMessages addObject:message];
+    
+}
+
 - (BOOL)messageViewController:(EaseMessageViewController *)viewController didSelectMessageModel:(id<IMessageModel>)messageModel
 {
     BOOL flag = [super messageViewController:viewController didSelectMessageModel:messageModel];
     if (!messageModel.isSender && [ChatDemoHelper isGoneAfterReadMessage:messageModel.message]) {
+        
         [self markReadingMessage:messageModel];
         switch (messageModel.bodyType) {
             case EMMessageBodyTypeText:
             {
-                [self textReadFire];
+                if ([self hasBeenRead:messageModel.message]) {
+                    
+                    return NO;
+                }
                 [self showHint:@"消息将在6s后销毁!"];
-                
             }
                 break;
             case EMMessageBodyTypeImage:
@@ -351,7 +425,6 @@
                 break;
         }
     }
-    
     return flag;
 }
 
@@ -362,28 +435,6 @@
     [self.tableView reloadData];
 }
 
-- (void)textReadFire
-{
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:6.0 target:self selector:@selector(timerAction) userInfo:nil repeats:NO];
-    if (!self.runloop) {
-        
-        self.runloop = [[NSRunLoop alloc] init];
-    }
-    [self.runloop addTimer:self.timer forMode:NSRunLoopCommonModes];
-    [self.runloop run];
-}
-
-- (void)timerAction
-{
-    [self handleRemoveAfterReadMessage:self.currentModel];
-    self.currentModel = nil;
-    if (self.timer.isValid) {
-        [self.timer invalidate];
-        self.timer = nil;
-        self.runloop = nil;
-    }
-}
-
 - (void)handleRemoveAfterReadMessage:(id<IMessageModel>)model
 {
     id<IMessageModel> messageModel = model;
@@ -391,14 +442,13 @@
         return;
     }
     [[ChatDemoHelper shareHelper] handleGoneAfterReadMessage:model.message];
-    
 }
 
 - (void)readMessageFinished:(id<IMessageModel>)model
 {
     [self handleRemoveAfterReadMessage:model];
-
 }
+
 
 
 @end
