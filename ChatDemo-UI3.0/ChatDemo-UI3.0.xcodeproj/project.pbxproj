@@ -1895,7 +1895,6 @@
 				90A5F9CF1E71300600B3B2E3 /* InputType */,
 				90A5F9D51E71300600B3B2E3 /* MainViewController+Category.h */,
 				90A5F9D61E71300600B3B2E3 /* MainViewController+Category.m */,
-				90A5F9DA1E71300600B3B2E3 /* Notices */,
 				90A5F9DD1E71300600B3B2E3 /* ShareLocation */,
 			);
 			path = ZYDCategory;
@@ -1936,13 +1935,6 @@
 				90A5F9D31E71300600B3B2E3 /* EaseChatToolbar+InputType.m */,
 			);
 			path = InputType;
-			sourceTree = "<group>";
-		};
-		90A5F9DA1E71300600B3B2E3 /* Notices */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notices;
 			sourceTree = "<group>";
 		};
 		90A5F9DD1E71300600B3B2E3 /* ShareLocation */ = {
