@@ -409,7 +409,7 @@
             {
                 if ([self hasBeenRead:messageModel.message]) {
                     
-                    return NO;
+                    flag = NO;
                 }
                 [self showHint:@"消息将在6s后销毁!"];
             }
