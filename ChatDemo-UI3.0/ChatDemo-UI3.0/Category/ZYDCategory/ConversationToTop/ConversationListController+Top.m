@@ -62,13 +62,15 @@
             
             NSArray* topSorted = [topAry sortedArrayUsingComparator:
                                   ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
-                                      if(obj1.topTime > obj2.topTime) {
+                                      EMMessage *message1 = [obj1.conversation latestMessage];
+                                      EMMessage *message2 = [obj2.conversation latestMessage];
+                                      if(message1.timestamp > message2.timestamp) {
                                           return(NSComparisonResult)NSOrderedAscending;
                                       }else {
                                           return(NSComparisonResult)NSOrderedDescending;
                                       }
                                   }];
-            
+
             NSArray* unTopSorted = [unTopAry sortedArrayUsingComparator:
                                     ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
                                         EMMessage *message1 = [obj1.conversation latestMessage];
@@ -79,6 +81,7 @@
                                             return(NSComparisonResult)NSOrderedDescending;
                                         }
                                     }];
+            
             [self.dataArray removeAllObjects];
             [self.dataArray addObjectsFromArray:topSorted];
             [self.dataArray addObjectsFromArray:unTopSorted];
@@ -113,7 +116,7 @@
         }
     }
     
-    NSArray* topSorted = [topAry sortedArrayUsingComparator:
+    NSArray *topSorted = [topAry sortedArrayUsingComparator:
                           ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
                               if(obj1.topTime > obj2.topTime) {
                                   return(NSComparisonResult)NSOrderedAscending;
@@ -122,7 +125,7 @@
                               }
                           }];
     
-    NSArray* unTopSorted = [unTopAry sortedArrayUsingComparator:
+    NSArray *unTopSorted = [unTopAry sortedArrayUsingComparator:
                             ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
                                 EMMessage *message1 = [obj1.conversation latestMessage];
                                 EMMessage *message2 = [obj2.conversation latestMessage];
