@@ -53,6 +53,9 @@
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageViewController:cellForMessageModel:)]) {
             NSString  *ert = model.text;
+            if (ert == nil) {
+                return [self ZYDtableView:tableView cellForRowAtIndexPath:indexPath];
+            }
             if ([ert rangeOfString:@"撤回了一条消息"].location !=NSNotFound) {
                 NSString *TimeCellIdentifier = [EaseRetracementMessageCell cellIdentifier];
                 EaseRetracementMessageCell *timeCell = (EaseRetracementMessageCell *)[tableView dequeueReusableCellWithIdentifier:TimeCellIdentifier];
@@ -82,6 +85,9 @@
         id<IMessageModel> model = object;
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageViewController:heightForMessageModel:withCellWidth:)]) {
             NSString  *ert = model.text;
+            if (ert == nil) {
+                return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
+            }
             if ([ert rangeOfString:@"撤回了一条消息"].location !=NSNotFound) {
                 CGFloat height = 22;
                 return height;
