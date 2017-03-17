@@ -8,6 +8,8 @@
 
 #import "EaseMessageCell+GoneAfterRead.h"
 #import <objc/runtime.h>
+#import "RemoveAfterReadCell.h"
+#import "ChatDemoHelper+GoneAfterRead.h"
 @implementation EaseMessageCell (GoneAfterRead)
 
 + (void)load
@@ -21,10 +23,17 @@
 {
     [self FBubbleViewTapAction:tapRecognizer];
     if (self.model.bodyType == EMMessageBodyTypeText) {
+        
+        RemoveAfterReadCell *cell = (RemoveAfterReadCell *)self;
+        // 点击bubble 隐藏遮罩
+        [cell isReadMessage:YES];
+        [cell startTimer:self.model];
+        
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageCellSelected:)]) {
             
             [self.delegate messageCellSelected:self.model];
         }
     }
 }
+
 @end

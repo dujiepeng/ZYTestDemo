@@ -21,14 +21,9 @@
 + (void)load
 {
     Method backAction = class_getInstanceMethod([self class], @selector(backAction));
-    Method FBackAction = class_getInstanceMethod([self class], @selector(FBackAction));
+    Method FBackAction = class_getInstanceMethod([RedPacketChatViewController class], @selector(FBackAction));
     method_exchangeImplementations(backAction, FBackAction);
 }
 
-- (void)FBackAction
-{
-    [self.navigationController.navigationBar setBarTintColor:RGBACOLOR(30, 167, 252, 1)];
-    [self FBackAction];
-}
 
 @end

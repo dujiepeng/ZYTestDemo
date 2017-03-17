@@ -7,10 +7,13 @@
 //
 
 #import "ChatDemoHelper.h"
+#import "RedPacketChatViewController+GoneAfterRead.h"
 
 @interface ChatDemoHelper (GoneAfterRead)
 
 @property (nonatomic) BOOL isGoneAfterReadMode;
+
+@property (nonatomic) BOOL hasGone;
 
 + (NSDictionary *)structureGoneAfterReadMsgExt:(NSDictionary *)ext;
 
@@ -20,4 +23,7 @@
 
 - (void)handleGoneAfterReadMessage:(EMMessage *)message;
 
+
+
 @end
+
