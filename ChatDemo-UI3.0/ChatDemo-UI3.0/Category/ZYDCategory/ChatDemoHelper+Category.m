@@ -125,9 +125,8 @@
                 if (self.chatVC)  {
                     
                     isChatting = [cmdMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
-                    
-                    [self.chatVC.conversation insertMessage:newMessage error:nil];
-                    [self.chatVC.conversation deleteMessageWithId:revokeMessageId error:nil];
+                    [conversation insertMessage:newMessage error:nil];
+                    [conversation deleteMessageWithId:revokeMessageId error:nil];
                     
                     NSInteger index = 0;
                     for (int i = 0; i <= self.chatVC.messsagesSource.count; i++) {
@@ -137,7 +136,6 @@
                             break;
                         }
                     }
-                    
                     [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:newMessage];
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
@@ -178,7 +176,6 @@
             }  else {
                 NSLog(@"接收失败");
             }
-            
         }
     }
 }
