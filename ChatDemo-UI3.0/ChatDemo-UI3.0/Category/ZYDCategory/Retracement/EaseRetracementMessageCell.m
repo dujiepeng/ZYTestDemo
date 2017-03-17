@@ -30,8 +30,6 @@ CGFloat const RetracementMessageLeft = 40;
     // Configure the view for the selected state
 }
 
-
-
 + (void)initialize
 {
     // UIAppearance Proxy Defaults
@@ -56,7 +54,6 @@ CGFloat const RetracementMessageLeft = 40;
 
 - (void)_setupSubview
 {
-
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _titleLabel.textAlignment = NSTextAlignmentCenter;

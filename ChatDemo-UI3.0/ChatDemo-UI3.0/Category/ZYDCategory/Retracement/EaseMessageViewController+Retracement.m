@@ -11,6 +11,7 @@
 #import "EaseCustomMessageCell.h"
 #import "UIImage+EMGIF.h"
 #import "EaseRetracementMessageCell.h"
+#import "DefineKey.h"
 
 @interface EaseMessageViewController()
 
@@ -26,16 +27,14 @@
     Method oldHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(tableView: heightForRowAtIndexPath:));
     Method newHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(ZYDtableView: heightForRowAtIndexPath:));
     method_exchangeImplementations(oldHightMethod, newHightMethod);
-    
-    
-    
 }
+
 
 - (UITableViewCell *)ZYDtableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self.dataArray objectAtIndex:indexPath.row];
     if ([object isKindOfClass:[NSString class]]) {
-       
+        
         NSString *TimeCellIdentifier = [EaseMessageTimeCell cellIdentifier];
         EaseMessageTimeCell *timeCell = (EaseMessageTimeCell *)[tableView dequeueReusableCellWithIdentifier:TimeCellIdentifier];
         
@@ -52,27 +51,27 @@
         id<IMessageModel> model = object;
         
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageViewController:cellForMessageModel:)]) {
-            NSString  *ert = model.text;
-            if (ert == nil) {
-                return [self ZYDtableView:tableView cellForRowAtIndexPath:indexPath];
-            }
-            if ([ert rangeOfString:@"撤回了一条消息"].location !=NSNotFound) {
+            NSDictionary *ext =  model.message.ext;
+            if (ext[INSERT] != nil) {
+                
                 NSString *TimeCellIdentifier = [EaseRetracementMessageCell cellIdentifier];
                 EaseRetracementMessageCell *timeCell = (EaseRetracementMessageCell *)[tableView dequeueReusableCellWithIdentifier:TimeCellIdentifier];
-                
                 if (timeCell == nil) {
                     timeCell = [[EaseRetracementMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeCellIdentifier];
                     timeCell.selectionStyle = UITableViewCellSelectionStyleNone;
                 }
                 
-                timeCell.title = ert;
+                timeCell.title = ext[INSERT];
                 return timeCell;
+            }
+            else{
+                return [self ZYDtableView:tableView cellForRowAtIndexPath:indexPath];
                 
             }
         }
     }
-        return [self ZYDtableView:tableView cellForRowAtIndexPath:indexPath];
-
+    return [self ZYDtableView:tableView cellForRowAtIndexPath:indexPath];
+    
 }
 
 - (CGFloat)ZYDtableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -84,13 +83,10 @@
     else{
         id<IMessageModel> model = object;
         if (self.delegate && [self.delegate respondsToSelector:@selector(messageViewController:heightForMessageModel:withCellWidth:)]) {
-            NSString  *ert = model.text;
-            if (ert == nil) {
-                return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
-            }
-            if ([ert rangeOfString:@"撤回了一条消息"].location !=NSNotFound) {
-                CGFloat height = 22;
-                return height;
+            NSDictionary *ext =  model.message.ext;
+            
+            if (ext[INSERT] != nil) {
+                return self.timeCellHeight;
             }
             
         }else{
