@@ -8,11 +8,8 @@
 
 #import "RemoveAfterReadCell.h"
 #import "EaseBubbleView+Gif.h"
-//#import "EMGifImage.h"
 #import "UIImageView+HeadImage.h"
-#import "ChatDemoHelper+GoneAfterRead.h"
-
-//#import "EaseMob.h"
+#import "EaseFireHelper.h"
 #import <Hyphenate/Hyphenate.h>
 
 @interface RemoveAfterReadCell()
@@ -139,10 +136,10 @@
             
             weakSelf.countLabel.text = [NSString stringWithFormat:@"%d",currentIndex];
         });
-        if (currentIndex == 0 && ![[ChatDemoHelper shareHelper] hasGone]) {
+        if (currentIndex == 0 && ![[EaseFireHelper sharedHelper] hasGone]) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.countLabel.text = @"";
-                [[ChatDemoHelper shareHelper] handleGoneAfterReadMessage:model.message];
+                [[EaseFireHelper sharedHelper] handleGoneAfterReadMessage:model.message];
             });
             
             dispatch_source_cancel(fireTimer);

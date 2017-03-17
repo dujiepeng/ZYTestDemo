@@ -9,7 +9,7 @@
 #import "EaseMessageCell+GoneAfterRead.h"
 #import <objc/runtime.h>
 #import "RemoveAfterReadCell.h"
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "EaseFireHelper.h"
 @implementation EaseMessageCell (GoneAfterRead)
 
 + (void)load

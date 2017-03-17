@@ -7,7 +7,7 @@
 //
 
 #import "ChatViewController+GoneAfterRead.h"
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "RedPacketChatViewController+GoneAfterRead.h"
 #import <objc/runtime.h>
 #import "EaseMessageReadManager+GoneAfterRead.h"
 
