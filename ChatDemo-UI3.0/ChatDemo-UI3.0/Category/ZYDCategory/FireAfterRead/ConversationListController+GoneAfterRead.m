@@ -8,7 +8,7 @@
 
 #import "ConversationListController+GoneAfterRead.h"
 #import <objc/runtime.h>
-#import "ChatDemoHelper+GoneAfterRead.h"
+#import "EaseFireHelper.h"
 @implementation ConversationListController (GoneAfterRead)
 
 + (void)load
@@ -25,7 +25,12 @@
 - (void)FViewDidLoad
 {
     [self FViewDidLoad];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleUI:) name:@"handleGoneAfterReadUI" object:nil];
+}
 
+- (void)handleUI:(NSNotification *)notification
+{
+    [self tableViewDidTriggerHeaderRefresh];
 }
 
 
@@ -33,10 +38,10 @@
  *  最新一条消息为阅后即焚消息时显示
  */
 - (NSAttributedString *)FConversationListViewController:(EaseConversationListViewController *)conversationListViewController
-                  latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
+                 latestMessageTitleForConversationModel:(id<IConversationModel>)conversationModel
 {
     EMMessage *latestMessage = conversationModel.conversation.latestMessage;
-    if (latestMessage.ext && [ChatDemoHelper isGoneAfterReadMessage:latestMessage] && (latestMessage.direction == EMMessageDirectionReceive)) {
+    if (latestMessage.ext && [EaseFireHelper isGoneAfterReadMessage:latestMessage] && (latestMessage.direction == EMMessageDirectionReceive)) {
         
         NSAttributedString *attr = [[NSAttributedString alloc] initWithString:@"[阅后即焚消息]"];
         return attr;

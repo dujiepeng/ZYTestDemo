@@ -9,8 +9,11 @@
 #import "EaseCustomMessageCell.h"
 
 @interface RemoveAfterReadCell :EaseCustomMessageCell
-
+@property (nonatomic) BOOL beenRead;
+@property (nonatomic, strong) UIImageView *frontImageView;//上面遮罩
 - (void)isReadMessage:(BOOL)isRead;
 - (BOOL)isCustomBubbleView:(id<IMessageModel>)model;
+- (void)startTimer:(id<IMessageModel>)model;
+
 
 @end

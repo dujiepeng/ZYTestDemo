@@ -1,16 +1,20 @@
 //
-//  ChatDemoHelper+GoneAfterRead.h
+//  EaseFireHelper.h
 //  ChatDemo-UI3.0
 //
-//  Created by EaseMob on 2017/3/14.
+//  Created by EaseMob on 2017/3/17.
 //  Copyright © 2017年 EaseMob. All rights reserved.
 //
 
-#import "ChatDemoHelper.h"
-
-@interface ChatDemoHelper (GoneAfterRead)
+#import <Foundation/Foundation.h>
+#import "ConversationListController+GoneAfterRead.h"
+@interface EaseFireHelper : NSObject
 
 @property (nonatomic) BOOL isGoneAfterReadMode;
+
+@property (nonatomic) BOOL hasGone;
+
+@property (nonatomic, weak) ConversationListController *conversationListVC;
 
 + (NSDictionary *)structureGoneAfterReadMsgExt:(NSDictionary *)ext;
 
@@ -20,4 +24,5 @@
 
 - (void)handleGoneAfterReadMessage:(EMMessage *)message;
 
++ (instancetype)sharedHelper;
 @end

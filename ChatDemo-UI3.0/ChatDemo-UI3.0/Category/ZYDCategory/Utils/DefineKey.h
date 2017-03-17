@@ -30,6 +30,17 @@
 #define REVOCATION_UPDATE_UNREAD_COUNT @"Revocation_updateUnreadCount"
 
 #define GROUP_MEMBER_CHANGE_INSERT     @"group_member_change_insert"
+
 #define REVOKE_FLAG                    @"revoke_flag"
 #define MSG_ID                         @"msg_id"
 #define INSERT                         @"insert"
+
+#pragma mark - shareLocation
+#define SHARE_LOCATION_NOTI_KEY @"ShareLocationNoti"
+
+#define SHARE_LOCATION_MESSAGE_FLAG @"ShareLocation"
+#define STOP_SHARE_LOCATION_FLAG @"isStop"
+
+#define LATITUDE @"latitude"
+#define LONGITUDE @"longitude"
+

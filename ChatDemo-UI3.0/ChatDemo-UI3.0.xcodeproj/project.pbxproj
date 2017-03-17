@@ -190,7 +190,6 @@
 		921C6A9E1D2A841600D8257F /* CoreMotion.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 921C6A9D1D2A841600D8257F /* CoreMotion.framework */; };
 		C035E8151AEA40F400283EE9 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C36CA691A1EDB6200CDDD48 /* CoreData.framework */; };
 		D21E563F1E11120800C50BA0 /* libRedpacketLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D21E56351E11120800C50BA0 /* libRedpacketLib.a */; };
-		D21FD15B1E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1471E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m */; };
 		D21FD15C1E793DC2006A0CAE /* ChatViewController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD1491E793DC2006A0CAE /* ChatViewController+GoneAfterRead.m */; };
 		D21FD15D1E793DC2006A0CAE /* ConversationListController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD14B1E793DC2006A0CAE /* ConversationListController+GoneAfterRead.m */; };
 		D21FD15E1E793DC2006A0CAE /* EaseLocationViewController+GoneAfterRead.m in Sources */ = {isa = PBXBuildFile; fileRef = D21FD14D1E793DC2006A0CAE /* EaseLocationViewController+GoneAfterRead.m */; };
@@ -263,6 +262,7 @@
 		D2BF97511AEB566B009E0D5C /* group_joinpublicgroup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = D2BF974E1AEB566B009E0D5C /* group_joinpublicgroup@2x.png */; };
 		D2BF98B31AEDD780009E0D5C /* EditNicknameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2BF98B21AEDD780009E0D5C /* EditNicknameViewController.m */; };
 		D2CB225C1B60CB08001BC741 /* UserProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2CB225B1B60CB08001BC741 /* UserProfileViewController.m */; };
+		D2F4C81F1E7BCD2500240F59 /* EaseFireHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F4C81E1E7BCD2500240F59 /* EaseFireHelper.m */; };
 		D2F7691C1CBF3F26009778FB /* SearchMessageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F7691B1CBF3F26009778FB /* SearchMessageViewController.m */; };
 		D2F7691F1CBF42DB009778FB /* SearchChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = D2F7691E1CBF42DB009778FB /* SearchChatViewController.m */; };
 		D2FD8D4B1E5C39FD0097B20D /* EaseUI.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD8C271E5C39FD0097B20D /* EaseUI.m */; };
@@ -798,8 +798,6 @@
 		90F1BED41930495800121AEC /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		921C6A9D1D2A841600D8257F /* CoreMotion.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMotion.framework; path = System/Library/Frameworks/CoreMotion.framework; sourceTree = SDKROOT; };
 		D21E56351E11120800C50BA0 /* libRedpacketLib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libRedpacketLib.a; sourceTree = "<group>"; };
-		D21FD1461E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatDemoHelper+GoneAfterRead.h"; sourceTree = "<group>"; };
-		D21FD1471E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatDemoHelper+GoneAfterRead.m"; sourceTree = "<group>"; };
 		D21FD1481E793DC2006A0CAE /* ChatViewController+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatViewController+GoneAfterRead.h"; sourceTree = "<group>"; };
 		D21FD1491E793DC2006A0CAE /* ChatViewController+GoneAfterRead.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+GoneAfterRead.m"; sourceTree = "<group>"; };
 		D21FD14A1E793DC2006A0CAE /* ConversationListController+GoneAfterRead.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ConversationListController+GoneAfterRead.h"; sourceTree = "<group>"; };
@@ -892,6 +890,8 @@
 		D2BF98B21AEDD780009E0D5C /* EditNicknameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditNicknameViewController.m; sourceTree = "<group>"; };
 		D2CB225A1B60CB08001BC741 /* UserProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserProfileViewController.h; sourceTree = "<group>"; };
 		D2CB225B1B60CB08001BC741 /* UserProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserProfileViewController.m; sourceTree = "<group>"; };
+		D2F4C81D1E7BCD2500240F59 /* EaseFireHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseFireHelper.h; sourceTree = "<group>"; };
+		D2F4C81E1E7BCD2500240F59 /* EaseFireHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseFireHelper.m; sourceTree = "<group>"; };
 		D2F7691A1CBF3F26009778FB /* SearchMessageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchMessageViewController.h; sourceTree = "<group>"; };
 		D2F7691B1CBF3F26009778FB /* SearchMessageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SearchMessageViewController.m; sourceTree = "<group>"; };
 		D2F7691D1CBF42DB009778FB /* SearchChatViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SearchChatViewController.h; sourceTree = "<group>"; };
@@ -1898,7 +1898,6 @@
 				90A5F9CF1E71300600B3B2E3 /* InputType */,
 				90A5F9D51E71300600B3B2E3 /* MainViewController+Category.h */,
 				90A5F9D61E71300600B3B2E3 /* MainViewController+Category.m */,
-				90A5F9DA1E71300600B3B2E3 /* Notices */,
 				90A5F9DD1E71300600B3B2E3 /* ShareLocation */,
 			);
 			path = ZYDCategory;
@@ -1939,13 +1938,6 @@
 				90A5F9D31E71300600B3B2E3 /* EaseChatToolbar+InputType.m */,
 			);
 			path = InputType;
-			sourceTree = "<group>";
-		};
-		90A5F9DA1E71300600B3B2E3 /* Notices */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Notices;
 			sourceTree = "<group>";
 		};
 		90A5F9DD1E71300600B3B2E3 /* ShareLocation */ = {
@@ -2038,8 +2030,6 @@
 		D21FD1451E793DC2006A0CAE /* FireAfterRead */ = {
 			isa = PBXGroup;
 			children = (
-				D21FD1461E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.h */,
-				D21FD1471E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m */,
 				D21FD1481E793DC2006A0CAE /* ChatViewController+GoneAfterRead.h */,
 				D21FD1491E793DC2006A0CAE /* ChatViewController+GoneAfterRead.m */,
 				D21FD14A1E793DC2006A0CAE /* ConversationListController+GoneAfterRead.h */,
@@ -2057,6 +2047,8 @@
 				D21FD1581E793DC2006A0CAE /* RemoveAfterReadCell.h */,
 				D21FD1591E793DC2006A0CAE /* RemoveAfterReadCell.m */,
 				D21FD15A1E793DC2006A0CAE /* timg.jpeg */,
+				D2F4C81D1E7BCD2500240F59 /* EaseFireHelper.h */,
+				D2F4C81E1E7BCD2500240F59 /* EaseFireHelper.m */,
 			);
 			path = FireAfterRead;
 			sourceTree = "<group>";
@@ -3284,7 +3276,6 @@
 				D2FD8D981E5C39FD0097B20D /* NSDate+Category.m in Sources */,
 				90882EE81E7961F200FB9A9E /* ChatViewController+ShareFile.m in Sources */,
 				D2FD8DBD1E5C39FD0097B20D /* EaseFacialView.m in Sources */,
-				D21FD15B1E793DC2006A0CAE /* ChatDemoHelper+GoneAfterRead.m in Sources */,
 				D2FD8D751E5C39FD0097B20D /* DACircularProgressView.m in Sources */,
 				3A2C3A281E23AF5000DCD9BE /* EMChatroomMutesViewController.m in Sources */,
 				90A5FA001E716C5800B3B2E3 /* EaseMessageCell+ShareLocation.m in Sources */,
@@ -3337,6 +3328,7 @@
 				3C2923B11988E13300DCCD40 /* BlackListViewController.m in Sources */,
 				D2FD8DB11E5C39FD0097B20D /* EaseBubbleView+Gif.m in Sources */,
 				9091112F192EEC0F008A48AA /* SettingsViewController.m in Sources */,
+				D2F4C81F1E7BCD2500240F59 /* EaseFireHelper.m in Sources */,
 				3AD0FB851E1E0962001F3957 /* RedPacketLuckView.m in Sources */,
 				D2FD8D8F1E5C39FD0097B20D /* PSTGridLayoutInfo.m in Sources */,
 				90A5F9EB1E71300600B3B2E3 /* EaseConversationCell+Top.m in Sources */,

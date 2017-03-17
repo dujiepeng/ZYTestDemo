@@ -8,15 +8,15 @@
 
 #import "RemoveAfterReadCell.h"
 #import "EaseBubbleView+Gif.h"
-//#import "EMGifImage.h"
 #import "UIImageView+HeadImage.h"
-
-//#import "EaseMob.h"
+#import "EaseFireHelper.h"
 #import <Hyphenate/Hyphenate.h>
 
 @interface RemoveAfterReadCell()
 
-@property (nonatomic, strong) UIImageView *frontImageView;//上面遮罩
+
+@property (nonatomic, strong) UILabel *countLabel;
+@property (nonatomic, assign) int currentCount;
 
 @end
 
@@ -34,6 +34,7 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier model:model];
     if (self)
     {
+        
     }
     return self;
 }
@@ -52,6 +53,14 @@
     
 }
 
+- (void)_setupCountLabelConstraints
+{
+    [self.bubbleView addConstraint:[NSLayoutConstraint constraintWithItem:_countLabel attribute:NSLayoutAttributeCenterX relatedBy:NSLayoutRelationEqual toItem:self.bubbleView attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
+    [self.bubbleView addConstraint:[NSLayoutConstraint constraintWithItem:_countLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.bubbleView attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+    [self.bubbleView addConstraint:[NSLayoutConstraint constraintWithItem:_countLabel attribute:NSLayoutAttributeWidth relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeWidth multiplier:1.0 constant:15]];
+    [self.bubbleView addConstraint:[NSLayoutConstraint constraintWithItem:_countLabel attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:_countLabel attribute:NSLayoutAttributeWidth multiplier:1.0 constant:0]];
+}
+
 - (UIImageView *)frontImageView
 {
     if (_frontImageView == nil)
@@ -66,12 +75,28 @@
     return _frontImageView;
 }
 
+- (UILabel *)countLabel
+{
+    if (!_countLabel) {
+        _countLabel = [[UILabel alloc] init];
+        _countLabel.translatesAutoresizingMaskIntoConstraints = NO;
+        _countLabel.backgroundColor = [UIColor clearColor];
+        _countLabel.textColor = [UIColor redColor];
+        _countLabel.textAlignment = NSTextAlignmentCenter;
+        _countLabel.font = [UIFont systemFontOfSize:11];
+        [self.bubbleView addSubview:_countLabel];
+        [self.bubbleView bringSubviewToFront:_countLabel];
+        [self _setupCountLabelConstraints];
+    }
+    return _countLabel;
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     self.frontImageView.image = self.bubbleView.backgroundImageView.image;
+    
 }
-
 
 #pragma mark - IModelCell
 
@@ -79,6 +104,7 @@
     [super setModel:model];
     self.hasRead.hidden = YES;
     self.frontImageView.hidden = NO;
+    self.countLabel.hidden = YES;
     //语音
     if (model.bodyType == EMMessageBodyTypeVoice) {
         CGRect rect = self.bubbleView.frame;
@@ -89,7 +115,47 @@
     }
 }
 
+/**
+ 开启定时器
+ @param model 消息Model
+ */
+- (void)startTimer:(id<IMessageModel>)model
+{
+    NSLog(@"-----定时器开启------%@",model.message.messageId);
+    __block int currentIndex = 6;
+    self.countLabel.text = @"6";
+    dispatch_queue_t fireQueue = dispatch_queue_create("fire", DISPATCH_QUEUE_SERIAL);
+    dispatch_source_t fireTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, fireQueue);
+    dispatch_time_t start = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 *NSEC_PER_SEC));
+    dispatch_source_set_timer(fireTimer, start, (1.0 * NSEC_PER_SEC), 0);
+    __weak typeof(self) weakSelf = self;
+    dispatch_source_set_event_handler(fireTimer, ^{
+        
+        currentIndex--;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            
+            weakSelf.countLabel.text = [NSString stringWithFormat:@"%d",currentIndex];
+        });
+        if ([[EaseFireHelper sharedHelper] hasGone]) {
+            dispatch_source_cancel(fireTimer);
+        }
+        if (currentIndex == 0) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                weakSelf.countLabel.text = @"";
+                [[EaseFireHelper sharedHelper] handleGoneAfterReadMessage:model.message];
+            });
+            dispatch_source_cancel(fireTimer);
+        }
+    });
+    dispatch_resume(fireTimer);
+}
+
 - (void)isReadMessage:(BOOL)isRead {
+    
+    if (self.model.bodyType == EMMessageBodyTypeText) {
+        
+        self.countLabel.hidden = !isRead;
+    }
     self.frontImageView.hidden = isRead;
     //发送者本身不加遮罩
     if (self.model.isSender)
