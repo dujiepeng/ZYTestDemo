@@ -14,7 +14,7 @@
 
 @interface RemoveAfterReadCell()
 
-@property (nonatomic, strong) UIImageView *frontImageView;//上面遮罩
+
 @property (nonatomic, strong) UILabel *countLabel;
 @property (nonatomic, assign) int currentCount;
 
@@ -136,12 +136,14 @@
             
             weakSelf.countLabel.text = [NSString stringWithFormat:@"%d",currentIndex];
         });
-        if (currentIndex == 0 && ![[EaseFireHelper sharedHelper] hasGone]) {
+        if ([[EaseFireHelper sharedHelper] hasGone]) {
+            dispatch_source_cancel(fireTimer);
+        }
+        if (currentIndex == 0) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 weakSelf.countLabel.text = @"";
                 [[EaseFireHelper sharedHelper] handleGoneAfterReadMessage:model.message];
             });
-            
             dispatch_source_cancel(fireTimer);
         }
     });

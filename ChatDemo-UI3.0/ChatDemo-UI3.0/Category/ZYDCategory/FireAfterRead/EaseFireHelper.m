@@ -18,8 +18,9 @@
 #define UserDefaultKey(username) [[KEM_REMOVEAFTERREAD_PREFIX stringByAppendingString:@"_"] stringByAppendingString:username]
 /** @brief NSUserDefaults中保存当前阅读的阅后即焚消息信息 */
 #define NEED_REMOVE_CURRENT_MESSAGE        @"em_needRemoveCurrnetMessage"
-
-@interface EaseFireHelper()
+#define kReconnectAction @"RemoveUnFiredMsg"
+#define kReconnectMsgIdKey @"REMOVE_UNFIRED_MSG"
+@interface EaseFireHelper()<EMClientDelegate, EMChatManagerDelegate>
 @property (nonatomic, strong) NSDictionary *infoDic;
 @property (nonatomic, strong) dispatch_queue_t queue;
 @end
@@ -34,6 +35,16 @@ static EaseFireHelper *helper = nil;
         helper = [[EaseFireHelper alloc] init];
     });
     return helper;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        [[EMClient sharedClient] addDelegate:self delegateQueue:nil];
+        [[EMClient sharedClient].chatManager addDelegate:self delegateQueue:nil];
+    }
+    return self;
 }
 
 - (NSDictionary *)needRemoveDic
@@ -252,12 +263,26 @@ static EaseFireHelper *helper = nil;
                 for (NSString *messageId in weakSelf.needRemoveDic[chatter]) {
                     
                     EMMessage *msg = [conversation loadMessageWithId:messageId error:nil];
-                    [[EMClient sharedClient].chatManager sendMessageReadAck:msg completion:nil];
-                    [conversation deleteMessageWithId:msg.messageId error:nil];
+                    if (!msg) {
+                        
+                        EMCmdMessageBody *cmd = [[EMCmdMessageBody alloc] initWithAction:@"RemoveUnFiredMsg"];
+                        EMMessage *msg = [[EMMessage alloc] initWithConversationID:chatter from:[[EMClient sharedClient] currentUsername] to:chatter body:cmd ext:@{@"REMOVE_UNFIRED_MSG":messageId}];
+                        [[EMClient sharedClient].chatManager sendMessage:msg progress:nil completion:nil];
+                    } else {
+                        
+                        [[EMClient sharedClient].chatManager sendMessageReadAck:msg completion:nil];
+                        [conversation deleteMessageWithId:msg.messageId error:nil];
+                    }
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterRead" object:msg];
+                    });
                 }
                 if (!conversation.latestMessage)
                 {
                     [[EMClient sharedClient].chatManager deleteConversation:conversation.conversationId isDeleteMessages:YES completion:nil];
+                    [weakSelf.conversationListVC tableViewDidTriggerHeaderRefresh];
+
                 }
             }
             [weakSelf clearNeedRemoveDic];
@@ -273,6 +298,31 @@ static EaseFireHelper *helper = nil;
     NSMutableDictionary *dic = [self.infoDic mutableCopy];
     [dic removeObjectForKey:NEED_REMOVE_MESSAGE_DIC];
     [self updateInfoDic:dic];
+}
+
+- (void)cmdMessagesDidReceive:(NSArray *)aCmdMessages
+{
+    for (EMMessage *msg in aCmdMessages) {
+        
+        EMCmdMessageBody *body = (EMCmdMessageBody *)msg.body;
+        if (![body.action isEqualToString:kReconnectAction]) {
+            continue;
+        }
+        NSString *msgId = msg.ext[kReconnectMsgIdKey];
+        if (msgId.length > 0) {
+            
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:msg.conversationId type:EMConversationTypeChat createIfNotExist:YES];
+            EMMessage *message = [conversation loadMessageWithId:msgId error:nil];
+            [conversation deleteMessageWithId:msgId error:nil];
+            [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterReadUI" object:message];
+            if (!conversation.latestMessage) {
+                
+                [self.conversationListVC tableViewDidTriggerHeaderRefresh];
+            }
+            
+        }
+        
+    }
 }
 
 @end

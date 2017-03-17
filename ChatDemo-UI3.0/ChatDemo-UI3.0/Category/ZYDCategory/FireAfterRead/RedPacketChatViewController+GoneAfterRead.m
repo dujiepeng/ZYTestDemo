@@ -139,10 +139,15 @@
 #pragma mark - 消息点击
 - (void)FMessageCellSelected:(id<IMessageModel>)model
 {
-    [self storeHasbeenReadMessage:model.message];
-    if (model.bodyType == EMMessageBodyTypeVoice && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
+#warning Change_Flag_6
+    if (model.bodyType == EMMessageBodyTypeImage && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
         
-        [self markReadingMessage:model];
+        if (![EMClient sharedClient].isConnected || ![EMClient sharedClient].isLoggedIn) {
+            [self showHint:@"无法下载文件"];
+            return;
+        }
+    }
+    if (model.bodyType == EMMessageBodyTypeVoice && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
         self.scrollToBottomWhenAppear = NO;
         EMVoiceMessageBody *body = (EMVoiceMessageBody *)model.message.body;
         EMDownloadStatus downloadStatus = [body downloadStatus];
@@ -156,6 +161,8 @@
             [[EMClient sharedClient].chatManager downloadMessageAttachment:model.message progress:nil completion:nil];
             return;
         }
+        [self storeHasbeenReadMessage:model.message];
+        [self markReadingMessage:model];
         __weak RedPacketChatViewController *weakSelf = self;
         BOOL isPrepare = [[EaseMessageReadManager defaultManager] prepareMessageAudioModel:model updateViewCompletion:^(EaseMessageModel *prevAudioModel, EaseMessageModel *currentAudioModel) {
             if (prevAudioModel || currentAudioModel) {
@@ -186,11 +193,18 @@
     
     if (model.bodyType == EMMessageBodyTypeVideo && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
         
+        if (![EMClient sharedClient].isConnected || ![EMClient sharedClient].isLoggedIn) {
+            [self showHint:@"无法下载文件"];
+            return;
+        }
+        [self storeHasbeenReadMessage:model.message];
         [self markReadingMessage:model];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(moviePlayFinished:) name:MPMoviePlayerPlaybackDidFinishNotification object:nil];
     }
     if (model.bodyType == EMMessageBodyTypeLocation && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
+        [self storeHasbeenReadMessage:model.message];
+        [self markReadingMessage:model];
         EaseLocationViewController *locationController = [[EaseLocationViewController alloc] initWithLocation:CLLocationCoordinate2DMake(model.latitude, model.longitude)];
         locationController.locationModel = model;
         locationController.locDelegate = self;
@@ -402,7 +416,7 @@
 {
     BOOL flag = [super messageViewController:viewController didSelectMessageModel:messageModel];
     if (!messageModel.isSender && [EaseFireHelper isGoneAfterReadMessage:messageModel.message]) {
-        
+        [self storeHasbeenReadMessage:messageModel.message];
         [self markReadingMessage:messageModel];
         switch (messageModel.bodyType) {
             case EMMessageBodyTypeText:
