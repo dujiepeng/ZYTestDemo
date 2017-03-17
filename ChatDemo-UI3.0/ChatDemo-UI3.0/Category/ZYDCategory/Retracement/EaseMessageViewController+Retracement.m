@@ -27,9 +27,6 @@
     Method oldHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(tableView: heightForRowAtIndexPath:));
     Method newHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(ZYDtableView: heightForRowAtIndexPath:));
     method_exchangeImplementations(oldHightMethod, newHightMethod);
-    
-    
-    
 }
 
 
@@ -59,7 +56,6 @@
                 
                 NSString *TimeCellIdentifier = [EaseRetracementMessageCell cellIdentifier];
                 EaseRetracementMessageCell *timeCell = (EaseRetracementMessageCell *)[tableView dequeueReusableCellWithIdentifier:TimeCellIdentifier];
-                
                 if (timeCell == nil) {
                     timeCell = [[EaseRetracementMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeCellIdentifier];
                     timeCell.selectionStyle = UITableViewCellSelectionStyleNone;
@@ -90,21 +86,8 @@
             NSDictionary *ext =  model.message.ext;
             
             if (ext[INSERT] != nil) {
-                NSString *TimeCellIdentifier = [EaseRetracementMessageCell cellIdentifier];
-                EaseRetracementMessageCell *timeCell = (EaseRetracementMessageCell *)[tableView dequeueReusableCellWithIdentifier:TimeCellIdentifier];
-                
-                if (timeCell == nil) {
-                    timeCell = [[EaseRetracementMessageCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:TimeCellIdentifier];
-                    timeCell.selectionStyle = UITableViewCellSelectionStyleNone;
-                    
-                    CGFloat height = 22;
-                    return height;
-                }
-            }else{
-                return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
-                
+                return self.timeCellHeight;
             }
-            
             
         }else{
             return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
