@@ -16,6 +16,7 @@
 
 #import "DefineKey.h"
 #import "LocalDataTools.h"
+#import "DefineKey.h"
 
 @implementation ChatDemoHelper (Category)
 + (void)load {
@@ -96,15 +97,13 @@
     BOOL isRefreshCons = YES;
     
     for (EMMessage *cmdMessage in aCmdMessages) {
-        EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;
-        NSString *from = cmdMessage.from;
-        
-        if ([body.action isEqualToString:@"REVOKE_FLAG"]) {
+        EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;        
+        if ([body.action isEqualToString:REVOKE_FLAG]) {
             //删除撤回的消息
             EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cmdMessage.conversationId
                                                                                            type:(EMConversationType)cmdMessage.chatType
                                                                                createIfNotExist:YES];
-            NSString *revokeMessageId = cmdMessage.ext[@"msgId"];
+            NSString *revokeMessageId = cmdMessage.ext[MSG_ID];
             //构建插入的消息
             EMMessage *newMessage = [self buildInsertMessageWithConversation:conversation
                                                                   CmdMessage:cmdMessage
@@ -198,10 +197,11 @@
     
     EMMessage *oldMessage = [conversation loadMessageWithId:revokeMessageId error:nil];
     EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",cmdMessage.from] ];
+    NSDictionary *extInsert = @{INSERT:body.text};
     EMMessage *smessage = [[EMMessage alloc] initWithConversationID:oldMessage.conversationId
                                                                from:cmdMessage.from
                                                                  to:oldMessage.conversationId
-                                                               body:body ext:nil];
+                                                               body:body ext:extInsert];
     smessage.timestamp = oldMessage.timestamp;
     smessage.localTime = oldMessage.localTime;
     if (conversation.type == EMConversationTypeGroupChat){

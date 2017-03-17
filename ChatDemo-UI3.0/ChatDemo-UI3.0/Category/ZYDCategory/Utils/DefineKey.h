@@ -30,3 +30,6 @@
 #define REVOCATION_UPDATE_UNREAD_COUNT @"Revocation_updateUnreadCount"
 
 #define GROUP_MEMBER_CHANGE_INSERT     @"group_member_change_insert"
+#define REVOKE_FLAG                    @"revoke_flag"
+#define MSG_ID                         @"msgId"
+#define INSERT                         @"insert"

@@ -14,6 +14,7 @@
 #import "ChatDemoHelper.h"
 #import "ChatViewController+ShareLocation.h"
 #import <objc/runtime.h>
+#import "DefineKey.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate>
 {
@@ -116,8 +117,8 @@
         return;
     }
     
-    EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:@"REVOKE_FLAG"];
-    NSDictionary *ext = @{@"msgId":aMessageId};
+    EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:REVOKE_FLAG];
+    NSDictionary *ext = @{MSG_ID:aMessageId};
     NSString *currentUsername = [EMClient sharedClient].currentUsername;
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:currentUsername  to:conversationId body:body ext:ext];
     
@@ -135,9 +136,16 @@
             NSLog(@"发送成功");
             EMMessage *oldMessage = [strongSelf.conversation loadMessageWithId:aMessageId error:nil];
             EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",currentUsername] ];
-            EMMessage *smessage = [[EMMessage alloc] initWithConversationID:conversationId from:currentUsername to:conversationId body:body ext:nil];
+            NSDictionary *extInsert = @{INSERT:body.text};
+
+            EMMessage *smessage = [[EMMessage alloc] initWithConversationID:conversationId
+                                                                       from:currentUsername
+                                                                         to:conversationId body:body
+                                                                        ext:extInsert];
             smessage.timestamp = oldMessage.timestamp;
             smessage.localTime = oldMessage.localTime;
+
+
             if (strongSelf.conversation.type == EMConversationTypeGroupChat){
                 smessage.chatType = EMChatTypeGroupChat;
             } else {
