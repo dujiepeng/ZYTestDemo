@@ -40,8 +40,8 @@
     if (!self.imageModel.isSender && self.readDelegate && [self.readDelegate respondsToSelector:@selector(readMessageFinished:)]) {
         
         [self.readDelegate readMessageFinished:self.imageModel];
-        [photoBrowser dismissViewControllerAnimated:YES completion:nil];
     }
+    [photoBrowser dismissViewControllerAnimated:YES completion:nil];
     
 }
 @end
