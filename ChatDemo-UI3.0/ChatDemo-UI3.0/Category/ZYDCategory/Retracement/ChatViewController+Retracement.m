@@ -66,14 +66,24 @@
     NSString *from = model.message.from;
     
     if ([currentUsername isEqualToString:from]) {
-        
-        if (messageType == EMMessageBodyTypeText) {
-            [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
-        } else if (messageType == EMMessageBodyTypeImage){
-            [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
-        } else {
-            [self.menuController setMenuItems:@[_deleteMenuItem,retracementMenuItem]];
+        if (self.conversation.type == EMChatTypeChatRoom){
+            if (messageType == EMMessageBodyTypeText) {
+                [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem]];
+            } else if (messageType == EMMessageBodyTypeImage){
+                [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem]];
+            } else {
+                [self.menuController setMenuItems:@[_deleteMenuItem]];
+            }
+        }else{
+            if (messageType == EMMessageBodyTypeText) {
+                [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
+            } else if (messageType == EMMessageBodyTypeImage){
+                [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
+            } else {
+                [self.menuController setMenuItems:@[_deleteMenuItem,retracementMenuItem]];
+            }
         }
+        
     }else{
         if (messageType == EMMessageBodyTypeText) {
             [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem]];
@@ -158,6 +168,9 @@
             [strongSelf.dataArray replaceObjectAtIndex:self.menuIndexPath.row withObject:model];
             
             __block NSInteger index = -1;
+            NSLock *mutexLock;
+            [mutexLock lock];
+
             [strongSelf.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj isKindOfClass:[EMMessage class]]) {
                     EMMessage *_message = (EMMessage *)obj;
@@ -170,7 +183,8 @@
             if (index > -1) {
                 [strongSelf.messsagesSource replaceObjectAtIndex:index withObject:smessage];
             }
-            
+            [mutexLock unlock];
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf.tableView beginUpdates];
                 [strongSelf.tableView reloadRowsAtIndexPaths:@[self.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
