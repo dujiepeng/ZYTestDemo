@@ -38,7 +38,7 @@
 #pragma mark - shareLocation
 #define SHARE_LOCATION_NOTI_KEY @"ShareLocationNoti"
 
-#define SHARE_LOCATION_MESSAGE_FLAG @"ShareLocation"
+#define SHARE_LOCATION_MESSAGE_FLAG @"shareLocation"
 #define STOP_SHARE_LOCATION_FLAG @"isStop"
 
 #define LATITUDE @"latitude"
