@@ -178,6 +178,10 @@
 		90EB333E1E7644A300054987 /* GroupMessageReadersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EB33321E7644A300054987 /* GroupMessageReadersViewController.m */; };
 		90EB333F1E7644A300054987 /* hasRead@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EB33331E7644A300054987 /* hasRead@3x.png */; };
 		90EB33401E7644A300054987 /* LocalDataTools.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EB33371E7644A300054987 /* LocalDataTools.m */; };
+		90ECE57A1E800002008544AF /* ChatDemoHelper+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ECE5731E800002008544AF /* ChatDemoHelper+Retracement.m */; };
+		90ECE57B1E800002008544AF /* ChatViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ECE5751E800002008544AF /* ChatViewController+Retracement.m */; };
+		90ECE57C1E800002008544AF /* EaseMessageViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ECE5771E800002008544AF /* EaseMessageViewController+Retracement.m */; };
+		90ECE57D1E800002008544AF /* EaseRetracementMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 90ECE5791E800002008544AF /* EaseRetracementMessageCell.m */; };
 		90EF2CEC192F2B4E00BDC549 /* sr_refresh.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EF2CE5192F2B4E00BDC549 /* sr_refresh.png */; };
 		90EF2CED192F2B4E00BDC549 /* sr_refresh@2X.png in Resources */ = {isa = PBXBuildFile; fileRef = 90EF2CE6192F2B4E00BDC549 /* sr_refresh@2X.png */; };
 		90EF2CEE192F2B4E00BDC549 /* SRRefreshView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90EF2CE9192F2B4E00BDC549 /* SRRefreshView.m */; };
@@ -387,9 +391,6 @@
 		D2FD8DC51E5C3AF90097B20D /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */; };
 		D2FD8DC61E5C3AF90097B20D /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2FFDB921C1687A30031425A /* ChatDemoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FFDB911C1687A30031425A /* ChatDemoHelper.m */; };
-		DE225D091E7A412700769A8E /* EaseMessageViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D061E7A412700769A8E /* EaseMessageViewController+Retracement.m */; };
-		DE225D0A1E7A412700769A8E /* EaseRetracementMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */; };
-		DE225D361E7BC1D600769A8E /* ChatViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */; };
 		EB1975B21ADE0C77002E7E27 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1975B11ADE0C77002E7E27 /* libc++.dylib */; };
 		EBD2AB071A7CDAC000D16528 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AA3D1A7CDABF00D16528 /* chatListCellHead.png */; };
 		EBD2AB081A7CDAC000D16528 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AA3E1A7CDABF00D16528 /* chatListCellHead@2x.png */; };
@@ -783,6 +784,14 @@
 		90EB33351E7644A300054987 /* DefineKey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DefineKey.h; sourceTree = "<group>"; };
 		90EB33361E7644A300054987 /* LocalDataTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LocalDataTools.h; sourceTree = "<group>"; };
 		90EB33371E7644A300054987 /* LocalDataTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LocalDataTools.m; sourceTree = "<group>"; };
+		90ECE5721E800002008544AF /* ChatDemoHelper+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatDemoHelper+Retracement.h"; sourceTree = "<group>"; };
+		90ECE5731E800002008544AF /* ChatDemoHelper+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatDemoHelper+Retracement.m"; sourceTree = "<group>"; };
+		90ECE5741E800002008544AF /* ChatViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatViewController+Retracement.h"; sourceTree = "<group>"; };
+		90ECE5751E800002008544AF /* ChatViewController+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+Retracement.m"; sourceTree = "<group>"; };
+		90ECE5761E800002008544AF /* EaseMessageViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+Retracement.h"; sourceTree = "<group>"; };
+		90ECE5771E800002008544AF /* EaseMessageViewController+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+Retracement.m"; sourceTree = "<group>"; };
+		90ECE5781E800002008544AF /* EaseRetracementMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseRetracementMessageCell.h; sourceTree = "<group>"; };
+		90ECE5791E800002008544AF /* EaseRetracementMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseRetracementMessageCell.m; sourceTree = "<group>"; };
 		90EF2CE5192F2B4E00BDC549 /* sr_refresh.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sr_refresh.png; sourceTree = "<group>"; };
 		90EF2CE6192F2B4E00BDC549 /* sr_refresh@2X.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sr_refresh@2X.png"; sourceTree = "<group>"; };
 		90EF2CE7192F2B4E00BDC549 /* SRDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRDefine.h; sourceTree = "<group>"; };
@@ -1153,12 +1162,6 @@
 		D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
 		D2FFDB901C1687A30031425A /* ChatDemoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDemoHelper.h; sourceTree = "<group>"; };
 		D2FFDB911C1687A30031425A /* ChatDemoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDemoHelper.m; sourceTree = "<group>"; };
-		DE225D051E7A412700769A8E /* EaseMessageViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+Retracement.h"; sourceTree = "<group>"; };
-		DE225D061E7A412700769A8E /* EaseMessageViewController+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+Retracement.m"; sourceTree = "<group>"; };
-		DE225D071E7A412700769A8E /* EaseRetracementMessageCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseRetracementMessageCell.h; sourceTree = "<group>"; };
-		DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseRetracementMessageCell.m; sourceTree = "<group>"; };
-		DE225D341E7BC1D600769A8E /* ChatViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatViewController+Retracement.h"; sourceTree = "<group>"; };
-		DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+Retracement.m"; sourceTree = "<group>"; };
 		EB1975B11ADE0C77002E7E27 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		EBD2AA3D1A7CDABF00D16528 /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		EBD2AA3E1A7CDABF00D16528 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
@@ -1883,7 +1886,7 @@
 		90A5F9BE1E71300600B3B2E3 /* ZYDCategory */ = {
 			isa = PBXGroup;
 			children = (
-				DE225D041E7A412700769A8E /* Retracement */,
+				90ECE5711E800002008544AF /* Retracement */,
 				D21FD1451E793DC2006A0CAE /* FireAfterRead */,
 				90882EDF1E78FE5800FB9A9E /* ShareFiles */,
 				908B48D11E77DDCC00B2B4CA /* GroupMember */,
@@ -2011,6 +2014,21 @@
 				90EB33371E7644A300054987 /* LocalDataTools.m */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		90ECE5711E800002008544AF /* Retracement */ = {
+			isa = PBXGroup;
+			children = (
+				90ECE5721E800002008544AF /* ChatDemoHelper+Retracement.h */,
+				90ECE5731E800002008544AF /* ChatDemoHelper+Retracement.m */,
+				90ECE5741E800002008544AF /* ChatViewController+Retracement.h */,
+				90ECE5751E800002008544AF /* ChatViewController+Retracement.m */,
+				90ECE5761E800002008544AF /* EaseMessageViewController+Retracement.h */,
+				90ECE5771E800002008544AF /* EaseMessageViewController+Retracement.m */,
+				90ECE5781E800002008544AF /* EaseRetracementMessageCell.h */,
+				90ECE5791E800002008544AF /* EaseRetracementMessageCell.m */,
+			);
+			path = Retracement;
 			sourceTree = "<group>";
 		};
 		90EF2CE4192F2B4E00BDC549 /* SlimeRefresh */ = {
@@ -2731,19 +2749,6 @@
 			path = ../HyphenateFullSDK;
 			sourceTree = "<group>";
 		};
-		DE225D041E7A412700769A8E /* Retracement */ = {
-			isa = PBXGroup;
-			children = (
-				DE225D051E7A412700769A8E /* EaseMessageViewController+Retracement.h */,
-				DE225D061E7A412700769A8E /* EaseMessageViewController+Retracement.m */,
-				DE225D071E7A412700769A8E /* EaseRetracementMessageCell.h */,
-				DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */,
-				DE225D341E7BC1D600769A8E /* ChatViewController+Retracement.h */,
-				DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */,
-			);
-			path = Retracement;
-			sourceTree = "<group>";
-		};
 		EBD2AA341A7CDABF00D16528 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -3225,7 +3230,6 @@
 				D2FD8DA41E5C39FD0097B20D /* FixFopen.c in Sources */,
 				90EB333C1E7644A300054987 /* EMGroupReadControl.m in Sources */,
 				90A5F9F01E71300600B3B2E3 /* MainViewController+Category.m in Sources */,
-				DE225D361E7BC1D600769A8E /* ChatViewController+Retracement.m in Sources */,
 				D2FD8DA01E5C39FD0097B20D /* EaseEmoji.m in Sources */,
 				3C5EB36319407CAF005C7704 /* EMChooseViewController.m in Sources */,
 				3A2C3A251E23AF5000DCD9BE /* EMChatroomAdminsViewController.m in Sources */,
@@ -3251,7 +3255,6 @@
 				90A5F9F71E71300600B3B2E3 /* ShareLocationViewController.m in Sources */,
 				D2FD8DB81E5C39FD0097B20D /* EaseChatToolbar.m in Sources */,
 				3C3EB2FC19545FFD00E1AE9E /* PublicGroupListViewController.m in Sources */,
-				DE225D0A1E7A412700769A8E /* EaseRetracementMessageCell.m in Sources */,
 				D21FD15E1E793DC2006A0CAE /* EaseLocationViewController+GoneAfterRead.m in Sources */,
 				D2FD8D531E5C39FD0097B20D /* amrFileCodec.mm in Sources */,
 				3A386EDA1DE5539C000F3D8E /* DemoCallManager.m in Sources */,
@@ -3290,6 +3293,8 @@
 				90A5F9EE1E71300600B3B2E3 /* EaseChatToolbar+InputType.m in Sources */,
 				D2FD8DA51E5C39FD0097B20D /* EaseConversationListViewController.m in Sources */,
 				D29A6BA91B7208DF002324BB /* UIImageView+HeadImage.m in Sources */,
+				90ECE57C1E800002008544AF /* EaseMessageViewController+Retracement.m in Sources */,
+				90ECE57B1E800002008544AF /* ChatViewController+Retracement.m in Sources */,
 				3A2C3A261E23AF5000DCD9BE /* EMChatroomBansViewController.m in Sources */,
 				D2FD8DA81E5C39FD0097B20D /* EaseRefreshTableViewController.m in Sources */,
 				D2FD8DA11E5C39FD0097B20D /* EaseEmojiEmoticons.m in Sources */,
@@ -3352,7 +3357,6 @@
 				D2FD8D7F1E5C39FD0097B20D /* UIButton+EMWebCache.m in Sources */,
 				90B42A381B65E62C00968342 /* RobotManager.m in Sources */,
 				3AF6A6571E1F5BD40022E835 /* EMGroupMembersViewController.m in Sources */,
-				DE225D091E7A412700769A8E /* EaseMessageViewController+Retracement.m in Sources */,
 				3A386ED21DE5539C000F3D8E /* EMCallViewController.mm in Sources */,
 				D2FD8DA21E5C39FD0097B20D /* EaseEmotionEscape.m in Sources */,
 				D2FD8D781E5C39FD0097B20D /* EMSDWebImageDecoder.m in Sources */,
@@ -3370,6 +3374,7 @@
 				D2FD8DAE1E5C39FD0097B20D /* EaseMessageCell.m in Sources */,
 				D2FD8D841E5C39FD0097B20D /* UIImageView+EMWebCache.m in Sources */,
 				3C914D8619514BBD0002DAD3 /* CreateGroupViewController.m in Sources */,
+				90ECE57D1E800002008544AF /* EaseRetracementMessageCell.m in Sources */,
 				D2FD8D9B1E5C39FD0097B20D /* UIViewController+DismissKeyboard.m in Sources */,
 				9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */,
 				D2FD8D741E5C39FD0097B20D /* MWZoomingScrollView.m in Sources */,
@@ -3393,6 +3398,7 @@
 				D2FFDB921C1687A30031425A /* ChatDemoHelper.m in Sources */,
 				D2FD8D701E5C39FD0097B20D /* MWPhoto.m in Sources */,
 				D2FD8DA71E5C39FD0097B20D /* EaseMessageViewController.m in Sources */,
+				90ECE57A1E800002008544AF /* ChatDemoHelper+Retracement.m in Sources */,
 				D2BF98B31AEDD780009E0D5C /* EditNicknameViewController.m in Sources */,
 				D2FD8D551E5C39FD0097B20D /* EMVoiceConverter.mm in Sources */,
 				D21FD1641E793DC2006A0CAE /* RemoveAfterReadCell.m in Sources */,

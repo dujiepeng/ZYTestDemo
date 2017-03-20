@@ -168,6 +168,9 @@
             [strongSelf.dataArray replaceObjectAtIndex:self.menuIndexPath.row withObject:model];
             
             __block NSInteger index = -1;
+            NSLock *mutexLock;
+            [mutexLock lock];
+
             [strongSelf.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
                 if ([obj isKindOfClass:[EMMessage class]]) {
                     EMMessage *_message = (EMMessage *)obj;
@@ -180,7 +183,8 @@
             if (index > -1) {
                 [strongSelf.messsagesSource replaceObjectAtIndex:index withObject:smessage];
             }
-            
+            [mutexLock unlock];
+
             dispatch_async(dispatch_get_main_queue(), ^{
                 [strongSelf.tableView beginUpdates];
                 [strongSelf.tableView reloadRowsAtIndexPaths:@[self.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
