@@ -16,9 +16,9 @@
 #define CLEAR_QUEUE_TIME               5.0f
 #define READ_CMD_TIMEINTERVAL          2.0f
 
-#define GROUP_READ_CMD                 @"group_read_cmd"
-#define UPDATE_MSGID_LIST              @"update_msgId_list"
-#define CURRENT_CONVERSATIONID         @"current_conversationId"
+#define GROUP_READ_ACTION              @"group_read_action"
+#define GROUP_READ_MSG_ID_ARRAY        @"group_read_msg_id_array"
+#define GROUP_READ_CONVERSATION_ID     @"group_read_conversation_id"
 
 #define UPDATE_GROUPMSG_READCOUNT      @"updateGroupMessageReadCount"
 #define ENTRY_GROUPMSG_READERLIST      @"entryGroupMessageReadersList"

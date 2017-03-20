@@ -10,6 +10,7 @@
 #import "ConversationListController.h"
 #import "NoticeViewController.h"
 #import <objc/runtime.h>
+#import "GroupReadHelper.h"
 
 @interface MainViewController()
 @property (nonatomic, strong) UIBarButtonItem *noticeItem;
@@ -51,6 +52,7 @@
 }
 
 - (void)ZYDViewDidLoad {
+    [GroupReadHelper helper];
     [self ZYDViewDidLoad];
     
     [[NSNotificationCenter defaultCenter] addObserver:self

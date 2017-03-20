@@ -82,14 +82,6 @@ static char queueKey;
     }
     else
     {
-        if (message.chatType == EMChatTypeGroupChat) {
-            message.isReadAcked = YES;
-            [[EMClient sharedClient].chatManager updateMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
-                if (!aError) {
-//                    NSLog(@"更新成功");
-                }
-            }];
-        }
         return YES;
     }
 }
@@ -121,6 +113,13 @@ static char queueKey;
                 NSMutableArray *msgIds = [NSMutableArray arrayWithArray:self.readMsgIdDic[toUser]];
                 [msgIds addObject:message.messageId];
                 [self.readMsgIdDic setObject:msgIds forKey:toUser];
+                
+                message.isReadAcked = YES;
+                [[EMClient sharedClient].chatManager updateMessage:message completion:^(EMMessage *aMessage, EMError *aError) {
+                    if (!aError) {
+                        //                    NSLog(@"更新成功");
+                    }
+                }];
             }
         }
     }
@@ -148,9 +147,9 @@ static char queueKey;
         return;
     }
     
-    EMCmdMessageBody *_body = [[EMCmdMessageBody alloc] initWithAction:GROUP_READ_CMD];
+    EMCmdMessageBody *_body = [[EMCmdMessageBody alloc] initWithAction:GROUP_READ_ACTION];
     NSString *_currentUsername = [EMClient sharedClient].currentUsername;
-    NSDictionary *_ext = @{UPDATE_MSGID_LIST:msgIds, CURRENT_CONVERSATIONID:self.conversation.conversationId};
+    NSDictionary *_ext = @{GROUP_READ_MSG_ID_ARRAY:msgIds, GROUP_READ_CONVERSATION_ID:self.conversation.conversationId};
     EMMessage *_message = [[EMMessage alloc] initWithConversationID:toUser
                                                               from:_currentUsername
                                                                 to:toUser

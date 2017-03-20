@@ -116,6 +116,10 @@
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
 		715B84571E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */; };
+		7198A2881E7BBB7D0034C889 /* MainViewController+GroupPushBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 7198A2841E7BBB7D0034C889 /* MainViewController+GroupPushBlock.m */; };
+		7198A2891E7BBB7D0034C889 /* EaseMessageCell+Link.m in Sources */ = {isa = PBXBuildFile; fileRef = 7198A2871E7BBB7D0034C889 /* EaseMessageCell+Link.m */; };
+		7198A28C1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 7198A28B1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.m */; };
+		71C179621E7F8AE300808FF3 /* GroupReadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 71C179611E7F8AE300808FF3 /* GroupReadHelper.m */; };
 		833E2D9E1DC723D600C5AB48 /* GettingMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */; };
 		90011F921AE4BF090088D549 /* EMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90011F911AE4BF090088D549 /* EMAlertView.m */; };
 		9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7861939D8D000DC38A4 /* ChatViewController.m */; };
@@ -660,6 +664,14 @@
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		715B84551E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+GroupMemberChange.h"; sourceTree = "<group>"; };
 		715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+GroupMemberChange.m"; sourceTree = "<group>"; };
+		7198A2831E7BBB7D0034C889 /* MainViewController+GroupPushBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+GroupPushBlock.h"; sourceTree = "<group>"; };
+		7198A2841E7BBB7D0034C889 /* MainViewController+GroupPushBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainViewController+GroupPushBlock.m"; sourceTree = "<group>"; };
+		7198A2861E7BBB7D0034C889 /* EaseMessageCell+Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageCell+Link.h"; sourceTree = "<group>"; };
+		7198A2871E7BBB7D0034C889 /* EaseMessageCell+Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageCell+Link.m"; sourceTree = "<group>"; };
+		7198A28A1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseConversationCell+GroupPushBlock.h"; sourceTree = "<group>"; };
+		7198A28B1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseConversationCell+GroupPushBlock.m"; sourceTree = "<group>"; };
+		71C179601E7F8AE300808FF3 /* GroupReadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GroupReadHelper.h; sourceTree = "<group>"; };
+		71C179611E7F8AE300808FF3 /* GroupReadHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GroupReadHelper.m; sourceTree = "<group>"; };
 		833E2D9C1DC723D600C5AB48 /* GettingMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GettingMoreFooterView.h; sourceTree = "<group>"; };
 		833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GettingMoreFooterView.m; sourceTree = "<group>"; };
 		90011F901AE4BF090088D549 /* EMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertView.h; sourceTree = "<group>"; };
@@ -1603,6 +1615,26 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		7198A2821E7BBB7D0034C889 /* GroupPushBlock */ = {
+			isa = PBXGroup;
+			children = (
+				7198A2831E7BBB7D0034C889 /* MainViewController+GroupPushBlock.h */,
+				7198A2841E7BBB7D0034C889 /* MainViewController+GroupPushBlock.m */,
+				7198A28A1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.h */,
+				7198A28B1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.m */,
+			);
+			path = GroupPushBlock;
+			sourceTree = "<group>";
+		};
+		7198A2851E7BBB7D0034C889 /* Link */ = {
+			isa = PBXGroup;
+			children = (
+				7198A2861E7BBB7D0034C889 /* EaseMessageCell+Link.h */,
+				7198A2871E7BBB7D0034C889 /* EaseMessageCell+Link.m */,
+			);
+			path = Link;
+			sourceTree = "<group>";
+		};
 		90011F8F1AE4BF090088D549 /* EMAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1883,6 +1915,8 @@
 		90A5F9BE1E71300600B3B2E3 /* ZYDCategory */ = {
 			isa = PBXGroup;
 			children = (
+				7198A2821E7BBB7D0034C889 /* GroupPushBlock */,
+				7198A2851E7BBB7D0034C889 /* Link */,
 				DE225D041E7A412700769A8E /* Retracement */,
 				D21FD1451E793DC2006A0CAE /* FireAfterRead */,
 				90882EDF1E78FE5800FB9A9E /* ShareFiles */,
@@ -1999,6 +2033,8 @@
 				90EB33311E7644A300054987 /* GroupMessageReadersViewController.h */,
 				90EB33321E7644A300054987 /* GroupMessageReadersViewController.m */,
 				90EB33331E7644A300054987 /* hasRead@3x.png */,
+				71C179601E7F8AE300808FF3 /* GroupReadHelper.h */,
+				71C179611E7F8AE300808FF3 /* GroupReadHelper.m */,
 			);
 			path = GroupRead;
 			sourceTree = "<group>";
@@ -3169,6 +3205,7 @@
 				90A5F9F61E71300600B3B2E3 /* ShareLocationHeadView.m in Sources */,
 				3049C18E1E5305DD00D3B159 /* RedpacketTakenMessageTipCell.m in Sources */,
 				D2FD8D671E5C39FD0097B20D /* MJRefreshStateHeader.m in Sources */,
+				7198A28C1E7BEB030034C889 /* EaseConversationCell+GroupPushBlock.m in Sources */,
 				3049C18F1E5305DD00D3B159 /* RedpacketView.m in Sources */,
 				D2FD8D611E5C39FD0097B20D /* MJRefreshAutoStateFooter.m in Sources */,
 				3049C1901E5305DD00D3B159 /* RedPacketUserConfig.m in Sources */,
@@ -3326,6 +3363,7 @@
 				D2FD8D4C1E5C39FD0097B20D /* EMAudioPlayerUtil.m in Sources */,
 				3AD0FB841E1E0962001F3957 /* EaseRedBagCell.m in Sources */,
 				3C2923B11988E13300DCCD40 /* BlackListViewController.m in Sources */,
+				7198A2891E7BBB7D0034C889 /* EaseMessageCell+Link.m in Sources */,
 				D2FD8DB11E5C39FD0097B20D /* EaseBubbleView+Gif.m in Sources */,
 				9091112F192EEC0F008A48AA /* SettingsViewController.m in Sources */,
 				D2F4C81F1E7BCD2500240F59 /* EaseFireHelper.m in Sources */,
@@ -3345,6 +3383,7 @@
 				90911137192EEC91008A48AA /* LoginViewController.m in Sources */,
 				3A386EDB1DE5539C000F3D8E /* EMCallOptions+NSCoding.m in Sources */,
 				D2FD8D641E5C39FD0097B20D /* MJRefreshBackStateFooter.m in Sources */,
+				71C179621E7F8AE300808FF3 /* GroupReadHelper.m in Sources */,
 				3C6FFA2419A2F5560003EB25 /* DebugViewController.m in Sources */,
 				908B48D41E77DDCC00B2B4CA /* ChatDemoHelper+GroupMemberChange.m in Sources */,
 				D2FD8D6B1E5C39FD0097B20D /* UIScrollView+MJRefresh.m in Sources */,
@@ -3391,6 +3430,7 @@
 				3C13D94E1A120BA200903622 /* ContactView.m in Sources */,
 				D2FD8DAB1E5C39FD0097B20D /* EaseUserCell.m in Sources */,
 				D2FFDB921C1687A30031425A /* ChatDemoHelper.m in Sources */,
+				7198A2881E7BBB7D0034C889 /* MainViewController+GroupPushBlock.m in Sources */,
 				D2FD8D701E5C39FD0097B20D /* MWPhoto.m in Sources */,
 				D2FD8DA71E5C39FD0097B20D /* EaseMessageViewController.m in Sources */,
 				D2BF98B31AEDD780009E0D5C /* EditNicknameViewController.m in Sources */,
