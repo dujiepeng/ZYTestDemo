@@ -9,7 +9,10 @@
 #import "ConversationListController+Top.h"
 #import "EaseConversationModel+Top.h"
 
+
 @implementation ConversationListController (Top)
+
+
 - (NSArray<UITableViewRowAction *> *)tableView:(UITableView *)tableView editActionsForRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UITableViewRowAction *removeRowAction = [UITableViewRowAction rowActionWithStyle:UITableViewRowActionStyleNormal
@@ -118,7 +121,9 @@
     
     NSArray *topSorted = [topAry sortedArrayUsingComparator:
                           ^(EaseConversationModel *obj1, EaseConversationModel* obj2){
-                              if(obj1.topTime > obj2.topTime) {
+                              EMMessage *message1 = [obj1.conversation latestMessage];
+                              EMMessage *message2 = [obj2.conversation latestMessage];
+                              if(message1.timestamp > message2.timestamp) {
                                   return(NSComparisonResult)NSOrderedAscending;
                               }else {
                                   return(NSComparisonResult)NSOrderedDescending;

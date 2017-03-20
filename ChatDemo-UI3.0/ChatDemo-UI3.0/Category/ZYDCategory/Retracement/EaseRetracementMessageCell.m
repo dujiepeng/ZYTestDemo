@@ -7,10 +7,9 @@
 //
 
 #import "EaseRetracementMessageCell.h"
+#define SCRERNWIDTH      [[UIScreen mainScreen] bounds].size.width
 
 CGFloat const RetracementMessage = 5;
-CGFloat const RetracementMessageLeft = 40;
-
 
 @interface EaseRetracementMessageCell()
 
@@ -32,10 +31,7 @@ CGFloat const RetracementMessageLeft = 40;
 
 + (void)initialize
 {
-    // UIAppearance Proxy Defaults
-    EaseRetracementMessageCell *cell = [self appearance];
-    cell.titleLabelColor = [UIColor lightGrayColor];
-    cell.titleLabelFont = [UIFont systemFontOfSize:12];
+
 }
 
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
@@ -54,27 +50,37 @@ CGFloat const RetracementMessageLeft = 40;
 
 - (void)_setupSubview
 {
+    
     _titleLabel = [[UILabel alloc] init];
     _titleLabel.translatesAutoresizingMaskIntoConstraints = NO;
     _titleLabel.textAlignment = NSTextAlignmentCenter;
     _titleLabel.backgroundColor =[UIColor colorWithRed:0.96f green:0.96f blue:0.96f alpha:1.00f];
-    _titleLabel.textColor = _titleLabelColor;
-    _titleLabel.font = _titleLabelFont;
+    _titleLabel.layer.cornerRadius = RetracementMessage;
+    _titleLabel.layer.borderWidth = 0.1;
+    _titleLabel.layer.borderColor = [[UIColor lightGrayColor] CGColor];
+    _titleLabel.textColor = [UIColor lightGrayColor];
+    _titleLabel.center = self.contentView.center;
+    
+    _titleLabel.adjustsFontSizeToFitWidth = YES;
     [self.contentView addSubview:_titleLabel];
     
-    [self _setupTitleLabelConstraints];
 }
 
 #pragma mark - Setup Constraints
 
 - (void)_setupTitleLabelConstraints
 {
+    CGSize contentSize = [self sizeWithText:_titleLabel.text font:[UIFont systemFontOfSize:12] maxSize:CGSizeMake(MAXFLOAT, MAXFLOAT)];
+    CGFloat contentW =contentSize.width;
+    CGFloat Width = (SCRERNWIDTH - contentW)/2;
+    
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeTop multiplier:1.0 constant:RetracementMessage]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeBottom multiplier:1.0 constant:-RetracementMessage]];
     [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeCenterY relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeCenterY multiplier:1.0 constant:0]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-RetracementMessageLeft]];
-    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:RetracementMessageLeft]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeRight multiplier:1.0 constant:-Width]];
+    [self addConstraint:[NSLayoutConstraint constraintWithItem:self.titleLabel attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:self.contentView attribute:NSLayoutAttributeLeft multiplier:1.0 constant:Width]];
 }
+
 
 #pragma mark - setter
 
@@ -82,18 +88,13 @@ CGFloat const RetracementMessageLeft = 40;
 {
     _title = title;
     _titleLabel.text = _title;
+    [self _setupTitleLabelConstraints];
 }
 
-- (void)setTitleLabelFont:(UIFont *)titleLabelFont
+- (CGSize)sizeWithText:(NSString *)text font:(UIFont *)font maxSize:(CGSize)maxSize
 {
-    _titleLabelFont = titleLabelFont;
-    _titleLabel.font = _titleLabelFont;
-}
-
-- (void)setTitleLabelColor:(UIColor *)titleLabelColor
-{
-    _titleLabelColor = titleLabelColor;
-    _titleLabel.textColor = _titleLabelColor;
+    NSDictionary *attrs = @{NSFontAttributeName : font};
+    return [text boundingRectWithSize:maxSize options:NSStringDrawingUsesLineFragmentOrigin attributes:attrs context:nil].size;
 }
 
 #pragma mark - public

@@ -384,12 +384,15 @@
 		D2FD8DBF1E5C39FD0097B20D /* EaseRecordView.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD8D451E5C39FD0097B20D /* EaseRecordView.m */; };
 		D2FD8DC01E5C39FD0097B20D /* EaseConversationCell.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FD8D481E5C39FD0097B20D /* EaseConversationCell.m */; };
 		D2FD8DC11E5C39FD0097B20D /* EaseUIResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = D2FD8D4A1E5C39FD0097B20D /* EaseUIResource.bundle */; };
-		D2FD8DC51E5C3AF90097B20D /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */; };
-		D2FD8DC61E5C3AF90097B20D /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D2FFDB921C1687A30031425A /* ChatDemoHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = D2FFDB911C1687A30031425A /* ChatDemoHelper.m */; };
 		DE225D091E7A412700769A8E /* EaseMessageViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D061E7A412700769A8E /* EaseMessageViewController+Retracement.m */; };
 		DE225D0A1E7A412700769A8E /* EaseRetracementMessageCell.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */; };
 		DE225D361E7BC1D600769A8E /* ChatViewController+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */; };
+		DE9A40941E7FAC5600E8148E /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9A40921E7F785000E8148E /* Hyphenate.framework */; };
+		DE9A40981E7FAD4600E8148E /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9A40971E7FAD4600E8148E /* Hyphenate.framework */; };
+		DEC4AEB81E7FAD690090E9CC /* Hyphenate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE9A40971E7FAD4600E8148E /* Hyphenate.framework */; };
+		DEC4AEB91E7FAD690090E9CC /* Hyphenate.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = DE9A40971E7FAD4600E8148E /* Hyphenate.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		DEC4AEBC1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.m in Sources */ = {isa = PBXBuildFile; fileRef = DEC4AEBB1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.m */; };
 		EB1975B21ADE0C77002E7E27 /* libc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = EB1975B11ADE0C77002E7E27 /* libc++.dylib */; };
 		EBD2AB071A7CDAC000D16528 /* chatListCellHead.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AA3D1A7CDABF00D16528 /* chatListCellHead.png */; };
 		EBD2AB081A7CDAC000D16528 /* chatListCellHead@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = EBD2AA3E1A7CDABF00D16528 /* chatListCellHead@2x.png */; };
@@ -472,7 +475,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				D2FD8DC61E5C3AF90097B20D /* Hyphenate.framework in Embed Frameworks */,
+				DEC4AEB91E7FAD690090E9CC /* Hyphenate.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1150,7 +1153,6 @@
 		D2FD8D471E5C39FD0097B20D /* EaseConversationCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EaseConversationCell.h; sourceTree = "<group>"; };
 		D2FD8D481E5C39FD0097B20D /* EaseConversationCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseConversationCell.m; sourceTree = "<group>"; };
 		D2FD8D4A1E5C39FD0097B20D /* EaseUIResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = EaseUIResource.bundle; sourceTree = "<group>"; };
-		D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
 		D2FFDB901C1687A30031425A /* ChatDemoHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChatDemoHelper.h; sourceTree = "<group>"; };
 		D2FFDB911C1687A30031425A /* ChatDemoHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChatDemoHelper.m; sourceTree = "<group>"; };
 		DE225D051E7A412700769A8E /* EaseMessageViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+Retracement.h"; sourceTree = "<group>"; };
@@ -1159,6 +1161,10 @@
 		DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EaseRetracementMessageCell.m; sourceTree = "<group>"; };
 		DE225D341E7BC1D600769A8E /* ChatViewController+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatViewController+Retracement.h"; sourceTree = "<group>"; };
 		DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatViewController+Retracement.m"; sourceTree = "<group>"; };
+		DE9A40921E7F785000E8148E /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Hyphenate.framework; path = /Users/jiangyueting/Desktop/ZYTestDemo/Hyphenate.framework; sourceTree = "<absolute>"; };
+		DE9A40971E7FAD4600E8148E /* Hyphenate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Hyphenate.framework; sourceTree = "<group>"; };
+		DEC4AEBA1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ChatDemoHelper+Retracement.h"; sourceTree = "<group>"; };
+		DEC4AEBB1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ChatDemoHelper+Retracement.m"; sourceTree = "<group>"; };
 		EB1975B11ADE0C77002E7E27 /* libc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libc++.dylib"; path = "usr/lib/libc++.dylib"; sourceTree = SDKROOT; };
 		EBD2AA3D1A7CDABF00D16528 /* chatListCellHead.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = chatListCellHead.png; sourceTree = "<group>"; };
 		EBD2AA3E1A7CDABF00D16528 /* chatListCellHead@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "chatListCellHead@2x.png"; sourceTree = "<group>"; };
@@ -1241,7 +1247,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3A03FE9F1E360BEE00DC1ABC /* MessageUI.framework in Frameworks */,
-				D2FD8DC51E5C3AF90097B20D /* Hyphenate.framework in Frameworks */,
 				D25972881BCBBFA100148BF6 /* libMobClickLibrary.a in Frameworks */,
 				3AD0FB8B1E1E0962001F3957 /* libRedpacketLib.a in Frameworks */,
 				3A595FAC1D6DBBD100504DB3 /* CoreTelephony.framework in Frameworks */,
@@ -1250,12 +1255,15 @@
 				921C6A9E1D2A841600D8257F /* CoreMotion.framework in Frameworks */,
 				D29A6BB61B7209C8002324BB /* Social.framework in Frameworks */,
 				D29A6BB51B7209C1002324BB /* Accounts.framework in Frameworks */,
+				DEC4AEB81E7FAD690090E9CC /* Hyphenate.framework in Frameworks */,
 				C035E8151AEA40F400283EE9 /* CoreData.framework in Frameworks */,
 				EB1975B21ADE0C77002E7E27 /* libc++.dylib in Frameworks */,
 				EBF9556C1ADD0F0C0087E035 /* libstdc++.6.0.9.dylib in Frameworks */,
 				3CBB931C1A14B227007FED9E /* libsqlite3.dylib in Frameworks */,
 				3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */,
 				D2FD8D561E5C39FD0097B20D /* libopencore-amrnb.a in Frameworks */,
+				DE9A40981E7FAD4600E8148E /* Hyphenate.framework in Frameworks */,
+				DE9A40941E7FAC5600E8148E /* Hyphenate.framework in Frameworks */,
 				3C1CEF7F196EA37600DBA56B /* ImageIO.framework in Frameworks */,
 				3C06AB0319405D330076FF0B /* MapKit.framework in Frameworks */,
 				D21E563F1E11120800C50BA0 /* libRedpacketLib.a in Frameworks */,
@@ -1713,7 +1721,7 @@
 		9091101B192EEA70008A48AA = {
 			isa = PBXGroup;
 			children = (
-				D2FD8DC21E5C3A0B0097B20D /* HyphenateFullSDK */,
+				DE9A40961E7FAD4600E8148E /* HyphenateFullSDK */,
 				9091102D192EEA70008A48AA /* ChatDemo-UI3.0 */,
 				90911026192EEA70008A48AA /* Frameworks */,
 				90911025192EEA70008A48AA /* Products */,
@@ -2722,15 +2730,6 @@
 			path = resources;
 			sourceTree = "<group>";
 		};
-		D2FD8DC21E5C3A0B0097B20D /* HyphenateFullSDK */ = {
-			isa = PBXGroup;
-			children = (
-				D2FD8DC31E5C3A0B0097B20D /* Hyphenate.framework */,
-			);
-			name = HyphenateFullSDK;
-			path = ../HyphenateFullSDK;
-			sourceTree = "<group>";
-		};
 		DE225D041E7A412700769A8E /* Retracement */ = {
 			isa = PBXGroup;
 			children = (
@@ -2740,8 +2739,18 @@
 				DE225D081E7A412700769A8E /* EaseRetracementMessageCell.m */,
 				DE225D341E7BC1D600769A8E /* ChatViewController+Retracement.h */,
 				DE225D351E7BC1D600769A8E /* ChatViewController+Retracement.m */,
+				DEC4AEBA1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.h */,
+				DEC4AEBB1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.m */,
 			);
 			path = Retracement;
+			sourceTree = "<group>";
+		};
+		DE9A40961E7FAD4600E8148E /* HyphenateFullSDK */ = {
+			isa = PBXGroup;
+			children = (
+				DE9A40971E7FAD4600E8148E /* Hyphenate.framework */,
+			);
+			path = HyphenateFullSDK;
 			sourceTree = "<group>";
 		};
 		EBD2AA341A7CDABF00D16528 /* Resources */ = {
@@ -3249,6 +3258,7 @@
 				D2FD8D631E5C39FD0097B20D /* MJRefreshBackNormalFooter.m in Sources */,
 				90DE3C6E1E7293B5009C85EE /* NoticeInfoViewController.m in Sources */,
 				90A5F9F71E71300600B3B2E3 /* ShareLocationViewController.m in Sources */,
+				DEC4AEBC1E7FAE7D0090E9CC /* ChatDemoHelper+Retracement.m in Sources */,
 				D2FD8DB81E5C39FD0097B20D /* EaseChatToolbar.m in Sources */,
 				3C3EB2FC19545FFD00E1AE9E /* PublicGroupListViewController.m in Sources */,
 				DE225D0A1E7A412700769A8E /* EaseRetracementMessageCell.m in Sources */,
@@ -3555,6 +3565,7 @@
 					"$(PROJECT_DIR)/ChatDemo-UI3.0",
 					"$(PROJECT_DIR)/RedpacketSDK",
 					"$(PROJECT_DIR)/../HyphenateFullSDK",
+					"$(PROJECT_DIR)/HyphenateFullSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatDemo-UI3.0/ChatDemo-UI3.0-Prefix.pch";
@@ -3567,6 +3578,7 @@
 					"$(PROJECT_DIR)/../RedpacketSDK/",
 					"\"$(SRCROOT)/../../easeui_ios/EaseUI/EaseUI\"/**",
 					"\"$(SRCROOT)/../../emclient-ios/newSDK/libHyphenateVideoRecorderPlugin\"",
+					"\"$(SRCROOT)/../Hyphenate.framework/Headers\"",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "ChatDemo-UI3.0/ChatDemo-UI3.0-Info.plist";
@@ -3623,6 +3635,7 @@
 					"$(PROJECT_DIR)/ChatDemo-UI3.0",
 					"$(PROJECT_DIR)/RedpacketSDK",
 					"$(PROJECT_DIR)/../HyphenateFullSDK",
+					"$(PROJECT_DIR)/HyphenateFullSDK",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ChatDemo-UI3.0/ChatDemo-UI3.0-Prefix.pch";
@@ -3632,6 +3645,7 @@
 					"$(PROJECT_DIR)/../RedpacketSDK/",
 					"\"$(SRCROOT)/../../easeui_ios/EaseUI/EaseUI\"/**",
 					"\"$(SRCROOT)/../../emclient-ios/newSDK/libHyphenateVideoRecorderPlugin\"",
+					"\"$(SRCROOT)/../Hyphenate.framework/Headers\"",
 				);
 				INFOPLIST_EXPAND_BUILD_SETTINGS = YES;
 				INFOPLIST_FILE = "ChatDemo-UI3.0/ChatDemo-UI3.0-Info.plist";
