@@ -87,7 +87,7 @@
             newBody.thumbnailRemotePath = imgBody.thumbnailRemotePath;
             newBody.remotePath = imgBody.remotePath;
             EMMessage *newMsg = [[EMMessage alloc] initWithConversationID:userModel.buddy from:from to:userModel.buddy body:newBody ext:message.ext];
-            newMsg.chatType = message.chatType;
+            newMsg.chatType = EMChatTypeChat;
             
             [[EMClient sharedClient].chatManager sendMessage:newMsg progress:nil completion:^(EMMessage *message, EMError *error) {
                 if (error) {
@@ -143,7 +143,7 @@
                                                                          displayName:@"video.mp4"];
             newBody.thumbnailLocalPath = videoBody.thumbnailLocalPath;
             EMMessage *newMsg = [[EMMessage alloc] initWithConversationID:userModel.buddy from:from to:userModel.buddy body:newBody ext:message.ext];
-            newMsg.chatType = message.chatType;
+            newMsg.chatType = EMChatTypeChat;
             
             [[EMClient sharedClient].chatManager sendMessage:newMsg progress:nil completion:^(EMMessage *message, EMError *error) {
                 if (error) {

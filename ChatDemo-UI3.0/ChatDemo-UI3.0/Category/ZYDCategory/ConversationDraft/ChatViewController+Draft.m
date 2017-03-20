@@ -14,14 +14,6 @@
 #import <objc/runtime.h>
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate>
-{
-    UIMenuItem *_copyMenuItem;
-    UIMenuItem *_deleteMenuItem;
-    UIMenuItem *_transpondMenuItem;
-    //  UIMenuItem *_retracementMenuItem;//撤回
-}
-
-@property (nonatomic, strong) UIMenuItem * retracementMenuItem;//撤回
 
 @end
 @implementation ChatViewController (Draft)
