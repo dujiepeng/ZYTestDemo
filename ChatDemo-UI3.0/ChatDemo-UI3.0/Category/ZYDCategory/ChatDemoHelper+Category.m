@@ -16,7 +16,7 @@
 
 #import "DefineKey.h"
 #import "LocalDataTools.h"
-#import "DefineKey.h"
+
 
 @implementation ChatDemoHelper (Category)
 + (void)load {
