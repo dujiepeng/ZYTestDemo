@@ -29,7 +29,7 @@
 @end
 @implementation ChatViewController (Retracement)
 + (void)load {
-
+    
     Method oldshowMenuViewController = class_getInstanceMethod([ChatViewController class], @selector(showMenuViewController:andIndexPath:messageType:));
     Method newshowMenuViewController = class_getInstanceMethod([ChatViewController class], @selector(ZYDshowMenuViewController:andIndexPath:messageType:));
     method_exchangeImplementations(oldshowMenuViewController, newshowMenuViewController);
@@ -44,57 +44,57 @@
     }
     
     if (_deleteMenuItem == nil) {
-        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"delete", @"Delete") action:@selector(deleteMenuAction:)];
+        _deleteMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"delete", @"Delete")
+                                                     action:@selector(deleteMenuAction:)];
     }
     
     if (_copyMenuItem == nil) {
-        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy") action:@selector(copyMenuAction:)];
+        _copyMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"copy", @"Copy")
+                                                   action:@selector(copyMenuAction:)];
     }
     
     if (_transpondMenuItem == nil) {
-        _transpondMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"transpond", @"Transpond") action:@selector(transpondMenuAction:)];
+        _transpondMenuItem = [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"transpond", @"Transpond")
+                                                        action:@selector(transpondMenuAction:)];
     }
     //撤回
     UIMenuItem *retracementMenuItem;
     if (retracementMenuItem == nil) {
-        retracementMenuItem= [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"retracement", @"Retracement")  action:@selector(messageRetracementMenuAction:)];
+        retracementMenuItem= [[UIMenuItem alloc] initWithTitle:NSLocalizedString(@"retracement", @"Retracement")
+                                                        action:@selector(messageRetracementMenuAction:)];
     }
     
     id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
+ 
+    NSMutableArray *items = [NSMutableArray array];
+    switch (messageType) {
+        case EMMessageBodyTypeText:
+        {
+            [items addObject:_copyMenuItem];
+        }
+        case EMMessageBodyTypeImage:
+        case EMMessageBodyTypeVideo:
+        {
+            [items addObject:_transpondMenuItem];
+        }
+        case EMMessageBodyTypeVoice:
+        case EMMessageBodyTypeFile:
+        case EMMessageBodyTypeLocation:
+        {
+            [items addObject:_deleteMenuItem];
+        }
+            break;
+        default:
+            break;
+    }
     
     NSString *currentUsername = [EMClient sharedClient].currentUsername;
     NSString *from = model.message.from;
-    
     if ([currentUsername isEqualToString:from]) {
-        if (self.conversation.type == EMChatTypeChatRoom){
-            if (messageType == EMMessageBodyTypeText) {
-                [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem]];
-            } else if (messageType == EMMessageBodyTypeImage){
-                [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem]];
-            } else {
-                [self.menuController setMenuItems:@[_deleteMenuItem]];
-            }
-        }else{
-            if (messageType == EMMessageBodyTypeText) {
-                [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
-            } else if (messageType == EMMessageBodyTypeImage){
-                [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem,retracementMenuItem]];
-            } else {
-                [self.menuController setMenuItems:@[_deleteMenuItem,retracementMenuItem]];
-            }
-        }
-        
-    }else{
-        if (messageType == EMMessageBodyTypeText) {
-            [self.menuController setMenuItems:@[_copyMenuItem, _deleteMenuItem,_transpondMenuItem]];
-        } else if (messageType == EMMessageBodyTypeImage){
-            [self.menuController setMenuItems:@[_deleteMenuItem,_transpondMenuItem]];
-        } else {
-            [self.menuController setMenuItems:@[_deleteMenuItem]];
-        }
+        [items addObject:retracementMenuItem];
     }
-    //    UIMenuItem *retracementMenuItem = [[UIMenuItem alloc]init];
     
+    [self.menuController setMenuItems:items];
     [self.menuController setTargetRect:showInView.frame inView:showInView.superview];
     [self.menuController setMenuVisible:YES animated:YES];
 }
@@ -147,15 +147,15 @@
             EMMessage *oldMessage = [strongSelf.conversation loadMessageWithId:aMessageId error:nil];
             EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",currentUsername] ];
             NSDictionary *extInsert = @{INSERT:body.text};
-
+            
             EMMessage *smessage = [[EMMessage alloc] initWithConversationID:conversationId
                                                                        from:currentUsername
                                                                          to:conversationId body:body
                                                                         ext:extInsert];
             smessage.timestamp = oldMessage.timestamp;
             smessage.localTime = oldMessage.localTime;
-
-
+            
+            
             if (strongSelf.conversation.type == EMConversationTypeGroupChat){
                 smessage.chatType = EMChatTypeGroupChat;
             } else {
