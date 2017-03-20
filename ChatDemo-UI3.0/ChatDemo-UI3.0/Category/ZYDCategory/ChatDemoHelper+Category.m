@@ -10,12 +10,9 @@
 #import "ShareLocationAnnotation.h"
 #import "EMConversation+Draft.h"
 #import <Hyphenate/Hyphenate.h>
-#import "EaseMessageViewController+GroupRead.h"
-#import "LocalDataTools.h"
 #import <objc/runtime.h>
 
 #import "DefineKey.h"
-#import "LocalDataTools.h"
 
 @implementation ChatDemoHelper (Category)
 + (void)load {
@@ -63,14 +60,6 @@
                 }
                 dic[@"username"] = msg.from;
                 [set addObject:dic];
-            }
-            else if ([body.action isEqualToString:GROUP_READ_CMD]) {
-                //群组消息已读
-                NSDictionary *ext = msg.ext;
-                NSString *groupId = ext[CURRENT_CONVERSATIONID];
-                NSArray *msgIds = ext[UPDATE_MSGID_LIST];
-                NSString *readerName = msg.from;
-                [[LocalDataTools tools] addDataToPlist:groupId msgIds:msgIds readerName:readerName];
             }
         }
     }
