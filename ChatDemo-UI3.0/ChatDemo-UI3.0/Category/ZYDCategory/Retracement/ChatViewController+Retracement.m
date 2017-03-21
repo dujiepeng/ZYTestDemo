@@ -147,8 +147,9 @@
     [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
         if (!error) {
             __strong typeof(ChatViewController) *strongSelf = weakSelf;
-            NSLog(@"发送成功");
+            NSLog(@"发送成功 %@",aMessageId);
             EMMessage *oldMessage = [strongSelf.conversation loadMessageWithId:aMessageId error:nil];
+            
             EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",currentUsername] ];
             NSDictionary *extInsert = @{INSERT:body.text};
             

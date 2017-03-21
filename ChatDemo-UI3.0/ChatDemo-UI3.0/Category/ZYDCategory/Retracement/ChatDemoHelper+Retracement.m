@@ -8,26 +8,49 @@
 
 #import "ChatDemoHelper+Retracement.h"
 #import "DefineKey.h"
+#import <objc/runtime.h>
+
 
 @implementation ChatDemoHelper (Retracement)
+//+(void)load {
+//
+//    Method oldCmdMessagesDidReceive = class_getInstanceMethod([ChatDemoHelper class], @selector(cmdMessagesDidReceive:));
+//    Method newCmdMessagesDidReceive = class_getInstanceMethod([ChatDemoHelper class], @selector(TCmdMessagesDidReceive:));
+//    method_exchangeImplementations(oldCmdMessagesDidReceive, newCmdMessagesDidReceive);
+//}
 
 // 接收撤回透传消息
-- (void)didReceiveCmdMessages:(NSArray *)aCmdMessages {
+- (void)tCmdRevokeMessagesDidReceive:(NSArray *)aCmdMessages {
     BOOL isRefreshCons = YES;
-    
+    NSMutableArray *revokeAry = [[NSMutableArray alloc] init];
+    NSMutableArray *msgAry = [[NSMutableArray alloc] init];
+
     for (EMMessage *cmdMessage in aCmdMessages) {
         EMCmdMessageBody *body = (EMCmdMessageBody *)cmdMessage.body;
-        if ([body.action isEqualToString:REVOKE_FLAG]) {
+        
+        NSString *action = body.action;
+        if ([action isEqualToString:REVOKE_FLAG]) {
+            [revokeAry addObject:cmdMessage];
+        }
+        else{
+            [msgAry addObject:cmdMessage];
+        }
+    }
+//    if (msgAry.count > 0) {
+//        [self TCmdMessagesDidReceive:msgAry];
+//    }
+    if (revokeAry.count > 0) {
+        NSLog(@"接收了%ld条撤回消息",revokeAry.count);
+        for (EMMessage *cmdRevokeMessage in revokeAry) {
             //删除撤回的消息
-            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cmdMessage.conversationId
-                                                                                           type:(EMConversationType)cmdMessage.chatType
+            EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:cmdRevokeMessage.conversationId
+                                                                                           type:(EMConversationType)cmdRevokeMessage.chatType
                                                                                createIfNotExist:YES];
-            NSString *revokeMessageId = cmdMessage.ext[MSG_ID];
-            //构建插入的消息
+            NSString *revokeMessageId = cmdRevokeMessage.ext[MSG_ID];
+            NSLog(@"--------------%@",revokeMessageId);
             EMMessage *newMessage = [self buildInsertMessageWithConversation:conversation
-                                                                  CmdMessage:cmdMessage
+                                                                  CmdMessage:cmdRevokeMessage
                                                                    messageId:revokeMessageId];
-            
             //判断是否删除成功
             BOOL isSuccess = [self removeRevokeMessageWithConversation:conversation
                                                              messageId:revokeMessageId];
@@ -40,7 +63,7 @@
                 
                 if (self.chatVC)  {
                     
-                    isChatting = [cmdMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
+                    isChatting = [cmdRevokeMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
                     [conversation insertMessage:newMessage error:nil];
                     [conversation deleteMessageWithId:revokeMessageId error:nil];
                     
@@ -76,7 +99,7 @@
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
                         [self.mainVC setupUnreadMessageCount];
                     }
-                    return;
+//                    return;
                 }
                 if (isChatting) {
                     isRefreshCons = NO;
@@ -84,6 +107,7 @@
                 if (isRefreshCons) {
                     if (self.conversationListVC) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
+                        [self.conversationListVC refresh];
                     }
                     if (self.contactViewVC) {
                         [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
@@ -92,8 +116,10 @@
             }  else {
                 NSLog(@"接收失败");
             }
+            
         }
     }
+
 }
 //删除消息
 - (BOOL)removeRevokeMessageWithConversation:(EMConversation *)conversation
