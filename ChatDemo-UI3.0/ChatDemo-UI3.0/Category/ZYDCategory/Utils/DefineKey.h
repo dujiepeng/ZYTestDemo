@@ -44,3 +44,6 @@
 #define LATITUDE @"latitude"
 #define LONGITUDE @"longitude"
 
+
+#define mark - draft
+#define DRAFT_NOTI_KEY @"DraftNotifications"

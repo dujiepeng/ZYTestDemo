@@ -11,6 +11,7 @@
 #import "EMConversation+Draft.h"
 #import "ChatDemoHelper.h"
 #import "ChatViewController+ShareLocation.h"
+#import "DefineKey.h"
 #import <objc/runtime.h>
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate>
@@ -25,8 +26,6 @@
     Method oldViewDidLoadMethod = class_getInstanceMethod([ChatViewController class], @selector(viewDidLoad));
     Method newViewDidLoadMethod = class_getInstanceMethod([ChatViewController class], @selector(ZYDViewDidLoad));
     method_exchangeImplementations(oldViewDidLoadMethod, newViewDidLoadMethod);
-    
-
 }
 
 - (void)ZYDBackAction {
@@ -47,13 +46,21 @@
     [self.navigationController popViewControllerAnimated:YES];
 }
 
-
 - (void)ZYDViewDidLoad {
     [self ZYDViewDidLoad];
     EaseChatToolbar *toolBar = (EaseChatToolbar *)self.chatToolbar;
     toolBar.inputTextView.text = [self.conversation draft];
+    [self registerNotifications];
 }
 
+- (void)registerNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(saveInputText) name:DRAFT_NOTI_KEY object:nil];
+}
+
+- (void)saveInputText {
+    EaseChatToolbar *toolBar = (EaseChatToolbar *)self.chatToolbar;
+    [self.conversation setDraft:toolBar.inputTextView.text];
+}
 
 
 @end

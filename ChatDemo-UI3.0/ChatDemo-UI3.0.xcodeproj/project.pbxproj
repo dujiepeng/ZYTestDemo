@@ -163,6 +163,7 @@
 		90A5FA001E716C5800B3B2E3 /* EaseMessageCell+ShareLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 90A5F9FF1E716C5800B3B2E3 /* EaseMessageCell+ShareLocation.m */; };
 		90B42A371B65E62C00968342 /* RobotChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B42A341B65E62C00968342 /* RobotChatViewController.m */; };
 		90B42A381B65E62C00968342 /* RobotManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 90B42A361B65E62C00968342 /* RobotManager.m */; };
+		90C059771E80CA9000133201 /* AppDelegate+Draft.m in Sources */ = {isa = PBXBuildFile; fileRef = 90C059761E80CA9000133201 /* AppDelegate+Draft.m */; };
 		90CE5C121B43C8E500810187 /* AppDelegate+EaseMobDebug.m in Sources */ = {isa = PBXBuildFile; fileRef = 90CE5C111B43C8E500810187 /* AppDelegate+EaseMobDebug.m */; };
 		90DE3C641E728A3A009C85EE /* CreateGroupViewController+WithoutAgreed.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE3C631E728A3A009C85EE /* CreateGroupViewController+WithoutAgreed.m */; };
 		90DE3C671E728F9E009C85EE /* EMGroupBansViewController+Member.m in Sources */ = {isa = PBXBuildFile; fileRef = 90DE3C661E728F9E009C85EE /* EMGroupBansViewController+Member.m */; };
@@ -756,6 +757,8 @@
 		90B42A341B65E62C00968342 /* RobotChatViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotChatViewController.m; sourceTree = "<group>"; };
 		90B42A351B65E62C00968342 /* RobotManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RobotManager.h; sourceTree = "<group>"; };
 		90B42A361B65E62C00968342 /* RobotManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RobotManager.m; sourceTree = "<group>"; };
+		90C059751E80CA9000133201 /* AppDelegate+Draft.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Draft.h"; sourceTree = "<group>"; };
+		90C059761E80CA9000133201 /* AppDelegate+Draft.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+Draft.m"; sourceTree = "<group>"; };
 		90CE5C101B43C8E500810187 /* AppDelegate+EaseMobDebug.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMobDebug.h"; sourceTree = "<group>"; };
 		90CE5C111B43C8E500810187 /* AppDelegate+EaseMobDebug.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMobDebug.m"; sourceTree = "<group>"; };
 		90DE3C621E728A3A009C85EE /* CreateGroupViewController+WithoutAgreed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CreateGroupViewController+WithoutAgreed.h"; sourceTree = "<group>"; };
@@ -1915,6 +1918,8 @@
 				90A5F9C51E71300600B3B2E3 /* ConversationListController+Draft.m */,
 				90A5F9C61E71300600B3B2E3 /* EMConversation+Draft.h */,
 				90A5F9C71E71300600B3B2E3 /* EMConversation+Draft.m */,
+				90C059751E80CA9000133201 /* AppDelegate+Draft.h */,
+				90C059761E80CA9000133201 /* AppDelegate+Draft.m */,
 			);
 			path = ConversationDraft;
 			sourceTree = "<group>";
@@ -3344,6 +3349,7 @@
 				D29A6BB91B720A62002324BB /* AppDelegate+Parse.m in Sources */,
 				D21FD1621E793DC2006A0CAE /* EaseSDKHelper+GoneAfterRead.m in Sources */,
 				90A5F9EA1E71300600B3B2E3 /* ConversationListController+Top.m in Sources */,
+				90C059771E80CA9000133201 /* AppDelegate+Draft.m in Sources */,
 				D2FD8D5B1E5C39FD0097B20D /* MJRefreshBackFooter.m in Sources */,
 				D2FD8D651E5C39FD0097B20D /* MJRefreshGifHeader.m in Sources */,
 				3C3EB2FF195465D100E1AE9E /* PublicGroupDetailViewController.m in Sources */,
