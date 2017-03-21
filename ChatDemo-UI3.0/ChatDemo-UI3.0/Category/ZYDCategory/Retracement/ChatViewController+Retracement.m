@@ -195,9 +195,6 @@
                 [strongSelf.tableView endUpdates];
                 
             });
-            
-            
-            
         }  else {
             NSLog(@"发送失败");
         }
