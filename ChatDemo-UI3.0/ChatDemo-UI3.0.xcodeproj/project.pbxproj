@@ -116,6 +116,10 @@
 		3CBF90C019302F5000AD68AE /* BaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBF90BF19302F5000AD68AE /* BaseViewController.m */; };
 		3CE6293319A1B13700829632 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CE6293219A1B13700829632 /* CoreText.framework */; };
 		715B84571E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m in Sources */ = {isa = PBXBuildFile; fileRef = 715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */; };
+		71E8EE4E1E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E8EE481E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.m */; };
+		71E8EE4F1E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E8EE4A1E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.m */; };
+		71E8EE501E80D1F7007C1FD7 /* EaseMessageCell+Link.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E8EE4D1E80D1F7007C1FD7 /* EaseMessageCell+Link.m */; };
+		71E8EE531E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 71E8EE521E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.m */; };
 		833E2D9E1DC723D600C5AB48 /* GettingMoreFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = 833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */; };
 		90011F921AE4BF090088D549 /* EMAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = 90011F911AE4BF090088D549 /* EMAlertView.m */; };
 		9003D86E1939D8D000DC38A4 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D7861939D8D000DC38A4 /* ChatViewController.m */; };
@@ -662,6 +666,14 @@
 		3CE6293219A1B13700829632 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		715B84551E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageViewController+GroupMemberChange.h"; sourceTree = "<group>"; };
 		715B84561E7964F500207B72 /* EaseMessageViewController+GroupMemberChange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageViewController+GroupMemberChange.m"; sourceTree = "<group>"; };
+		71E8EE471E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseConversationCell+GroupPushBlock.h"; sourceTree = "<group>"; };
+		71E8EE481E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseConversationCell+GroupPushBlock.m"; sourceTree = "<group>"; };
+		71E8EE491E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "MainViewController+GroupPushBlock.h"; sourceTree = "<group>"; };
+		71E8EE4A1E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "MainViewController+GroupPushBlock.m"; sourceTree = "<group>"; };
+		71E8EE4C1E80D1F7007C1FD7 /* EaseMessageCell+Link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseMessageCell+Link.h"; sourceTree = "<group>"; };
+		71E8EE4D1E80D1F7007C1FD7 /* EaseMessageCell+Link.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseMessageCell+Link.m"; sourceTree = "<group>"; };
+		71E8EE511E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "EaseImageView+GroupPushBlock.h"; sourceTree = "<group>"; };
+		71E8EE521E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "EaseImageView+GroupPushBlock.m"; sourceTree = "<group>"; };
 		833E2D9C1DC723D600C5AB48 /* GettingMoreFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GettingMoreFooterView.h; sourceTree = "<group>"; };
 		833E2D9D1DC723D600C5AB48 /* GettingMoreFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GettingMoreFooterView.m; sourceTree = "<group>"; };
 		90011F901AE4BF090088D549 /* EMAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EMAlertView.h; sourceTree = "<group>"; };
@@ -1609,6 +1621,28 @@
 			path = ViewController;
 			sourceTree = "<group>";
 		};
+		71E8EE461E80D1F7007C1FD7 /* GroupPushBlock */ = {
+			isa = PBXGroup;
+			children = (
+				71E8EE471E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.h */,
+				71E8EE481E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.m */,
+				71E8EE511E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.h */,
+				71E8EE521E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.m */,
+				71E8EE491E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.h */,
+				71E8EE4A1E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.m */,
+			);
+			path = GroupPushBlock;
+			sourceTree = "<group>";
+		};
+		71E8EE4B1E80D1F7007C1FD7 /* Link */ = {
+			isa = PBXGroup;
+			children = (
+				71E8EE4C1E80D1F7007C1FD7 /* EaseMessageCell+Link.h */,
+				71E8EE4D1E80D1F7007C1FD7 /* EaseMessageCell+Link.m */,
+			);
+			path = Link;
+			sourceTree = "<group>";
+		};
 		90011F8F1AE4BF090088D549 /* EMAlertView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1889,6 +1923,8 @@
 		90A5F9BE1E71300600B3B2E3 /* ZYDCategory */ = {
 			isa = PBXGroup;
 			children = (
+				71E8EE461E80D1F7007C1FD7 /* GroupPushBlock */,
+				71E8EE4B1E80D1F7007C1FD7 /* Link */,
 				90ECE5711E800002008544AF /* Retracement */,
 				D21FD1451E793DC2006A0CAE /* FireAfterRead */,
 				90882EDF1E78FE5800FB9A9E /* ShareFiles */,
@@ -3215,6 +3251,7 @@
 				D2FD8D861E5C39FD0097B20D /* NSIndexPath+PSTCollectionViewAdditions.m in Sources */,
 				3A386ED41DE5539C000F3D8E /* EMVideoInfoViewController.m in Sources */,
 				D2FD8DB51E5C39FD0097B20D /* EaseBubbleView+Video.m in Sources */,
+				71E8EE4E1E80D1F7007C1FD7 /* EaseConversationCell+GroupPushBlock.m in Sources */,
 				D2F7691F1CBF42DB009778FB /* SearchChatViewController.m in Sources */,
 				3C6BBA0619419EBD00A64684 /* EMRemarkImageView.m in Sources */,
 				D2FD8DB41E5C39FD0097B20D /* EaseBubbleView+Text.m in Sources */,
@@ -3353,6 +3390,7 @@
 				D2FD8D5B1E5C39FD0097B20D /* MJRefreshBackFooter.m in Sources */,
 				D2FD8D651E5C39FD0097B20D /* MJRefreshGifHeader.m in Sources */,
 				3C3EB2FF195465D100E1AE9E /* PublicGroupDetailViewController.m in Sources */,
+				71E8EE4F1E80D1F7007C1FD7 /* MainViewController+GroupPushBlock.m in Sources */,
 				90911137192EEC91008A48AA /* LoginViewController.m in Sources */,
 				3A386EDB1DE5539C000F3D8E /* EMCallOptions+NSCoding.m in Sources */,
 				D2FD8D641E5C39FD0097B20D /* MJRefreshBackStateFooter.m in Sources */,
@@ -3365,6 +3403,7 @@
 				3AF6A6571E1F5BD40022E835 /* EMGroupMembersViewController.m in Sources */,
 				3A386ED21DE5539C000F3D8E /* EMCallViewController.mm in Sources */,
 				D2FD8DA21E5C39FD0097B20D /* EaseEmotionEscape.m in Sources */,
+				71E8EE531E80DC1C007C1FD7 /* EaseImageView+GroupPushBlock.m in Sources */,
 				D2FD8D781E5C39FD0097B20D /* EMSDWebImageDecoder.m in Sources */,
 				D2FD8D711E5C39FD0097B20D /* MWPhotoBrowser.m in Sources */,
 				D2FD8DBC1E5C39FD0097B20D /* EaseFaceView.m in Sources */,
@@ -3394,6 +3433,7 @@
 				D2FD8D591E5C39FD0097B20D /* MBProgressHUD.m in Sources */,
 				833E2D9E1DC723D600C5AB48 /* GettingMoreFooterView.m in Sources */,
 				90CE5C121B43C8E500810187 /* AppDelegate+EaseMobDebug.m in Sources */,
+				71E8EE501E80D1F7007C1FD7 /* EaseMessageCell+Link.m in Sources */,
 				28BFD6371B01D40500D0ADEC /* ChatroomListViewController.m in Sources */,
 				3AA412E81DDEDB2600317D72 /* EMSearchResultController.m in Sources */,
 				D21FD15C1E793DC2006A0CAE /* ChatViewController+GoneAfterRead.m in Sources */,
