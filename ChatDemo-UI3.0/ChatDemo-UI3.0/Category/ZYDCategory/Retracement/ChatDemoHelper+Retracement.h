@@ -10,7 +10,8 @@
 
 @interface ChatDemoHelper (Retracement)
 
-@property (nonatomic, weak) ChatViewController *chatVC;
-@property (nonatomic, weak) MainViewController *mainVC;
+//@property (nonatomic, weak) ChatViewController *chatVC;
+//@property (nonatomic, weak) MainViewController *mainVC;
+- (void)tCmdRevokeMessagesDidReceive:(NSArray *)aCmdMessages ;
 
 @end

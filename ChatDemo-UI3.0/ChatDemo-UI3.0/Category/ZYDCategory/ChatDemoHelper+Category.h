@@ -10,7 +10,7 @@
 
 @interface ChatDemoHelper (Category)
 
-@property (nonatomic, weak) ChatViewController *chatVC;
-@property (nonatomic, weak) MainViewController *mainVC;
+//@property (nonatomic, weak) ChatViewController *chatVC;
+//@property (nonatomic, weak) MainViewController *mainVC;
 
 @end
