@@ -65,11 +65,11 @@
                 dic[@"username"] = msg.from;
                 [set addObject:dic];
             }
-            else if ([body.action isEqualToString:GROUP_READ_CMD]) {
+            else if ([body.action isEqualToString:GROUP_READ_ACTION]) {
                 //群组消息已读
                 NSDictionary *ext = msg.ext;
-                NSString *groupId = ext[CURRENT_CONVERSATIONID];
-                NSArray *msgIds = ext[UPDATE_MSGID_LIST];
+                NSString *groupId = ext[GROUP_READ_CONVERSATION_ID];
+                NSArray *msgIds = ext[GROUP_READ_MSG_ID_ARRAY];
                 NSString *readerName = msg.from;
                 [[LocalDataTools tools] addDataToPlist:groupId msgIds:msgIds readerName:readerName];
             }
