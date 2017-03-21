@@ -74,12 +74,9 @@ static EaseFireHelper *helper = nil;
         EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:message.conversationId type:EMConversationTypeChat createIfNotExist:YES];
         if (![message.from isEqualToString:[[EMClient sharedClient] currentUsername]]) {
             
-            if ([[EMClient sharedClient] isConnected]) {
-                
                 EMError *aError = nil;
                 [conversation deleteMessageWithId:message.messageId error:&aError];
                 if (!aError) {
-                    
                     // 发送已读回执
                     [conversation markMessageAsReadWithId:message.messageId error:nil];
                     [self sendRemoveMessageAction:message];
@@ -99,7 +96,6 @@ static EaseFireHelper *helper = nil;
                     
                     [[NSNotificationCenter defaultCenter] postNotificationName:@"handleGoneAfterReadUI" object:message];
                 });
-            }
         }
     });
 }

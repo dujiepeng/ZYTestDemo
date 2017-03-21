@@ -114,8 +114,32 @@
     Method messageCellSelect = class_getInstanceMethod([self class], @selector(messageCellSelected:));
     Method FMessageCellSelect = class_getInstanceMethod([self class], @selector(FMessageCellSelected:));
     method_exchangeImplementations(messageCellSelect, FMessageCellSelect);
-    
+//    Method longPress = class_getInstanceMethod([self class], @selector(messageViewController:canLongPressRowAtIndexPath:));
+//    Method FLongPress = class_getInstanceMethod([self class], @selector(FMessageViewController:canLongPressRowAtIndexPath:));
+//    method_exchangeImplementations(longPress, FLongPress);
 }
+
+
+//- (BOOL)FMessageViewController:(EaseMessageViewController *)viewController canLongPressRowAtIndexPath:(NSIndexPath *)indexPath
+//{
+//    id<IMessageModel>messageModel = nil;
+//    id object = [self.dataArray objectAtIndex:indexPath.row];
+//    if ([object conformsToProtocol:@protocol(IMessageModel)]) {
+//        messageModel = object;
+//    }
+//    if ([EaseFireHelper isGoneAfterReadMessage:messageModel.message]) {
+//        
+//        EaseMessageCell *cell = (EaseMessageCell *)[self.tableView cellForRowAtIndexPath:indexPath];
+//        [cell becomeFirstResponder];
+//        self.menuIndexPath = indexPath;
+//        [self showMenuViewController:cell.bubbleView andIndexPath:indexPath messageType:EMMessageBodyTypeCmd];
+//        return NO;
+//    } else {
+//        
+//        return [self FMessageViewController:viewController canLongPressRowAtIndexPath:indexPath];
+//    }
+//}
+
 
 // 离开聊天页面 删除所有已读的消息
 - (void)FBackAction
@@ -139,7 +163,7 @@
 #pragma mark - 消息点击
 - (void)FMessageCellSelected:(id<IMessageModel>)model
 {
-#warning Change_Flag_6
+
     if (model.bodyType == EMMessageBodyTypeImage && [EaseFireHelper isGoneAfterReadMessage:model.message]) {
         
         if (![EMClient sharedClient].isConnected || ![EMClient sharedClient].isLoggedIn) {
