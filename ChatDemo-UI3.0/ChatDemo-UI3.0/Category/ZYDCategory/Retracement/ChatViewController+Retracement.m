@@ -65,28 +65,32 @@
     }
     
     id<IMessageModel> model = [self.dataArray objectAtIndex:self.menuIndexPath.row];
- 
+    BOOL isFireMsg = [[model.message.ext objectForKey:kGoneAfterReadKey] boolValue];
     NSMutableArray *items = [NSMutableArray array];
-    switch (messageType) {
-        case EMMessageBodyTypeText:
-        {
-            [items addObject:_copyMenuItem];
+    if (!isFireMsg) {
+        switch (messageType) {
+            case EMMessageBodyTypeText:
+            {
+                [items addObject:_copyMenuItem];
+            }
+            case EMMessageBodyTypeImage:
+            case EMMessageBodyTypeVideo:
+            {
+                [items addObject:_transpondMenuItem];
+            }
+            case EMMessageBodyTypeVoice:
+            case EMMessageBodyTypeFile:
+            case EMMessageBodyTypeLocation:
+            {
+         
+            }
+                break;
+            default:
+                break;
         }
-        case EMMessageBodyTypeImage:
-        case EMMessageBodyTypeVideo:
-        {
-            [items addObject:_transpondMenuItem];
-        }
-        case EMMessageBodyTypeVoice:
-        case EMMessageBodyTypeFile:
-        case EMMessageBodyTypeLocation:
-        {
-            [items addObject:_deleteMenuItem];
-        }
-            break;
-        default:
-            break;
     }
+    
+    [items addObject:_deleteMenuItem];
     
     NSString *currentUsername = [EMClient sharedClient].currentUsername;
     NSString *from = model.message.from;

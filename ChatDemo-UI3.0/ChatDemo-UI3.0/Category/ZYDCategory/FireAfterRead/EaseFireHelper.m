@@ -8,18 +8,8 @@
 
 #import "EaseFireHelper.h"
 #import <objc/runtime.h>
+#import "DefineKey.h"
 
-#define kGoneAfterReadKey @"goneAfterReadKey"
-/** @brief NSUserDefaults中保存当前已阅读但未发送ack回执的阅后即焚消息信息 */
-#define NEED_REMOVE_MESSAGE_DIC            @"em_needRemoveMessages"
-/** @brief 已读阅后即焚消息在NSUserDefaults保存的key前缀 */
-#define KEM_REMOVEAFTERREAD_PREFIX                @"readFirePrefix"
-//需要发送ack的阅后即焚消息信息在NSUserDefaults中的存放key
-#define UserDefaultKey(username) [[KEM_REMOVEAFTERREAD_PREFIX stringByAppendingString:@"_"] stringByAppendingString:username]
-/** @brief NSUserDefaults中保存当前阅读的阅后即焚消息信息 */
-#define NEED_REMOVE_CURRENT_MESSAGE        @"em_needRemoveCurrnetMessage"
-#define kReconnectAction @"RemoveUnFiredMsg"
-#define kReconnectMsgIdKey @"REMOVE_UNFIRED_MSG"
 @interface EaseFireHelper()<EMClientDelegate, EMChatManagerDelegate>
 @property (nonatomic, strong) NSDictionary *infoDic;
 @property (nonatomic, strong) dispatch_queue_t queue;
