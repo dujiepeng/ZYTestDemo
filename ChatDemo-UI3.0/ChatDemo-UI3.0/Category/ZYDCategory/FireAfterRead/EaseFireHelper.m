@@ -245,7 +245,7 @@ static EaseFireHelper *helper = nil;
         if ([[EMClient sharedClient] isConnected]) {
             for (NSString *chatter in [weakSelf.needRemoveDic allKeys]) {
                 
-                EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:chatter type:EMConversationTypeChat createIfNotExist:YES];
+                EMConversation *conversation = [[EMClient sharedClient].chatManager getConversation:chatter type:EMConversationTypeChat createIfNotExist:NO];
                 for (NSString *messageId in weakSelf.needRemoveDic[chatter]) {
                     
                     EMMessage *msg = [conversation loadMessageWithId:messageId error:nil];
