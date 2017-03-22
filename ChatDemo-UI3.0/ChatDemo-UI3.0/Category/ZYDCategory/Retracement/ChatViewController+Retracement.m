@@ -140,18 +140,21 @@
     NSString *currentUsername = [EMClient sharedClient].currentUsername;
     EMMessage *message = [[EMMessage alloc] initWithConversationID:conversationId from:currentUsername  to:conversationId body:body ext:ext];
     
-    if (self.conversation.type == EMConversationTypeGroupChat){
-        message.chatType = EMChatTypeGroupChat;
-    } else {
-        message.chatType = EMChatTypeChat;
-    }
     EMMessage *oldMessage = [self.conversation loadMessageWithId:aMessageId error:nil];
     EaseMessageModel *oldmodel = [[EaseMessageModel alloc] initWithMessage:oldMessage];
     
     EMTextMessageBody *oldBody = (EMTextMessageBody *)oldmodel.message.body;
-    
-    if([oldBody.text rangeOfString:@"@"].location !=NSNotFound)
+    NSLog(@"%@",oldBody.text);
+    if (self.conversation.type == EMConversationTypeGroupChat){
+        message.chatType = EMChatTypeGroupChat;
+        
+    } else {
+        message.chatType = EMChatTypeChat;
+    }
+
+    if([oldBody.text rangeOfString:@"@"].location !=NSNotFound && self.conversation.type == EMConversationTypeGroupChat)
     {
+        [MBProgressHUD hideHUDForView:self.view animated:YES];
         [self showHint:NSEaseLocalizedString(@"notAllowedRevoke", @"Not allowed to revoke it")];
     }
     else{
