@@ -81,7 +81,7 @@ static const char *withoutAgreedKey = "withoutAgreedKey";
     id objc = [self valueForKey:@"isMemberOn"];
     NSLog(@"objc -- %@",objc);
     if ([[self valueForKey:@"isPublic"] boolValue]) {
-        if([self valueForKey:@"isMemberOn"])
+        if([[self valueForKey:@"isMemberOn"] boolValue])
         {
             setting.style = EMGroupStylePublicOpenJoin;
         }
