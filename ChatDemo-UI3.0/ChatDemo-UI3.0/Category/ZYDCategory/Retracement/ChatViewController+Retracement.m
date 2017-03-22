@@ -15,6 +15,7 @@
 #import "ChatViewController+ShareLocation.h"
 #import <objc/runtime.h>
 #import "DefineKey.h"
+#import "MBProgressHUD.h"
 
 @interface ChatViewController ()<UIAlertViewDelegate,EMClientDelegate>
 {
@@ -126,10 +127,13 @@
 }
 //发送回撤的透传消息  删除 self.conversation，self.dataArray，self.messsagesSource，这三个，然后刷新一下。
 - (void)revokeMessageWithMessageId:(NSString *)aMessageId   conversationId:(NSString *)conversationId {
-    
     if (!self.menuIndexPath) {
         return;
     }
+    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.labelText = @"正在撤回";
+    hud.removeFromSuperViewOnHide = YES;
+    hud.dimBackground = YES;
     
     EMCmdMessageBody *body = [[EMCmdMessageBody alloc] initWithAction:REVOKE_FLAG];
     NSDictionary *ext = @{MSG_ID:aMessageId};
@@ -141,64 +145,76 @@
     } else {
         message.chatType = EMChatTypeChat;
     }
+    EMMessage *oldMessage = [self.conversation loadMessageWithId:aMessageId error:nil];
+    EaseMessageModel *oldmodel = [[EaseMessageModel alloc] initWithMessage:oldMessage];
     
-    __weak typeof(self) weakSelf = self;
-    //发送cmd消息
-    [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
-        if (!error) {
-            __strong typeof(ChatViewController) *strongSelf = weakSelf;
-            NSLog(@"发送成功 %@",aMessageId);
-            EMMessage *oldMessage = [strongSelf.conversation loadMessageWithId:aMessageId error:nil];
-            
-            EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",currentUsername] ];
-            NSDictionary *extInsert = @{INSERT:body.text};
-            
-            EMMessage *smessage = [[EMMessage alloc] initWithConversationID:conversationId
-                                                                       from:currentUsername
-                                                                         to:conversationId body:body
-                                                                        ext:extInsert];
-            smessage.timestamp = oldMessage.timestamp;
-            smessage.localTime = oldMessage.localTime;
-            
-            
-            if (strongSelf.conversation.type == EMConversationTypeGroupChat){
-                smessage.chatType = EMChatTypeGroupChat;
-            } else {
-                smessage.chatType = EMChatTypeChat;
-            }
-            [strongSelf.conversation insertMessage:smessage error:nil];
-            [strongSelf.conversation deleteMessageWithId:aMessageId error:nil];
-            
-            EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:smessage];
-            [strongSelf.dataArray replaceObjectAtIndex:self.menuIndexPath.row withObject:model];
-            
-            __block NSInteger index = -1;
-            NSLock *mutexLock;
-            [mutexLock lock];
-
-            [strongSelf.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-                if ([obj isKindOfClass:[EMMessage class]]) {
-                    EMMessage *_message = (EMMessage *)obj;
-                    if ([_message.messageId isEqualToString:aMessageId]) {
-                        index = idx;
-                        *stop = YES;
-                    }
-                }
-            }];
-            if (index > -1) {
-                [strongSelf.messsagesSource replaceObjectAtIndex:index withObject:smessage];
-            }
-            [mutexLock unlock];
-
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [strongSelf.tableView beginUpdates];
-                [strongSelf.tableView reloadRowsAtIndexPaths:@[self.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
-                [strongSelf.tableView endUpdates];
+    EMTextMessageBody *oldBody = (EMTextMessageBody *)oldmodel.message.body;
+    
+    if([oldBody.text rangeOfString:@"@"].location !=NSNotFound)
+    {
+        [self showHint:NSEaseLocalizedString(@"notAllowedRevoke", @"Not allowed to revoke it")];
+    }
+    else{
+        __weak typeof(self) weakSelf = self;
+        //发送cmd消息
+        [[EMClient sharedClient].chatManager sendMessage:message progress:nil completion:^(EMMessage *message, EMError *error) {
+            if (!error) {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
                 
-            });
-        }  else {
-            NSLog(@"发送失败");
-        }
-    }];
+                __strong typeof(ChatViewController) *strongSelf = weakSelf;
+                NSLog(@"发送成功 %@",aMessageId);
+                EMTextMessageBody *body = [[EMTextMessageBody alloc] initWithText:[NSString stringWithFormat:@"%@撤回了一条消息",currentUsername] ];
+                NSDictionary *extInsert = @{INSERT:body.text};
+                
+                EMMessage *smessage = [[EMMessage alloc] initWithConversationID:conversationId
+                                                                           from:currentUsername
+                                                                             to:conversationId body:body
+                                                                            ext:extInsert];
+                smessage.timestamp = oldMessage.timestamp;
+                smessage.localTime = oldMessage.localTime;
+                
+                if (strongSelf.conversation.type == EMConversationTypeGroupChat){
+                    smessage.chatType = EMChatTypeGroupChat;
+                } else {
+                    smessage.chatType = EMChatTypeChat;
+                }
+                [strongSelf.conversation insertMessage:smessage error:nil];
+                [strongSelf.conversation deleteMessageWithId:aMessageId error:nil];
+                
+                EaseMessageModel *model = [[EaseMessageModel alloc] initWithMessage:smessage];
+                [strongSelf.dataArray replaceObjectAtIndex:self.menuIndexPath.row withObject:model];
+                
+                __block NSInteger index = -1;
+                NSLock *mutexLock;
+                [mutexLock lock];
+                
+                [strongSelf.messsagesSource enumerateObjectsWithOptions:NSEnumerationReverse usingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+                    if ([obj isKindOfClass:[EMMessage class]]) {
+                        EMMessage *_message = (EMMessage *)obj;
+                        if ([_message.messageId isEqualToString:aMessageId]) {
+                            index = idx;
+                            *stop = YES;
+                        }
+                    }
+                }];
+                if (index > -1) {
+                    [strongSelf.messsagesSource replaceObjectAtIndex:index withObject:smessage];
+                }
+                [mutexLock unlock];
+                
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [strongSelf.tableView beginUpdates];
+                    [strongSelf.tableView reloadRowsAtIndexPaths:@[self.menuIndexPath] withRowAnimation:UITableViewRowAnimationNone];
+                    [strongSelf.tableView endUpdates];
+                    
+                });
+                
+            }  else {
+                [MBProgressHUD hideHUDForView:self.view animated:YES];
+                
+                [self showHint:NSEaseLocalizedString(@"revokeFailed", @"revoke message Failed")];
+            }
+        }];
+    }
 }
 @end
