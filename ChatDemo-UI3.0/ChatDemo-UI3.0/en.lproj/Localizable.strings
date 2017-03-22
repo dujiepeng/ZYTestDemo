@@ -31,7 +31,7 @@
 "transpond" = "Transpond";
 "retracement" = "Retracement";
 "notAllowedRevoke" = "Not allowed to revoke it";
-"revokeFailed" = "Revoke message Failed"
+"revokeFailed" = "Revoke message Failed";
 "save" = "Save";
 "prompt" = "Prompt";
 "add" = "Add";
