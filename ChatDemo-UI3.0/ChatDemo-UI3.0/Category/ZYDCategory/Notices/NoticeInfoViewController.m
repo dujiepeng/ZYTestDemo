@@ -9,7 +9,7 @@
 #import "NoticeInfoViewController.h"
 #import <Hyphenate/Hyphenate.h>
 #import "EMSDImageCache.h"
-#define IMAGESIZE CGSizeMake(400,270)
+#define SIZE CGSizeMake([UIScreen mainScreen].applicationFrame.size.width,270)
 #define PADDING 20
 
 @interface NoticeInfoViewController ()
@@ -39,7 +39,6 @@
         info = dic.allValues.firstObject;
     }
     
-    
     int y = 10;
     
     if (info && [info isKindOfClass:[NSArray class]]) {
@@ -47,7 +46,7 @@
         for (NSDictionary *infoDic in ary) {
             y += 5;
             if (infoDic[@"img"]) {
-                UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING, y, IMAGESIZE.width - PADDING * 2, IMAGESIZE.height)];
+                UIImageView *img = [[UIImageView alloc] initWithFrame:CGRectMake(PADDING, y, SIZE.width - PADDING * 2, SIZE.height)];
                 [img sd_setImageWithURL:[NSURL URLWithString:infoDic[@"img"]] placeholderImage:nil];
                 [self.scrollView addSubview:img];
                 y +=  img.frame.size.height;
@@ -56,19 +55,21 @@
             if (infoDic[@"txt"]) {
                 UILabel *label = [[UILabel alloc] init];
                 label.text = infoDic[@"txt"];
-                [label sizeToFit];
+                label.numberOfLines = 0;
                 CGRect frame = label.frame;
                 
                 frame.origin.y = y;
                 frame.origin.x = PADDING;
+                frame.size.width = SIZE.width - 2 * PADDING;
                 label.frame = frame;
+                [label sizeToFit];
                 [self.scrollView addSubview:label];
                 y += label.frame.size.height;
             }
         }
     }
     
-    self.scrollView.contentSize = CGSizeMake(self.scrollView.frame.size.width, y + 10);
+    self.scrollView.contentSize = CGSizeMake(SIZE.width, y + 10);
     [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
 }
 
