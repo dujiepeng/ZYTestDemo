@@ -15,7 +15,7 @@
 
 // 接收撤回透传消息
 - (void)tCmdRevokeMessagesDidReceive:(NSArray *)aCmdMessages {
-    //    BOOL isRefreshCons = YES;
+    BOOL isRefreshCons = YES;
     NSMutableArray *revokeAry = [[NSMutableArray alloc] init];
     NSMutableArray *msgAry = [[NSMutableArray alloc] init];
     BOOL isRevoke = NO;
@@ -87,6 +87,19 @@
                         [self.mainVC setupUnreadMessageCount];
                     }
                     //                    return;
+                }
+                if (isChatting) {
+                    isRefreshCons = NO;
+                }
+                if (isRefreshCons) {
+                    if (self.conversationListVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"conversationListRefresh" object:nil];
+                        [self.conversationListVC refresh];
+                    }
+                    if (self.contactViewVC) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:@"setupUnreadMessageCount" object:nil];
+                        [self.mainVC setupUnreadMessageCount];
+                    }
                 }
                 
             }  else {
