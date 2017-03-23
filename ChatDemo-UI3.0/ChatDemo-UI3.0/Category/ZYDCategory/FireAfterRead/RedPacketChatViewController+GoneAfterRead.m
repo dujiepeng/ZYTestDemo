@@ -13,6 +13,7 @@
 #import "UIImage+EMGIF.h"
 #import "EaseLocationViewController+GoneAfterRead.h"
 #import "EaseFireHelper.h"
+#import "ChatDemoHelper.h"
 
 
 #define kHasReadMsgs @"hasReadMsgs"
@@ -144,7 +145,22 @@
 // 离开聊天页面 删除所有已读的消息
 - (void)FBackAction
 {
-    
+    if (self.conversation.type == EMConversationTypeChatRoom) {
+        
+        [[EMClient sharedClient].chatManager removeDelegate:self];
+        [[EMClient sharedClient].roomManager removeDelegate:self];
+        [[ChatDemoHelper shareHelper] setChatVC:nil];
+        
+        if (self.deleteConversationIfNull) {
+            //判断当前会话是否为空，若符合则删除该会话
+            EMMessage *message = [self.conversation latestMessage];
+            if (message == nil) {
+                [[EMClient sharedClient].chatManager deleteConversation:self.conversation.conversationId isDeleteMessages:NO completion:nil];
+            }
+        }
+        [self.navigationController popViewControllerAnimated:YES];
+        return;
+    }
     for (EMMessage *msg in self.needRemoveMessages) {
         
         [[EaseFireHelper sharedHelper] handleGoneAfterReadMessage:msg];
