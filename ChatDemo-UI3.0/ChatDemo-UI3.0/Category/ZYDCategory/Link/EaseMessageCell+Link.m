@@ -73,6 +73,9 @@ static char matchsKey;
 - (NSArray *)regularExpression {
     NSString *regular = @"((http[s]{0,1}|ftp)://[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)|(www.[a-zA-Z0-9\\.\\-]+\\.([a-zA-Z]{2,4})(:\\d+)?(/[a-zA-Z0-9\\.\\-~!@#$%^&*+?:_/=<>]*)?)";
     NSString *linkString = self.bubbleView.textLabel.attributedText.string;
+    if (linkString.length == 0) {
+        return nil;
+    }
     NSRegularExpression *exp = [NSRegularExpression regularExpressionWithPattern:regular options:NSRegularExpressionCaseInsensitive error:nil];
     NSArray *match = [exp matchesInString:linkString options:NSMatchingReportProgress range:NSMakeRange(0, linkString.length)];
     
@@ -80,7 +83,13 @@ static char matchsKey;
     
     for (NSTextCheckingResult *result in match) {
         NSString *str = [self.model.text substringWithRange:result.range];
-        [results addObject:[NSTextCheckingResult linkCheckingResultWithRange:result.range URL:[NSURL URLWithString:str]]];
+        NSURL *url = [NSURL URLWithString:str];
+        //为不包含http/https的url添加前缀http
+        if ([str rangeOfString:@"http"].location == NSNotFound &&
+            [str rangeOfString:@"https"].location == NSNotFound) {
+            url = [NSURL URLWithString:[NSString stringWithFormat:@"http://%@",str]];
+        }
+        [results addObject:[NSTextCheckingResult linkCheckingResultWithRange:result.range URL:url]];
     }
     return results;
 }
@@ -117,6 +126,7 @@ static char matchsKey;
  @result
  */
 - (void)linkBubbleViewTapAction:(UITapGestureRecognizer *)tapRecognizer {
+    [self linkBubbleViewTapAction:tapRecognizer];
     if (tapRecognizer.state == UIGestureRecognizerStateEnded &&
         self.model.bodyType == EMMessageBodyTypeText &&
         self.matchs.count > 0) {
@@ -132,9 +142,7 @@ static char matchsKey;
                 }
             }
         }
-        return;
     }
-    [self linkBubbleViewTapAction:tapRecognizer];
 }
 
 
