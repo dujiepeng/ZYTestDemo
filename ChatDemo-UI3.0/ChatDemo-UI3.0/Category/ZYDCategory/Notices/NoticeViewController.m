@@ -9,6 +9,7 @@
 #import "NoticeViewController.h"
 #import <Hyphenate/Hyphenate.h>
 #import "NoticeInfoViewController.h"
+#import "NoticeTableViewCell.h"
 @interface NoticeViewController () {
     NSString *_currentId;
 }
@@ -47,6 +48,8 @@
 
     [self fetchChatWithMessageId:nil isHeader:YES];
     [self registNotifications];
+    UINib *nib = [UINib nibWithNibName:@"NoticeTableViewCell" bundle:nil];
+    [self.tableView registerNib:nib forCellReuseIdentifier:@"NOTICECELL"];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,17 +107,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NOTICECELL"];
-    if(!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"NOTICECELL"];
-    }
+    NoticeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NOTICECELL"];
     EMMessage *msg = self.dataSource[indexPath.row];
     EMTextMessageBody *textBody = (EMTextMessageBody *)msg.body;
-    cell.textLabel.text = textBody.text;
+    cell.noticeLabel.text = textBody.text;
     if (msg.isRead) {
-        cell.detailTextLabel.text = @"";
+        cell.unreadLabel.text = @"";
     }else {
-        cell.detailTextLabel.text = @"未读";
+        cell.unreadLabel.text = @"未读";
     }
     return cell;
 }

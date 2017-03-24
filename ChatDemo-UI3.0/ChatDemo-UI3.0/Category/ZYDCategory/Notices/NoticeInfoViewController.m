@@ -31,7 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     EMTextMessageBody *textBody = (EMTextMessageBody *)self.msg.body;
-    self.title = textBody.text;
+    self.title = @"公告详情";
     self.msg.isRead = YES;
     id info = nil;
     NSDictionary *dic = self.msg.ext;
@@ -40,6 +40,20 @@
     }
     
     int y = 10;
+    
+    UILabel *label = [[UILabel alloc] init];
+    label.text = [NSString stringWithFormat:@"%@\n\n",textBody.text];
+    label.numberOfLines = 0;
+    CGRect frame = label.frame;
+    
+    frame.origin.y = y;
+    frame.origin.x = PADDING;
+    frame.size.width = SIZE.width - 2 * PADDING;
+    label.frame = frame;
+    [label sizeToFit];
+    [self.scrollView addSubview:label];
+    y += label.frame.size.height;
+
     
     if (info && [info isKindOfClass:[NSArray class]]) {
         NSArray *ary = (NSArray *)info;

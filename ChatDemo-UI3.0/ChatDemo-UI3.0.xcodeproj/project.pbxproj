@@ -129,6 +129,8 @@
 		9003D9161939D8D000DC38A4 /* ApplyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D8641939D8D000DC38A4 /* ApplyViewController.m */; };
 		9003D9181939D8D000DC38A4 /* RealtimeSearchUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 9003D8671939D8D000DC38A4 /* RealtimeSearchUtil.m */; };
 		902DEC551931D934006CA75E /* libresolv.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 902DEC541931D934006CA75E /* libresolv.dylib */; };
+		903527F71E8535D90051027D /* NoticeTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 903527F51E8535D90051027D /* NoticeTableViewCell.m */; };
+		903527F81E8535D90051027D /* NoticeTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 903527F61E8535D90051027D /* NoticeTableViewCell.xib */; };
 		90517D671A5C3C1F008F1315 /* AppDelegate+EaseMob.m in Sources */ = {isa = PBXBuildFile; fileRef = 90517D661A5C3C1F008F1315 /* AppDelegate+EaseMob.m */; };
 		90517D6A1A5C3DB0008F1315 /* AppDelegate+UMeng.m in Sources */ = {isa = PBXBuildFile; fileRef = 90517D691A5C3DB0008F1315 /* AppDelegate+UMeng.m */; };
 		905325CF1932ED8B00F064D7 /* EMSearchBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 905325CE1932ED8B00F064D7 /* EMSearchBar.m */; };
@@ -692,6 +694,9 @@
 		9003D8671939D8D000DC38A4 /* RealtimeSearchUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RealtimeSearchUtil.m; sourceTree = "<group>"; };
 		9003D91B1939D9C300DC38A4 /* MobClick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobClick.h; sourceTree = "<group>"; };
 		902DEC541931D934006CA75E /* libresolv.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libresolv.dylib; path = usr/lib/libresolv.dylib; sourceTree = SDKROOT; };
+		903527F41E8535D90051027D /* NoticeTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NoticeTableViewCell.h; sourceTree = "<group>"; };
+		903527F51E8535D90051027D /* NoticeTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NoticeTableViewCell.m; sourceTree = "<group>"; };
+		903527F61E8535D90051027D /* NoticeTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = NoticeTableViewCell.xib; sourceTree = "<group>"; };
 		90517D651A5C3C1F008F1315 /* AppDelegate+EaseMob.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+EaseMob.h"; sourceTree = "<group>"; };
 		90517D661A5C3C1F008F1315 /* AppDelegate+EaseMob.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+EaseMob.m"; sourceTree = "<group>"; };
 		90517D681A5C3DB0008F1315 /* AppDelegate+UMeng.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+UMeng.h"; sourceTree = "<group>"; };
@@ -2022,6 +2027,9 @@
 				90DE3C6B1E7293B5009C85EE /* NoticeInfoViewController.xib */,
 				90DE3C6C1E7293B5009C85EE /* NoticeViewController.h */,
 				90DE3C6D1E7293B5009C85EE /* NoticeViewController.m */,
+				903527F41E8535D90051027D /* NoticeTableViewCell.h */,
+				903527F51E8535D90051027D /* NoticeTableViewCell.m */,
+				903527F61E8535D90051027D /* NoticeTableViewCell.xib */,
 			);
 			path = Notices;
 			sourceTree = "<group>";
@@ -3062,6 +3070,7 @@
 				D2B3DADD1BF1D7B700913BD5 /* icon_029_cover.png in Resources */,
 				3A386EE91DE5539C000F3D8E /* Button_Cancel Call@2x.png in Resources */,
 				90EF2CEC192F2B4E00BDC549 /* sr_refresh.png in Resources */,
+				903527F81E8535D90051027D /* NoticeTableViewCell.xib in Resources */,
 				3A386EDD1DE5539C000F3D8E /* Button_Answer@2x.png in Resources */,
 				EBD2AB581A7CDAC000D16528 /* messageSendFail@2x.png in Resources */,
 				D2FD8D931E5C39FD0097B20D /* MWPhotoBrowser.bundle in Resources */,
@@ -3451,6 +3460,7 @@
 				3AD0FB9A1E1E7267001F3957 /* EMGroupAdminsViewController.m in Sources */,
 				90DE3C671E728F9E009C85EE /* EMGroupBansViewController+Member.m in Sources */,
 				90911145192EEE6E008A48AA /* MainViewController.m in Sources */,
+				903527F71E8535D90051027D /* NoticeTableViewCell.m in Sources */,
 				D2FD8D661E5C39FD0097B20D /* MJRefreshNormalHeader.m in Sources */,
 				3A807B0F1D951301004D18CB /* EMNavigationController.m in Sources */,
 				3C6BBA0C1941A7CF00A64684 /* EMTextView.m in Sources */,
