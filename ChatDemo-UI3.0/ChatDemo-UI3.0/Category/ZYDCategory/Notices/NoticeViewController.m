@@ -110,12 +110,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NoticeTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"NOTICECELL"];
     EMMessage *msg = self.dataSource[indexPath.row];
     EMTextMessageBody *textBody = (EMTextMessageBody *)msg.body;
-    cell.noticeLabel.text = textBody.text;
     if (msg.isRead) {
         cell.unreadLabel.text = @"";
     }else {
         cell.unreadLabel.text = @"未读";
     }
+    cell.noticeLabel.text = textBody.text;
+
     return cell;
 }
 
