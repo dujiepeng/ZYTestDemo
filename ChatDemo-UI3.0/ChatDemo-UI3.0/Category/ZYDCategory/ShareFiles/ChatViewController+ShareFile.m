@@ -53,6 +53,12 @@
     toFile = [toFile stringByAppendingString:[NSString stringWithFormat:@"/%@",body.displayName]];
     NSFileManager *fm = [NSFileManager defaultManager];
     
+    if ([fm fileExistsAtPath:toFile]) {
+        self.documentController = [UIDocumentInteractionController interactionControllerWithURL:[NSURL fileURLWithPath:toFile]];
+        [self.documentController presentOptionsMenuFromRect:self.view.bounds inView:self.view animated:YES];
+        return;
+    }
+    
     NSError *error;
     [fm copyItemAtURL:fileURL toURL:[NSURL fileURLWithPath:toFile] error:&error];
     if (!error) {
