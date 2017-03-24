@@ -95,7 +95,7 @@
     
     NSString *currentUsername = [EMClient sharedClient].currentUsername;
     NSString *from = model.message.from;
-    if ([currentUsername isEqualToString:from]) {
+    if ([currentUsername isEqualToString:from]&&self.conversation.type != EMChatTypeChatRoom) {
         [items addObject:retracementMenuItem];
     }
     
