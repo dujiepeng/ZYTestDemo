@@ -27,6 +27,12 @@
     Method oldHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(tableView: heightForRowAtIndexPath:));
     Method newHightMethod = class_getInstanceMethod([EaseMessageViewController class], @selector(ZYDtableView: heightForRowAtIndexPath:));
     method_exchangeImplementations(oldHightMethod, newHightMethod);
+    
+    Method oldLPMethod = class_getInstanceMethod([EaseMessageViewController class],
+                                                 @selector(handleLongPress:));
+    Method newLPMethod = class_getInstanceMethod([EaseMessageViewController class],
+                                                 @selector(ZYDHandleLongPress:));
+    method_exchangeImplementations(oldLPMethod, newLPMethod);
 }
 
 
@@ -85,4 +91,22 @@
     }
     return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
 }
+
+
+- (void)ZYDHandleLongPress:(UILongPressGestureRecognizer *)recognizer {
+    if (recognizer.state == UIGestureRecognizerStateBegan && [self.dataArray count] > 0)
+    {
+        CGPoint location = [recognizer locationInView:self.tableView];
+        NSIndexPath * indexPath = [self.tableView indexPathForRowAtPoint:location];
+        id obj = self.dataArray[indexPath.row];
+        if ([obj conformsToProtocol:@protocol(IMessageModel)]) {
+            EaseMessageModel *model = (EaseMessageModel *)obj;
+            if (model.message.ext[INSERT]) {
+                return;
+            }
+        }
+        [self performSelector:@selector(ZYDHandleLongPress:) withObject:recognizer];
+    }
+}
+
 @end
