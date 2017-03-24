@@ -77,23 +77,12 @@
 - (CGFloat)ZYDtableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     id object = [self.dataArray objectAtIndex:indexPath.row];
-    if ([object isKindOfClass:[NSString class]]) {
-        return self.timeCellHeight;
-    }
-    else{
+    if ([object conformsToProtocol:@protocol(IMessageModel)]) {
         id<IMessageModel> model = object;
-        if (self.delegate && [self.delegate respondsToSelector:@selector(messageViewController:heightForMessageModel:withCellWidth:)]) {
-            NSDictionary *ext =  model.message.ext;
-            
-            if (ext[INSERT] != nil) {
-                return self.timeCellHeight;
-            }
-            
-        }else{
-            return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
+        if (model.message.ext[INSERT]) {
+            return self.timeCellHeight;
         }
-        
-        return [EaseBaseMessageCell cellHeightWithModel:model];
     }
+    return [self ZYDtableView:tableView heightForRowAtIndexPath:indexPath];
 }
 @end
