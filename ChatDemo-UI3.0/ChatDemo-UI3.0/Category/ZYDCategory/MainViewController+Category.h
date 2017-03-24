@@ -9,5 +9,6 @@
 #import "MainViewController.h"
 
 @interface MainViewController (Category)
-
+- (void)lightOn;
+- (void)lightOff;
 @end

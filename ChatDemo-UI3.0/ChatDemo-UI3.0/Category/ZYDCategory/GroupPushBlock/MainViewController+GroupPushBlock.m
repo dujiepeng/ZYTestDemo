@@ -7,6 +7,7 @@
 //
 
 #import "MainViewController+GroupPushBlock.h"
+#import "MainViewController+Category.h"
 #import <objc/runtime.h>
 
 
@@ -24,6 +25,15 @@
     NSArray *pushGroupIds = [[EMClient sharedClient].groupManager getGroupsWithoutPushNotification:nil];
     NSInteger unreadCount = 0;
     for (EMConversation *conversation in conversations) {
+        if ([conversation.conversationId isEqualToString:@"admin"]) {
+            if (conversation.unreadMessagesCount) {
+                [self lightOn];
+            }else{
+                [self lightOff];
+            }
+            continue;
+        }
+
         if (![pushGroupIds containsObject:conversation.conversationId]) {
             unreadCount += conversation.unreadMessagesCount;
         }
