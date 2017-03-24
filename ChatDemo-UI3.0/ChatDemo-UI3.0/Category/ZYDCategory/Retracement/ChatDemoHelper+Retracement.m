@@ -56,15 +56,19 @@
                 if (self.chatVC)  {
                     
                     isChatting = [cmdRevokeMessage.conversationId isEqualToString:self.chatVC.conversation.conversationId];
-                    NSInteger index = 0;
-                    for (int i = 0; i <= self.chatVC.messsagesSource.count; i++) {
-                        index = i;
+                    NSInteger index = - 1;
+                    for (int i = 0; i < self.chatVC.messsagesSource.count; i++) {
                         EMMessage *msg = self.chatVC.messsagesSource[i];
                         if ([msg.messageId isEqualToString:revokeMessageId]) {
+                            index = i;
+
                             break;
                         }
                     }
-                    [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:newMessage];
+                    if (index > -1) {
+                        [self.chatVC.messsagesSource replaceObjectAtIndex:index withObject:newMessage];
+                    }
+                    
                     
                     dispatch_async(dispatch_get_main_queue(), ^{
                         self.chatVC.messageTimeIntervalTag = 0;
